@@ -2022,6 +2022,19 @@ body:before{
 @media(max-width:1100px){.alpha-grid{grid-template-columns:repeat(3,1fr)}.alpha-row{grid-template-columns:1fr}.alpha-pipeline{grid-template-columns:repeat(5,minmax(100px,1fr));overflow-x:auto}.alpha-live{position:static;width:max-content;margin-top:15px}}
 @media(max-width:650px){.alpha-grid{grid-template-columns:repeat(2,1fr)}.alpha-hero{padding:22px}.alpha-title{font-size:34px}.alpha-pipeline{grid-template-columns:repeat(5,120px)}.alpha-panel-body{padding:14px}}
 
+
+/* =====================================================
+   CRM 041 — DASHBOARD EXECUTIVO ULTRA
+===================================================== */
+.crm041-launcher{margin:0 0 22px;border:1px solid rgba(215,181,109,.22);border-radius:22px;background:linear-gradient(135deg,rgba(18,20,25,.98),rgba(9,12,17,.98));box-shadow:0 20px 65px rgba(0,0,0,.24);overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px;position:relative}
+.crm041-launcher:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 90% 20%,rgba(93,167,255,.12),transparent 30%),radial-gradient(circle at 8% 90%,rgba(215,181,109,.08),transparent 28%)}
+.crm041-launcher-main,.crm041-launcher-actions{position:relative;z-index:1}.crm041-kicker{font-size:9px;letter-spacing:.18em;color:#d8b65b;font-weight:950;text-transform:uppercase}.crm041-title{font-size:19px;font-weight:1000;color:#fff;margin-top:5px}.crm041-sub{font-size:10px;color:#7f8998;margin-top:5px;line-height:1.5}.crm041-live{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.crm041-live span{padding:6px 9px;border-radius:9px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);font-size:8px;color:#aeb7c3;font-weight:900}.crm041-live b{color:#fff}.crm041-primary{border:1px solid rgba(215,181,109,.34);background:linear-gradient(135deg,rgba(215,181,109,.18),rgba(93,167,255,.10));color:#fff;border-radius:12px;padding:12px 15px;font-size:9px;font-weight:1000;letter-spacing:.04em;white-space:nowrap}.crm041-primary:hover{border-color:rgba(215,181,109,.62);transform:translateY(-1px)}
+.crm041-modal{position:fixed;inset:0;z-index:10080;display:none;background:rgba(2,4,7,.82);backdrop-filter:blur(12px);padding:18px}.crm041-modal.open{display:flex;align-items:center;justify-content:center}.crm041-shell{width:min(1380px,100%);max-height:94vh;overflow:auto;border:1px solid rgba(215,181,109,.24);border-radius:26px;background:linear-gradient(145deg,#0a0d12,#11151c 58%,#080a0e);box-shadow:0 45px 150px rgba(0,0,0,.78)}.crm041-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:23px 24px;border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:3;background:rgba(10,13,18,.94);backdrop-filter:blur(16px)}.crm041-head-title{font-size:25px;font-weight:1000;color:#fff;margin-top:4px}.crm041-head-sub{font-size:10px;color:#7e8794;margin-top:5px}.crm041-head-actions{display:flex;gap:8px}.crm041-head button{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);color:#dfe5ed;border-radius:10px;padding:9px 11px;font-size:9px;font-weight:950}.crm041-head button:hover{border-color:rgba(215,181,109,.3)}
+.crm041-body{padding:20px}.crm041-kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.crm041-kpi{min-height:100px;padding:15px;border:1px solid rgba(255,255,255,.075);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));position:relative;overflow:hidden}.crm041-kpi:after{content:"";position:absolute;right:-28px;bottom:-32px;width:90px;height:90px;border-radius:50%;background:rgba(215,181,109,.06)}.crm041-kpi-label{font-size:8px;letter-spacing:.1em;color:#808a98;font-weight:950}.crm041-kpi-value{font-size:29px;font-weight:1000;color:#fff;margin-top:13px;line-height:1}.crm041-kpi small{display:block;margin-top:7px;color:#6e7784;font-size:8px}.crm041-kpi.gold .crm041-kpi-value{color:#e2c26e}.crm041-kpi.red .crm041-kpi-value{color:#ff7777}.crm041-kpi.green .crm041-kpi-value{color:#72e2a1}.crm041-kpi.blue .crm041-kpi-value{color:#70b5ff}
+.crm041-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}.crm041-card{border:1px solid rgba(255,255,255,.075);border-radius:18px;background:rgba(255,255,255,.018);overflow:hidden}.crm041-card-head{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.crm041-card-title{font-size:11px;font-weight:1000;color:#fff}.crm041-card-sub{font-size:8px;color:#707a88;margin-top:4px}.crm041-card-body{padding:15px 17px}.crm041-funnel{display:grid;gap:9px}.crm041-funnel-row{display:grid;grid-template-columns:105px 1fr 48px;align-items:center;gap:10px}.crm041-funnel-label{font-size:8px;color:#89929e;font-weight:900;text-transform:uppercase}.crm041-funnel-track{height:10px;background:#20252d;border-radius:20px;overflow:hidden}.crm041-funnel-track i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#d8b65b,#5da7ff)}.crm041-funnel-value{text-align:right;font-size:11px;color:#fff;font-weight:1000}.crm041-action-list{display:grid;gap:8px}.crm041-action{display:flex;gap:10px;align-items:center;padding:10px 11px;border-radius:12px;border:1px solid rgba(255,255,255,.065);background:rgba(0,0,0,.16);cursor:pointer}.crm041-action:hover{border-color:rgba(215,181,109,.3)}.crm041-action-icon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(215,181,109,.07);border:1px solid rgba(215,181,109,.13);font-size:13px}.crm041-action strong{display:block;font-size:9px;color:#fff}.crm041-action span{display:block;font-size:8px;color:#747e8c;margin-top:3px}.crm041-action b{margin-left:auto;font-size:12px;color:#fff}.crm041-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.crm041-mini{padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.018)}.crm041-mini span{display:block;font-size:8px;color:#747e8c}.crm041-mini b{display:block;font-size:20px;color:#fff;margin-top:7px}.crm041-bars{display:grid;gap:8px}.crm041-bar-row{display:grid;grid-template-columns:92px 1fr 36px;align-items:center;gap:8px}.crm041-bar-row span{font-size:8px;color:#8a94a1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crm041-bar{height:7px;background:#20252d;border-radius:10px;overflow:hidden}.crm041-bar i{display:block;height:100%;background:linear-gradient(90deg,#5da7ff,#d8b65b);border-radius:10px}.crm041-bar-row b{font-size:9px;color:#fff;text-align:right}.crm041-hot-list{display:grid;gap:7px}.crm041-hot-row{display:flex;justify-content:space-between;gap:12px;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.14);cursor:pointer}.crm041-hot-row strong{font-size:9px;color:#fff}.crm041-hot-row span{display:block;color:#727c89;font-size:8px;margin-top:3px}.crm041-hot-row b{font-size:8px;color:#e2c26e;white-space:nowrap}.crm041-empty{padding:18px;text-align:center;color:#717b88;font-size:9px;border:1px dashed rgba(255,255,255,.08);border-radius:12px}
+@media(max-width:1100px){.crm041-kpis{grid-template-columns:repeat(4,1fr)}.crm041-grid{grid-template-columns:1fr}.crm041-launcher{align-items:flex-start;flex-direction:column}.crm041-primary{width:100%}}
+@media(max-width:650px){.crm041-modal{padding:7px}.crm041-shell{max-height:97vh;border-radius:18px}.crm041-head{padding:17px;flex-direction:column}.crm041-head-actions{width:100%}.crm041-head button{flex:1}.crm041-body{padding:10px}.crm041-kpis{grid-template-columns:repeat(2,1fr)}.crm041-funnel-row{grid-template-columns:80px 1fr 35px}.crm041-bar-row{grid-template-columns:75px 1fr 28px}}
+
 /* =====================================================
    ALPHA CRM — AGENDA DE ENTREVISTAS
 ===================================================== */
@@ -2328,6 +2341,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
                   <span id="alphaLoggedName">ALPHA</span> · <span id="alphaLoggedEmail">carregando...</span> <span id="alphaLastSync" class="alpha-sync-time">· última leitura: —</span></div>
       <div class="alpha-quickbar" aria-label="Atalhos do Command Center">
         <button type="button" onclick="loadCandidates()">↻ ATUALIZAR</button>
+        <button type="button" onclick="openDashboard041()">📊 DASHBOARD</button>
         <button type="button" onclick="alphaJump('alphaKanban')">🐺 KANBAN</button>
         <button type="button" onclick="openAgenda040()">🎯 AGENDA 2.0</button>
         <button type="button" class="alpha-history-open" onclick="openHistory038Modal()">🧠 HISTÓRICO <span id="alphaHistoryQuickCount">0</span></button>
@@ -2372,6 +2386,41 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
     </div>
   </section>
 
+  <!-- CRM 041 — DASHBOARD EXECUTIVO -->
+  <section class="crm041-launcher" id="alphaDashboard041">
+    <div class="crm041-launcher-main">
+      <div class="crm041-kicker">CRM 041 // EXECUTIVE INTELLIGENCE</div>
+      <div class="crm041-title">📊 Dashboard Executivo</div>
+      <div class="crm041-sub">Uma visão de comando da operação: funil, produtividade, entrevistas, tarefas e prioridades que pedem ação.</div>
+      <div class="crm041-live" id="crm041LauncherStats"></div>
+    </div>
+    <div class="crm041-launcher-actions"><button type="button" class="crm041-primary" onclick="openDashboard041()">📊 ABRIR DASHBOARD EXECUTIVO</button></div>
+  </section>
+
+  <div id="crm041Modal" class="crm041-modal" aria-hidden="true">
+    <div class="crm041-shell" role="dialog" aria-modal="true" aria-labelledby="crm041Title">
+      <div class="crm041-head">
+        <div><div class="crm041-kicker">ALPHA CRM 041 // EXECUTIVE COMMAND</div><div class="crm041-head-title" id="crm041Title">📊 Dashboard Executivo</div><div class="crm041-head-sub">Leitura em tempo real dos candidatos e das ações carregadas no CRM.</div></div>
+        <div class="crm041-head-actions"><button type="button" onclick="renderDashboard041()">↻ ATUALIZAR</button><button type="button" onclick="closeDashboard041()">✕ FECHAR</button></div>
+      </div>
+      <div class="crm041-body">
+        <div class="crm041-kpis" id="crm041Kpis"></div>
+        <div class="crm041-grid">
+          <section class="crm041-card"><div class="crm041-card-head"><div><div class="crm041-card-title">🐺 FUNIL DE RECRUTAMENTO</div><div class="crm041-card-sub">Distribuição atual por etapa do processo.</div></div></div><div class="crm041-card-body"><div class="crm041-funnel" id="crm041Funnel"></div></div></section>
+          <section class="crm041-card"><div class="crm041-card-head"><div><div class="crm041-card-title">🚨 CENTRAL DE AÇÃO</div><div class="crm041-card-sub">O que merece atenção primeiro.</div></div></div><div class="crm041-card-body"><div class="crm041-action-list" id="crm041Actions"></div></div></section>
+        </div>
+        <div class="crm041-grid">
+          <section class="crm041-card"><div class="crm041-card-head"><div><div class="crm041-card-title">🎯 ENTREVISTAS</div><div class="crm041-card-sub">Os quatro slots oficiais.</div></div></div><div class="crm041-card-body"><div class="crm041-mini-grid" id="crm041Interviews"></div></div></section>
+          <section class="crm041-card"><div class="crm041-card-head"><div><div class="crm041-card-title">🔥 TEMPERATURA</div><div class="crm041-card-sub">Distribuição dos candidatos ativos.</div></div></div><div class="crm041-card-body"><div class="crm041-bars" id="crm041Temperature"></div></div></section>
+        </div>
+        <div class="crm041-grid">
+          <section class="crm041-card"><div class="crm041-card-head"><div><div class="crm041-card-title">📋 TAREFAS</div><div class="crm041-card-sub">Pendências e execução do follow-up.</div></div></div><div class="crm041-card-body"><div class="crm041-bars" id="crm041Tasks"></div></div></section>
+          <section class="crm041-card"><div class="crm041-card-head"><div><div class="crm041-card-title">🔥 OPORTUNIDADES QUENTES</div><div class="crm041-card-sub">Candidatos quentes que podem exigir ação rápida.</div></div></div><div class="crm041-card-body"><div class="crm041-hot-list" id="crm041Hot"></div></div></section>
+        </div>
+        <section class="crm041-card" style="margin-top:14px"><div class="crm041-card-head"><div><div class="crm041-card-title">🧠 LEITURA EXECUTIVA</div><div class="crm041-card-sub">Resumo operacional calculado a partir dos dados atuais.</div></div></div><div class="crm041-card-body" id="crm041Summary"></div></section>
+      </div>
+    </div>
+  </div>
 
   <!-- ALPHA CRM 040 — AGENDA 2.0 -->
   <section class="crm040-launcher" id="alphaInterviewAgenda">
@@ -3183,6 +3232,76 @@ function focusAlphaPriority(){ searchInput.value=""; statusFilter.value="Novo"; 
 
 
 
+
+/* =====================================================
+   CRM 041 — DASHBOARD EXECUTIVO
+===================================================== */
+function crm041OpenCandidates(status){
+  closeDashboard041();
+  if(status){ statusFilter.value=status; searchInput.value=''; viewMode='active'; refreshViewMode(); }
+  document.getElementById('candidatesList')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function crm041Active(){ return activeCandidates(); }
+function crm041TaskStats(){
+  const now=new Date(), today=new Date(); today.setHours(0,0,0,0);
+  const end=new Date(today); end.setHours(23,59,59,999);
+  const pending=crm039Tasks.filter(t=>t.status==='Pendente');
+  const overdue=pending.filter(t=>t.proxima_acao_at && new Date(t.proxima_acao_at)<today).length;
+  const dueToday=pending.filter(t=>t.proxima_acao_at && new Date(t.proxima_acao_at)>=today && new Date(t.proxima_acao_at)<=end).length;
+  const noDate=pending.filter(t=>!t.proxima_acao_at).length;
+  const done=crm039Tasks.filter(t=>t.status==='Concluída').length;
+  return {pending:pending.length,overdue,dueToday,noDate,done,total:crm039Tasks.length};
+}
+function crm041RenderLauncher(){
+  const el=document.getElementById('crm041LauncherStats'); if(!el)return;
+  const a=crm041Active(), hot=a.filter(c=>String(c.prioridade||'Morno')==='Quente').length, ts=crm041TaskStats();
+  el.innerHTML=`<span>👥 <b>${a.length}</b> ativos</span><span>🔥 <b>${hot}</b> quentes</span><span>🔴 <b>${ts.overdue}</b> atrasadas</span><span>📅 <b>${a.filter(c=>c.entrevista_dia&&c.entrevista_horario).length}</b> entrevistas</span>`;
+}
+function crm041SetHTML(id,html){const e=document.getElementById(id);if(e)e.innerHTML=html;}
+function renderDashboard041(){
+  const a=crm041Active(), total=a.length, statuses=['Novo','Em análise','Entrevista','Aprovado','Reprovado'];
+  const countStatus=st=>a.filter(c=>(c.status||'Novo')===st).length;
+  const ts=crm041TaskStats(), hot=a.filter(c=>String(c.prioridade||'Morno')==='Quente').length, stale=alphaStaleCandidates().length;
+  const scheduled=a.filter(c=>c.entrevista_dia&&c.entrevista_horario), confirmed=scheduled.filter(c=>crm040Status(c)==='Confirmada').length, attended=scheduled.filter(c=>crm040Status(c)==='Compareceu').length;
+  const approved=countStatus('Aprovado'), interview=countStatus('Entrevista'), approvalRate=total?((approved/total)*100).toFixed(1):'0.0';
+  crm041SetHTML('crm041Kpis',[
+    ['👥','ATIVOS',total,'gold','fora da lixeira'],['🔥','QUENTES',hot,'red','prioridade máxima'],['🎯','ENTREVISTAS',scheduled.length,'blue','agendadas'],['✅','APROVADOS',approved,'green','no funil'],['📈','APROVAÇÃO',approvalRate+'%','','sobre ativos'],['🔴','ATRASADAS',ts.overdue,'red','tarefas'],['⚠️','SEM AÇÃO',a.filter(c=>!c.proxima_acao).length,'','precisam planejamento']
+  ].map(x=>`<div class="crm041-kpi ${x[3]||''}"><div class="crm041-kpi-label">${x[0]} ${x[1]}</div><div class="crm041-kpi-value">${x[2]}</div><small>${x[4]}</small></div>`).join(''));
+  const max=Math.max(1,...statuses.map(countStatus));
+  crm041SetHTML('crm041Funnel',statuses.map(st=>{const n=countStatus(st);return `<div class="crm041-funnel-row"><div class="crm041-funnel-label">${escapeHTML(st)}</div><div class="crm041-funnel-track"><i style="width:${Math.round(n/max*100)}%"></i></div><div class="crm041-funnel-value">${n}</div></div>`}).join(''));
+  const actions=[
+    ['🔴','Tarefas atrasadas',ts.overdue,'Abrir central de tarefas'],
+    ['🟡','Tarefas para hoje',ts.dueToday,'Acompanhar follow-up'],
+    ['🔥','Quentes',hot,'Atacar candidatos quentes'],
+    ['⚠️','Sem próxima ação',a.filter(c=>!c.proxima_acao).length,'Planejar próxima ação'],
+    ['📞','Sem contato >24h',stale,'Priorizar primeiro contato'],
+    ['📅','Entrevistas não confirmadas',scheduled.filter(c=>crm040Status(c)==='Agendada').length,'Confirmar presença']
+  ];
+  crm041SetHTML('crm041Actions',actions.map((x,i)=>`<div class="crm041-action" onclick="${i===5?'openAgenda040()':i===0||i===1?'openTasks039Center()':i===2?'crm041OpenCandidates(\'Novo\')':'crm041OpenCandidates()'}"><div class="crm041-action-icon">${x[0]}</div><div><strong>${x[1]}</strong><span>${x[3]}</span></div><b>${x[2]}</b></div>`).join(''));
+  const slots=crm040Slots();
+  crm041SetHTML('crm041Interviews',slots.map(s=>{const list=a.filter(c=>c.entrevista_dia===s.day&&c.entrevista_horario===s.time);return `<div class="crm041-mini"><span>${escapeHTML(s.day.replace('-feira',''))} · ${s.time}</span><b>${list.length}</b></div>`}).join(''));
+  const temps=['Quente','Morno','Frio'], tm= Math.max(1,...temps.map(x=>a.filter(c=>String(c.prioridade||'Morno')===x).length));
+  crm041SetHTML('crm041Temperature',temps.map(x=>{const n=a.filter(c=>String(c.prioridade||'Morno')===x).length;return `<div class="crm041-bar-row"><span>${x}</span><div class="crm041-bar"><i style="width:${Math.round(n/tm*100)}%"></i></div><b>${n}</b></div>`}).join(''));
+  const taskRows=[['Pendentes',ts.pending],['Atrasadas',ts.overdue],['Hoje',ts.dueToday],['Sem prazo',ts.noDate],['Concluídas',ts.done]], tmax=Math.max(1,...taskRows.map(x=>x[1]));
+  crm041SetHTML('crm041Tasks',taskRows.map(x=>`<div class="crm041-bar-row"><span>${x[0]}</span><div class="crm041-bar"><i style="width:${Math.round(x[1]/tmax*100)}%"></i></div><b>${x[1]}</b></div>`).join(''));
+  const hotList=a.filter(c=>String(c.prioridade||'Morno')==='Quente').sort((x,y)=>alphaAgeHours(y)-alphaAgeHours(x)).slice(0,8);
+  crm041SetHTML('crm041Hot',hotList.length?hotList.map(c=>`<div class="crm041-hot-row" onclick="openDetails('${escapeHTML(c.id)}')"><div><strong>${escapeHTML(c.nome_completo||'Candidato')}</strong><span>${escapeHTML(c.status||'Novo')} · ${escapeHTML(c.responsavel||'ALPHA')}</span></div><b>${c.proxima_acao?escapeHTML(c.proxima_acao):'SEM AÇÃO'}</b></div>`).join(''):'<div class="crm041-empty">Nenhum candidato quente no momento.</div>');
+  const noAction=a.filter(c=>!c.proxima_acao).length;
+  const summary=[];
+  if(total===0) summary.push('Ainda não há candidatos ativos carregados.');
+  else summary.push(`A operação possui <b>${total}</b> candidato(s) ativo(s), com <b>${hot}</b> quente(s) e <b>${scheduled.length}</b> entrevista(s) agendada(s).`);
+  if(ts.overdue) summary.push(`Existem <b>${ts.overdue}</b> tarefa(s) atrasada(s); essa é a primeira fila recomendada para ação.`);
+  if(noAction) summary.push(`<b>${noAction}</b> candidato(s) estão sem próxima ação definida.`);
+  if(scheduled.length) summary.push(`Das entrevistas agendadas, <b>${confirmed}</b> estão confirmadas e <b>${attended}</b> registradas como comparecimento.`);
+  if(!ts.overdue&&!noAction) summary.push('Não há alerta crítico de follow-up no momento. Continue movimentando o funil e mantendo as próximas ações preenchidas.');
+  crm041SetHTML('crm041Summary',summary.map((x,i)=>`<div class="alpha-alert"><div class="alpha-alert-icon">${i===0?'🧠':i===1?'⚡':'🎯'}</div><div>${x}</div></div>`).join(''));
+  crm041RenderLauncher();
+}
+function openDashboard041(){const m=document.getElementById('crm041Modal');if(!m)return;m.classList.add('open');m.setAttribute('aria-hidden','false');renderDashboard041();document.body.style.overflow='hidden';}
+function closeDashboard041(){const m=document.getElementById('crm041Modal');if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+window.addEventListener('keydown',e=>{if(e.key==='Escape')closeDashboard041();});
+document.addEventListener('click',e=>{const m=document.getElementById('crm041Modal');if(m&&e.target===m)closeDashboard041();});
+
 /* =====================================================
    ALPHA CRM — AGENDA
 ===================================================== */
@@ -3522,7 +3641,7 @@ async function loadTasks039(){
     const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas?select=*&order=created_at.desc&limit=1000`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Accept':'application/json'},cache:'no-store'});
     const raw=await response.text(); let payload; try{payload=raw?JSON.parse(raw):[];}catch{payload=[];}
     if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${payload?.message||payload?.details||raw||'Não foi possível carregar as tarefas.'}`);
-    crm039Tasks=Array.isArray(payload)?payload:[]; renderTasks039(); renderKanban();
+    crm039Tasks=Array.isArray(payload)?payload:[]; renderTasks039(); renderKanban(); crm041RenderLauncher();
     if(document.getElementById('detailsOverlay')?.style.display==='flex'){
       const id=window.afincoOpenCandidateId; if(id) renderCandidateTasks039(id);
     }
@@ -3571,7 +3690,7 @@ async function toggleTask039(id){
   try{
     const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({status,completed_at:done?null:now,updated_at:now})});
     const raw=await response.text(); if(!response.ok) throw new Error(raw);
-    task.status=status; task.completed_at=done?null:now; task.updated_at=now; renderTasks039(); renderKanban(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); await loadHistory038(); showToast(done?'✓ Tarefa reaberta.':'✓ Tarefa concluída e registrada no histórico.');
+    task.status=status; task.completed_at=done?null:now; task.updated_at=now; renderTasks039(); renderKanban(); crm041RenderLauncher(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); await loadHistory038(); showToast(done?'✓ Tarefa reaberta.':'✓ Tarefa concluída e registrada no histórico.');
   }catch(error){console.error('CRM039 TOGGLE TASK ERROR:',error);showToast('Não foi possível atualizar a tarefa.');}
 }
 function syncTask039Launcher(){
@@ -5279,7 +5398,7 @@ async function saveCRM037(id){
     });
     if(!response.ok) throw new Error(await response.text());
     Object.assign(candidate,{prioridade,responsavel,proxima_acao,proxima_acao_at,ultima_atividade_at:now});
-    renderCRM037();renderKanban();applyFilters();updateDashboard();updateAnalytics();
+    renderCRM037();renderKanban();applyFilters();updateDashboard();updateAnalytics();crm041RenderLauncher();
     await refreshHistory038(id);
     showToast('✓ CRM atualizado e salvo no Supabase.');
     openDetails(id);
