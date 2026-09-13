@@ -2179,6 +2179,14 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 .crm-week-focus div{display:flex;flex-direction:column;gap:3px}.crm-week-focus b{color:#d9c27a;font-size:11px;letter-spacing:.12em}.crm-week-focus span{color:#8e99a8;font-size:11px;font-weight:700}.crm-week-focus>strong{font-size:11px;letter-spacing:.12em;color:#fff;border:1px solid rgba(112,181,255,.2);padding:8px 10px;border-radius:999px;background:rgba(29,92,168,.12)}
 @media(max-width:700px){.crm-week-focus{align-items:flex-start;flex-direction:column}.crm-week-focus>strong{align-self:flex-start}}
 </style>
+<!-- 045 PWA: instalação como aplicativo -->
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#07090d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ALPHA CRM">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 </head>
 
 
@@ -6340,6 +6348,17 @@ async function toggleTeam043(email,ativo){
     </div>
   </div>
 </div>
+
+<script>
+/* 045 PWA — registro seguro do Service Worker */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(function(err){
+      console.warn('PWA não registrada:', err);
+    });
+  });
+}
+</script>
 
 </body>
 
