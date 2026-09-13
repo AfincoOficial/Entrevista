@@ -34,20 +34,40 @@ jobs:
         with:
           gradle-version: '8.7'
 
-      - name: Corrigir configuração Android
+      - name: Corrigir configuração do Android
         working-directory: android-project/APK-ANDROID
         run: |
-          cat >> build.gradle <<'EOF'
+          cat > app/build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application'
+              id 'org.jetbrains.kotlin.android'
+          }
 
-          allprojects {
-              tasks.withType(JavaCompile).configureEach {
-                  options.release = 17
+          android {
+              namespace 'com.afinco.alphacrm'
+              compileSdk 35
+
+              defaultConfig {
+                  applicationId 'com.afinco.alphacrm'
+                  minSdk 23
+                  targetSdk 35
+                  versionCode 47
+                  versionName '1.0.47'
               }
+
+              compileOptions {
+                  sourceCompatibility JavaVersion.VERSION_17
+                  targetCompatibility JavaVersion.VERSION_17
+              }
+          }
+
+          kotlin {
+              jvmToolchain(17)
           }
           EOF
 
-          echo "=== CONFIGURAÇÃO FINAL ==="
-          cat build.gradle
+          echo "=== BUILD.GRADLE CORRIGIDO ==="
+          cat app/build.gradle
 
       - name: Gerar APK
         working-directory: android-project/APK-ANDROID
