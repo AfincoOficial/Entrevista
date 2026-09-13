@@ -2346,6 +2346,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
         <button type="button" onclick="openAgenda040()">🎯 AGENDA 2.0</button>
         <button type="button" class="alpha-history-open" onclick="openHistory038Modal()">🧠 HISTÓRICO <span id="alphaHistoryQuickCount">0</span></button>
         <button type="button" onclick="alphaJump('candidatesList')">👥 CANDIDATOS</button>
+        <button type="button" onclick="openTeam043()">👑 EQUIPE</button>
       </div></div>
     </div>
 
@@ -3156,6 +3157,23 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 .crm042-section{scroll-margin-top:18px}.crm042-section.flash{animation:crm042Flash .9s ease}@keyframes crm042Flash{0%{box-shadow:0 0 0 0 rgba(214,178,91,.4)}100%{box-shadow:0 0 0 14px rgba(214,178,91,0)}}
 @media(max-width:760px){.crm042-hero{grid-template-columns:auto 1fr}.crm042-actions{grid-column:1/-1;justify-content:flex-start}.crm042-summary{grid-template-columns:repeat(2,1fr)}.crm042-name{font-size:21px}}
 
+
+/* =====================================================
+   ALPHA CRM 043 — EQUIPE + PERMISSÕES
+===================================================== */
+.crm043-overlay{position:fixed;inset:0;background:rgba(2,5,10,.78);backdrop-filter:blur(14px);z-index:99990;display:none;padding:24px;overflow:auto}
+.crm043-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.crm043-modal{width:min(1180px,100%);margin:2vh auto;background:linear-gradient(145deg,#101722,#080c12);border:1px solid rgba(255,215,90,.25);border-radius:26px;box-shadow:0 30px 100px rgba(0,0,0,.55);overflow:hidden;color:#fff}
+.crm043-head{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:24px 26px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(90deg,rgba(212,167,55,.12),rgba(45,160,255,.08))}
+.crm043-kicker{font-size:11px;letter-spacing:.18em;font-weight:900;opacity:.65}.crm043-title{font-size:28px;font-weight:1000;margin-top:5px}.crm043-sub{font-size:13px;opacity:.62;margin-top:4px}
+.crm043-close{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;border-radius:12px;width:42px;height:42px;font-size:20px;cursor:pointer}
+.crm043-body{padding:24px}.crm043-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}.crm043-kpi{padding:16px;border:1px solid rgba(255,255,255,.08);border-radius:17px;background:rgba(255,255,255,.035)}.crm043-kpi b{display:block;font-size:25px}.crm043-kpi span{font-size:11px;opacity:.58;text-transform:uppercase;letter-spacing:.08em}
+.crm043-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.crm043-toolbar button,.crm043-form button{border:1px solid rgba(255,215,90,.25);background:rgba(255,215,90,.08);color:#fff;padding:11px 15px;border-radius:12px;font-weight:900;cursor:pointer}.crm043-toolbar button.active{background:rgba(255,215,90,.2);border-color:rgba(255,215,90,.5)}
+.crm043-list{display:grid;gap:10px}.crm043-row{display:grid;grid-template-columns:1.5fr 1.3fr .9fr .8fr auto;gap:12px;align-items:center;padding:15px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.025)}.crm043-user strong{display:block}.crm043-user small{opacity:.5}.crm043-role{font-size:12px;font-weight:900}.crm043-role.super{color:#f5c94a}.crm043-role.gestor{color:#64b5ff}.crm043-role.recrutador{color:#77e0a1}.crm043-role.viewer{color:#aaa}
+.crm043-pill{display:inline-flex;padding:6px 9px;border-radius:999px;font-size:10px;font-weight:1000;text-transform:uppercase}.crm043-pill.on{background:rgba(71,211,123,.12);color:#72e39a}.crm043-pill.off{background:rgba(255,82,82,.12);color:#ff8888}.crm043-actions{display:flex;gap:7px;justify-content:flex-end}.crm043-actions button{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;border-radius:9px;padding:8px 10px;cursor:pointer}
+.crm043-form{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;margin:0 0 18px;padding:15px;border:1px dashed rgba(255,215,90,.22);border-radius:16px;background:rgba(255,215,90,.025)}.crm043-form input,.crm043-form select{width:100%;box-sizing:border-box;background:#0c121b;border:1px solid rgba(255,255,255,.1);color:#fff;border-radius:10px;padding:11px}.crm043-note{font-size:11px;opacity:.5;margin:-8px 0 14px}.crm043-empty{padding:28px;text-align:center;opacity:.55;border:1px dashed rgba(255,255,255,.1);border-radius:16px}
+@media(max-width:900px){.crm043-grid{grid-template-columns:repeat(2,1fr)}.crm043-row{grid-template-columns:1fr 1fr}.crm043-actions{justify-content:flex-start}.crm043-form{grid-template-columns:1fr 1fr}.crm043-form button{grid-column:1/-1}.crm043-overlay{padding:10px}}
+@media(max-width:560px){.crm043-grid{grid-template-columns:1fr 1fr}.crm043-title{font-size:22px}.crm043-body{padding:15px}.crm043-row{grid-template-columns:1fr}.crm043-form{grid-template-columns:1fr}.crm043-actions{flex-wrap:wrap}}
 </style>
 
 <script>
@@ -4225,7 +4243,7 @@ async function loadAdminProfile(){
     // Por isso, não filtramos o e-mail na URL: evitamos falhas de autorização/encoding
     // e deixamos o Supabase fazer a validação de identidade pela sessão.
     const profileResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/admin_users?select=nome,email,ativo&limit=1`,
+      `${SUPABASE_URL}/rest/v1/admin_users?select=nome,email,ativo,role&limit=1`,
       {
         method:"GET",
         cache:"no-store",
@@ -4251,6 +4269,7 @@ async function loadAdminProfile(){
       throw new Error(`Administrador não autorizado: ${afincoAdminEmailValue || "e-mail não identificado"}.`);
     }
     afincoAdminName = profile.nome || "ALPHA";
+    window.afincoAdminRole = profile.role || "Super Admin";
 
     const emailEl=document.getElementById("alphaLoggedEmail");
     if(emailEl) emailEl.textContent=afincoAdminEmailValue;
@@ -6152,7 +6171,93 @@ bindCRM039();
 
 initialize();
 
+
+/* =====================================================
+   CRM 043 — EQUIPE + PERMISSÕES
+===================================================== */
+let team043Users=[]; let team043Filter='Todos';
+function role043(){return String(window.afincoAdminRole||'Super Admin');}
+function canManageTeam043(){return role043()==='Super Admin';}
+function openTeam043(){
+  const ov=document.getElementById('crm043Overlay'); if(!ov)return;
+  if(!canManageTeam043()){alert('Seu perfil não possui permissão para gerenciar usuários.');return;}
+  ov.classList.add('open'); document.body.style.overflow='hidden'; loadTeam043();
+}
+function closeTeam043(){const ov=document.getElementById('crm043Overlay');if(ov)ov.classList.remove('open');document.body.style.overflow='';}
+function filterTeam043(f,btn){team043Filter=f;document.querySelectorAll('.crm043-toolbar button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderTeam043();}
+async function loadTeam043(){
+  const list=document.getElementById('crm043List'); if(!list)return;
+  list.innerHTML='<div class="crm043-empty">Sincronizando equipe...</div>';
+  try{
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?select=nome,email,ativo,role,auth_user_id,created_at&order=created_at.asc`,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,Accept:'application/json'},cache:'no-store'});
+    const raw=await r.text(); let data=[]; try{data=raw?JSON.parse(raw):[]}catch{}
+    if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);
+    team043Users=Array.isArray(data)?data:[]; renderTeam043();
+  }catch(e){console.error('CRM043 TEAM',e);list.innerHTML=`<div class="crm043-empty">Não foi possível carregar a equipe.<br><small>${escapeHTML(e.message||'Erro')}</small></div>`;}
+}
+function renderTeam043(){
+  const list=document.getElementById('crm043List'); if(!list)return;
+  const filtered=team043Users.filter(u=>team043Filter==='Todos'||(team043Filter==='Ativos'?u.ativo===true:String(u.role||'Recrutador')===team043Filter));
+  const total=team043Users.length, active=team043Users.filter(u=>u.ativo).length;
+  document.getElementById('crm043Total').textContent=total;document.getElementById('crm043Active').textContent=active;document.getElementById('crm043Managers').textContent=team043Users.filter(u=>['Super Admin','Gestor'].includes(u.role)).length;document.getElementById('crm043Recruiters').textContent=team043Users.filter(u=>u.role==='Recrutador').length;
+  if(!filtered.length){list.innerHTML='<div class="crm043-empty">Nenhum usuário neste filtro.</div>';return;}
+  list.innerHTML=filtered.map((u,i)=>{const role=u.role||'Recrutador';const cls=role==='Super Admin'?'super':role==='Gestor'?'gestor':role==='Visualização'?'viewer':'recrutador';return `<div class="crm043-row"><div class="crm043-user"><strong>${escapeHTML(u.nome||'Sem nome')}</strong><small>${escapeHTML(u.email||'')}</small></div><div class="crm043-role ${cls}">${escapeHTML(role)}</div><div><span class="crm043-pill ${u.ativo?'on':'off'}">${u.ativo?'ATIVO':'INATIVO'}</span></div><div><small>${u.auth_user_id?'🔗 AUTH VINCULADO':'⏳ AGUARDANDO AUTH'}</small></div><div class="crm043-actions"><button onclick="editTeam043('${escapeHTML(u.email||'')}')">✏️ EDITAR</button>${u.email!==afincoAdminEmailValue?`<button onclick="toggleTeam043('${escapeHTML(u.email||'')}',${!u.ativo})">${u.ativo?'⛔':'✅'} ${u.ativo?'DESATIVAR':'ATIVAR'}</button>`:''}</div></div>`}).join('');
+  const wrap=document.getElementById('crm043AddWrap');if(wrap)wrap.style.display=canManageTeam043()?'block':'none';
+}
+async function saveTeamUser043(){
+  if(!canManageTeam043())return;
+  const nome=(document.getElementById('crm043Name')?.value||'').trim(),email=(document.getElementById('crm043Email')?.value||'').trim().toLowerCase(),role=document.getElementById('crm043Role')?.value||'Recrutador',auth_user_id=(document.getElementById('crm043AuthId')?.value||'').trim()||null;
+  if(!nome||!email){alert('Informe nome e e-mail.');return;}
+  try{const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users`,{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({nome,email,ativo:true,role,auth_user_id})});const raw=await r.text();if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);document.getElementById('crm043Name').value='';document.getElementById('crm043Email').value='';document.getElementById('crm043AuthId').value='';await loadTeam043();alert('Usuário autorizado com sucesso.');}catch(e){alert('Não foi possível autorizar: '+(e.message||'Erro'));}
+}
+async function editTeam043(email){
+  if(!canManageTeam043())return; const u=team043Users.find(x=>String(x.email).toLowerCase()===String(email).toLowerCase());if(!u)return;
+  const nome=prompt('Nome do usuário:',u.nome||'');if(nome===null)return;const roles=['Super Admin','Gestor','Recrutador','Visualização'];const role=prompt('Perfil (Super Admin / Gestor / Recrutador / Visualização):',u.role||'Recrutador');if(role===null)return;if(!roles.includes(role)){alert('Perfil inválido.');return;}
+  try{const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?email=eq.${encodeURIComponent(email)}`,{method:'PATCH',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({nome,role})});const raw=await r.text();if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);await loadTeam043();}catch(e){alert('Erro ao atualizar usuário: '+(e.message||'Erro'));}
+}
+async function toggleTeam043(email,ativo){
+  if(!canManageTeam043())return; if(!confirm(`${ativo?'Ativar':'Desativar'} este usuário?`))return;
+  try{const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?email=eq.${encodeURIComponent(email)}`,{method:'PATCH',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({ativo})});const raw=await r.text();if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);await loadTeam043();}catch(e){alert('Erro ao alterar acesso: '+(e.message||'Erro'));}
+}
+
 </script>
+
+
+<!-- ALPHA CRM 043 — EQUIPE + PERMISSÕES -->
+<div class="crm043-overlay" id="crm043Overlay" onclick="if(event.target===this)closeTeam043()">
+  <div class="crm043-modal" role="dialog" aria-modal="true" aria-labelledby="crm043Title">
+    <div class="crm043-head">
+      <div><div class="crm043-kicker">ALPHA CRM 043 // ACCESS COMMAND</div><div class="crm043-title" id="crm043Title">👑 Equipe & Permissões</div><div class="crm043-sub">Controle de acesso operacional. Senhas continuam protegidas pelo Supabase Auth.</div></div>
+      <button class="crm043-close" type="button" onclick="closeTeam043()">×</button>
+    </div>
+    <div class="crm043-body">
+      <div class="crm043-grid">
+        <div class="crm043-kpi"><b id="crm043Total">0</b><span>Usuários cadastrados</span></div>
+        <div class="crm043-kpi"><b id="crm043Active">0</b><span>Ativos</span></div>
+        <div class="crm043-kpi"><b id="crm043Managers">0</b><span>Gestão</span></div>
+        <div class="crm043-kpi"><b id="crm043Recruiters">0</b><span>Recrutadores</span></div>
+      </div>
+      <div id="crm043AddWrap" style="display:none">
+        <div class="crm043-form">
+          <input id="crm043Name" placeholder="Nome do usuário">
+          <input id="crm043Email" type="email" placeholder="E-mail usado no login">
+          <select id="crm043Role"><option>Recrutador</option><option>Gestor</option><option>Visualização</option><option>Super Admin</option></select>
+          <input id="crm043AuthId" placeholder="Auth User ID (opcional)">
+          <button type="button" onclick="saveTeamUser043()">＋ AUTORIZAR</button>
+        </div>
+        <div class="crm043-note">Primeiro crie a conta de login em Supabase Auth. Depois autorize o mesmo e-mail aqui. Nunca coloque senha neste painel.</div>
+      </div>
+      <div class="crm043-toolbar">
+        <button class="active" type="button" onclick="filterTeam043('Todos',this)">TODOS</button>
+        <button type="button" onclick="filterTeam043('Ativos',this)">ATIVOS</button>
+        <button type="button" onclick="filterTeam043('Super Admin',this)">SUPER ADMIN</button>
+        <button type="button" onclick="filterTeam043('Gestor',this)">GESTORES</button>
+        <button type="button" onclick="filterTeam043('Recrutador',this)">RECRUTADORES</button>
+      </div>
+      <div class="crm043-list" id="crm043List"><div class="crm043-empty">Carregando equipe...</div></div>
+    </div>
+  </div>
+</div>
 
 </body>
 
