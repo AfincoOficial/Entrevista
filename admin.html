@@ -2431,33 +2431,53 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 
 
   <!-- ALPHA CRM 039 — TAREFAS + FOLLOW-UP -->
-  <section class="crm039-section" id="alphaTasks">
-    <div class="crm039-head">
-      <div>
-        <div class="crm039-kicker">CRM 039 // ACTION ENGINE</div>
-        <div class="crm039-title">🎯 Tarefas & Follow-up</div>
-        <div class="crm039-sub">Transforme cada candidato em uma próxima ação clara. Prazo, responsável, prioridade e conclusão ficam registrados no CRM.</div>
+  <section class="crm039-launcher" id="alphaTasks">
+    <div class="crm039-launcher-main">
+      <div class="crm039-kicker">CRM 039 // ACTION ENGINE</div>
+      <div class="crm039-launcher-title">🎯 Tarefas & Follow-up</div>
+      <div class="crm039-launcher-sub">Sua central de próximas ações. As tarefas continuam conectadas ao Kanban, às fichas e ao histórico.</div>
+      <div class="crm039-launcher-stats">
+        <span>🔴 <b id="crm039LauncherOverdue">0</b> atrasadas</span>
+        <span>🟡 <b id="crm039LauncherToday">0</b> hoje</span>
+        <span>🔵 <b id="crm039LauncherPending">0</b> pendentes</span>
+        <span>🟢 <b id="crm039LauncherDone">0</b> concluídas</span>
       </div>
-      <div class="crm039-head-actions">
-        <div class="crm039-live"><i></i><span id="crm039TotalLabel">0 tarefas</span></div>
-        <button type="button" class="crm039-new" onclick="openTask039Modal()">＋ NOVA TAREFA</button>
-      </div>
     </div>
-    <div class="crm039-kpis">
-      <div class="crm039-kpi crm039-red"><span>🔴 ATRASADAS</span><b id="crm039Overdue">0</b><small>prazo vencido</small></div>
-      <div class="crm039-kpi crm039-gold"><span>🟡 HOJE</span><b id="crm039Today">0</b><small>ação para hoje</small></div>
-      <div class="crm039-kpi crm039-blue"><span>🔵 PENDENTES</span><b id="crm039Pending">0</b><small>em aberto</small></div>
-      <div class="crm039-kpi crm039-green"><span>🟢 CONCLUÍDAS</span><b id="crm039Done">0</b><small>finalizadas</small></div>
+    <div class="crm039-launcher-actions">
+      <button type="button" class="crm039-new" onclick="openTasks039Center()">🎯 ABRIR CENTRAL</button>
+      <button type="button" class="crm039-new crm039-new-secondary" onclick="openTask039Modal()">＋ NOVA TAREFA</button>
     </div>
-    <div class="crm039-toolbar">
-      <button type="button" class="crm039-filter active" data-crm039-filter="Todas">Todas</button>
-      <button type="button" class="crm039-filter" data-crm039-filter="Atrasadas">🔴 Atrasadas</button>
-      <button type="button" class="crm039-filter" data-crm039-filter="Hoje">🟡 Hoje</button>
-      <button type="button" class="crm039-filter" data-crm039-filter="Pendentes">🔵 Pendentes</button>
-      <button type="button" class="crm039-filter" data-crm039-filter="Concluídas">🟢 Concluídas</button>
-    </div>
-    <div id="crm039TaskList" class="crm039-list"></div>
   </section>
+
+  <div id="crm039Center" class="crm039-center" aria-hidden="true">
+    <div class="crm039-center-shell" role="dialog" aria-modal="true" aria-labelledby="crm039CenterTitle">
+      <div class="crm039-center-head">
+        <div>
+          <div class="crm039-kicker">ALPHA CRM 039 // TASK COMMAND</div>
+          <div class="crm039-center-title" id="crm039CenterTitle">🎯 Central de Tarefas</div>
+          <div class="crm039-center-sub">Todas as próximas ações da equipe em um único lugar.</div>
+        </div>
+        <div class="crm039-center-head-actions">
+          <button type="button" class="crm039-new" onclick="openTask039Modal()">＋ NOVA TAREFA</button>
+          <button type="button" class="crm039-modal-close" onclick="closeTasks039Center()">✕ FECHAR</button>
+        </div>
+      </div>
+      <div class="crm039-kpis">
+        <div class="crm039-kpi crm039-red"><span>🔴 ATRASADAS</span><b id="crm039Overdue">0</b><small>prazo vencido</small></div>
+        <div class="crm039-kpi crm039-gold"><span>🟡 HOJE</span><b id="crm039Today">0</b><small>ação para hoje</small></div>
+        <div class="crm039-kpi crm039-blue"><span>🔵 PENDENTES</span><b id="crm039Pending">0</b><small>em aberto</small></div>
+        <div class="crm039-kpi crm039-green"><span>🟢 CONCLUÍDAS</span><b id="crm039Done">0</b><small>finalizadas</small></div>
+      </div>
+      <div class="crm039-toolbar">
+        <button type="button" class="crm039-filter active" data-crm039-filter="Todas">Todas</button>
+        <button type="button" class="crm039-filter" data-crm039-filter="Atrasadas">🔴 Atrasadas</button>
+        <button type="button" class="crm039-filter" data-crm039-filter="Hoje">🟡 Hoje</button>
+        <button type="button" class="crm039-filter" data-crm039-filter="Pendentes">🔵 Pendentes</button>
+        <button type="button" class="crm039-filter" data-crm039-filter="Concluídas">🟢 Concluídas</button>
+      </div>
+      <div id="crm039TaskList" class="crm039-list"></div>
+    </div>
+  </div>
 
   <!-- DASHBOARD -->
 
@@ -3032,6 +3052,14 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 .crm039-modal{position:fixed;inset:0;z-index:9999;background:rgba(3,5,9,.82);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:18px}.crm039-modal.open{display:flex}.crm039-modal-shell{width:min(760px,100%);max-height:90vh;overflow:auto;border:1px solid rgba(214,178,91,.28);border-radius:24px;background:linear-gradient(145deg,#0e131b,#07090e);box-shadow:0 30px 100px rgba(0,0,0,.6)}.crm039-modal-head{display:flex;justify-content:space-between;gap:15px;padding:22px;border-bottom:1px solid rgba(255,255,255,.07)}.crm039-modal-kicker{font-size:9px;letter-spacing:2px;color:#d6b25b;font-weight:950}.crm039-modal-title{font-size:22px;font-weight:950;margin-top:4px}.crm039-modal-sub{font-size:10px;color:#8792a1;margin-top:5px}.crm039-modal-close{border:1px solid rgba(255,255,255,.12);background:#11161e;color:#fff;border-radius:10px;padding:9px 11px;font:inherit;font-weight:900;cursor:pointer;height:max-content}.crm039-form{padding:20px}.crm039-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.crm039-field{display:flex;flex-direction:column;gap:6px}.crm039-field.full{grid-column:1/-1}.crm039-field label{font-size:9px;color:#98a3b0;text-transform:uppercase;letter-spacing:.7px;font-weight:950}.crm039-field input,.crm039-field select,.crm039-field textarea{width:100%;box-sizing:border-box;background:#0c1118;border:1px solid rgba(255,255,255,.10);color:#eef2f6;border-radius:10px;padding:11px;font:inherit;font-size:11px;outline:none}.crm039-field input:focus,.crm039-field select:focus,.crm039-field textarea:focus{border-color:rgba(214,178,91,.45)}.crm039-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.crm039-cancel{border:1px solid rgba(255,255,255,.10);background:#10151c;color:#aeb8c5;border-radius:10px;padding:10px 14px;font:inherit;font-weight:900}.crm039-save{border:1px solid rgba(214,178,91,.35);background:linear-gradient(135deg,rgba(214,178,91,.18),rgba(214,178,91,.06));color:#f4d991;border-radius:10px;padding:10px 15px;font:inherit;font-weight:950;cursor:pointer}.crm039-detail-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.crm039-detail-head b{display:block;font-size:11px}.crm039-detail-head span{display:block;color:#7f8a99;font-size:9px;margin-top:3px}.crm039-detail-list{display:grid;gap:7px}.crm039-detail-list .crm039-task{grid-template-columns:30px 1fr auto;padding:10px}.crm039-detail-empty{padding:18px;border:1px dashed rgba(255,255,255,.09);border-radius:12px;color:#7f8a99;font-size:10px;text-align:center}
 @media(max-width:800px){.crm039-kpis{grid-template-columns:repeat(2,1fr)}.crm039-head{align-items:flex-start;flex-direction:column}.crm039-head-actions{width:100%;justify-content:space-between}.crm039-task{grid-template-columns:30px 1fr}.crm039-task-actions{grid-column:2}.crm039-task-actions button{width:100%}.crm039-form-grid{grid-template-columns:1fr}.crm039-field.full{grid-column:auto}}
 @media(max-width:520px){.crm039-kpis{grid-template-columns:1fr 1fr}.crm039-modal{padding:0}.crm039-modal-shell{width:100%;height:100%;max-height:none;border-radius:0}.crm039-modal-head{padding:18px}.crm039-form{padding:16px}.crm039-title{font-size:21px}}
+
+/* =====================================================
+   CRM 039.2 — CENTRAL DE TAREFAS EXTERNA
+===================================================== */
+.crm039-launcher{margin:0 0 22px;border:1px solid rgba(214,178,91,.18);border-radius:22px;padding:20px 22px;background:linear-gradient(135deg,rgba(214,178,91,.055),rgba(65,130,255,.035),rgba(255,255,255,.012));display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 14px 45px rgba(0,0,0,.18)}
+.crm039-launcher-main{min-width:0}.crm039-launcher-title{font-size:21px;font-weight:950;margin-top:4px}.crm039-launcher-sub{font-size:10px;color:#8792a1;margin-top:5px;line-height:1.45;max-width:760px}.crm039-launcher-stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:11px;color:#788493;font-size:9px;font-weight:850}.crm039-launcher-stats b{color:#e5ebf2}.crm039-launcher-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.crm039-new-secondary{background:#0c1118;color:#c9d0d9;border-color:rgba(255,255,255,.10)}
+.crm039-center{position:fixed;inset:0;z-index:9996;background:rgba(3,5,9,.84);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:18px}.crm039-center.open{display:flex}.crm039-center-shell{width:min(1180px,100%);height:min(900px,94vh);overflow:hidden;border:1px solid rgba(214,178,91,.25);border-radius:26px;background:linear-gradient(145deg,#0d121a,#07090e);box-shadow:0 35px 120px rgba(0,0,0,.65);display:flex;flex-direction:column}.crm039-center-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(90deg,rgba(214,178,91,.07),rgba(65,130,255,.035),transparent)}.crm039-center-title{font-size:25px;font-weight:950;margin-top:4px}.crm039-center-sub{font-size:10px;color:#8792a1;margin-top:5px}.crm039-center-head-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.crm039-center .crm039-kpis{flex:none}.crm039-center .crm039-list{overflow:auto;min-height:0;flex:1}.crm039-center .crm039-task{margin-right:2px}
+@media(max-width:800px){.crm039-launcher{align-items:flex-start;flex-direction:column}.crm039-launcher-actions{width:100%;justify-content:flex-start}.crm039-launcher-actions button{flex:1}.crm039-center{padding:0}.crm039-center-shell{width:100%;height:100%;border-radius:0}.crm039-center-head{padding:17px;align-items:flex-start;flex-direction:column}.crm039-center-head-actions{width:100%;justify-content:stretch}.crm039-center-head-actions button{flex:1}.crm039-center-title{font-size:21px}.crm039-center .crm039-kpis{grid-template-columns:repeat(2,1fr)}}
 </style>
 
 <script>
@@ -3361,7 +3389,7 @@ function renderTasks039(){
   const today=pending.filter(crm039IsToday).length;
   const done=crm039Tasks.filter(t=>t.status==='Concluída').length;
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-  set('crm039Overdue',overdue);set('crm039Today',today);set('crm039Pending',pending.length);set('crm039Done',done);set('crm039TotalLabel',`${crm039Tasks.length} tarefa${crm039Tasks.length===1?'':'s'}`);
+  set('crm039Overdue',overdue);set('crm039Today',today);set('crm039Pending',pending.length);set('crm039Done',done);set('crm039TotalLabel',`${crm039Tasks.length} tarefa${crm039Tasks.length===1?'':'s'}`); syncTask039Launcher();
   document.querySelectorAll('[data-crm039-filter]').forEach(b=>b.classList.toggle('active',b.dataset.crm039Filter===crm039Filter));
   const visible=crm039Tasks.filter(crm039Matches).sort(crm039Sort);
   list.innerHTML=visible.length?visible.map(t=>crm039RenderTask(t)).join(''):`<div class="crm039-empty"><div>🎯</div><strong>Nenhuma tarefa nesta visão.</strong><span>Crie uma nova tarefa para colocar o próximo passo em movimento.</span></div>`;
@@ -3393,7 +3421,7 @@ function openTask039Modal(candidateId='', taskId=''){
   const btn=document.getElementById('crm039SubmitTaskBtn'); if(btn) btn.textContent=task?'💾 Salvar alteração':'🔥 Criar tarefa';
   modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
 }
-function closeTask039Modal(){ const modal=document.getElementById('crm039TaskModal'); if(!modal)return; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); if(!document.getElementById('detailsOverlay')?.style.display || document.getElementById('detailsOverlay').style.display!=='flex') document.body.style.overflow=''; }
+function closeTask039Modal(){ const modal=document.getElementById('crm039TaskModal'); if(!modal)return; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); const centerOpen=document.getElementById('crm039Center')?.classList.contains('open'); const detailsOpen=document.getElementById('detailsOverlay')?.style.display==='flex'; if(!centerOpen && !detailsOpen) document.body.style.overflow=''; }
 async function loadTasks039(){
   if(!accessToken) return;
   try{
@@ -3452,10 +3480,33 @@ async function toggleTask039(id){
     task.status=status; task.completed_at=done?null:now; task.updated_at=now; renderTasks039(); renderKanban(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); await loadHistory038(); showToast(done?'✓ Tarefa reaberta.':'✓ Tarefa concluída e registrada no histórico.');
   }catch(error){console.error('CRM039 TOGGLE TASK ERROR:',error);showToast('Não foi possível atualizar a tarefa.');}
 }
+function syncTask039Launcher(){
+  const pending=crm039Tasks.filter(t=>t.status==='Pendente');
+  const overdue=pending.filter(crm039IsOverdue).length;
+  const today=pending.filter(crm039IsToday).length;
+  const done=crm039Tasks.filter(t=>t.status==='Concluída').length;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  set('crm039LauncherOverdue',overdue);set('crm039LauncherToday',today);set('crm039LauncherPending',pending.length);set('crm039LauncherDone',done);
+}
+function openTasks039Center(){
+  const modal=document.getElementById('crm039Center'); if(!modal)return;
+  renderTasks039(); syncTask039Launcher();
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+}
+function closeTasks039Center(){
+  const modal=document.getElementById('crm039Center'); if(!modal)return;
+  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+  const taskOpen=document.getElementById('crm039TaskModal')?.classList.contains('open');
+  const detailsOpen=document.getElementById('detailsOverlay')?.style.display==='flex';
+  if(!taskOpen && !detailsOpen) document.body.style.overflow='';
+}
+
 function bindCRM039(){
   document.querySelectorAll('[data-crm039-filter]').forEach(btn=>btn.addEventListener('click',()=>{crm039Filter=btn.dataset.crm039Filter;renderTasks039();}));
   document.getElementById('crm039TaskForm')?.addEventListener('submit',saveTask039);
   document.getElementById('crm039TaskModal')?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeTask039Modal();});
+  document.getElementById('crm039Center')?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeTasks039Center();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('crm039TaskModal')?.classList.contains('open')) closeTask039Modal(); else if(document.getElementById('crm039Center')?.classList.contains('open')) closeTasks039Center();}});
 }
 
 /* =====================================================
