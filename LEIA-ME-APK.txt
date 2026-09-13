@@ -1,0 +1,34 @@
+ALPHA CRM — BACKUP 048
+
+Base: BACKUP 047
+Versão do aplicativo: 1.0.48
+VersionCode: 48
+
+OBJETIVO DESTA VERSÃO
+Correção/robustez da geração do APK pelo GitHub Actions. O projeto do CRM e o endereço do WebView foram preservados.
+
+CONFIGURAÇÃO
+- Android Gradle Plugin: 8.6.1
+- Kotlin: 2.0.21
+- Gradle usado no GitHub Actions: 8.7
+- Java: 17
+- compileSdk: 35
+- minSdk: 23
+- targetSdk: 35
+
+ENDEREÇO DO ALPHA CRM
+https://afincooficial.github.io/Entrevista/admin.html
+
+ALTERAÇÕES NO 048
+1. VersionCode alterado de 47 para 48.
+2. VersionName alterado de 1.0.47 para 1.0.48.
+3. Adicionado workflow .github/workflows/build-apk.yml.
+4. O workflow usa setup-java@v5 e Gradle 8.7.
+5. O workflow desativa o cache do Gradle e limpa caches locais antes do build para evitar o problema de transformação do AGP visto no log.
+6. O build executa clean assembleDebug com --refresh-dependencies.
+7. O APK final é publicado como artefato do GitHub Actions.
+
+IMPORTANTE
+Não foram alterados MainActivity.kt, Manifest, URL do CRM, ícone ou tema.
+
+O APK compilado não está dentro deste backup; ele é gerado pelo GitHub Actions.
