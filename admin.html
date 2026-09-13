@@ -4243,7 +4243,7 @@ async function loadAdminProfile(){
     // Por isso, não filtramos o e-mail na URL: evitamos falhas de autorização/encoding
     // e deixamos o Supabase fazer a validação de identidade pela sessão.
     const profileResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/admin_users?select=nome,email,ativo,role&limit=1`,
+      `${SUPABASE_URL}/rest/v1/admin_users?select=nome,email,ativo,role&email=eq.${encodeURIComponent(afincoAdminEmailValue)}&limit=1`,
       {
         method:"GET",
         cache:"no-store",
