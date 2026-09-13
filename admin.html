@@ -366,6 +366,12 @@ button:disabled{
   white-space:nowrap;
 }
 
+/* 044.1 — e-mail oculto dentro do painel para uma interface mais limpa */
+.admin-email{
+  display:none !important;
+}
+
+
 
 .logout{
 
@@ -2279,6 +2285,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
       <div
         id="adminEmail"
         class="admin-email"
+        aria-hidden="true"
       ></div>
 
 
@@ -2338,7 +2345,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
       <h2 class="alpha-title">COMMAND <span>CENTER</span></h2>
       <div class="alpha-sub">Seu centro de comando para recrutamento. Dados, prioridades, performance e inteligência operacional em uma única visão.</div>
       <div class="alpha-admin">🐺 <b>ALPHA</b> <small>· ADMINISTRADOR AUTORIZADO ·</small> <span id="alphaConnectionState" class="connection-state">CONECTANDO...</span>
-                  <span id="alphaLoggedName">ALPHA</span> · <span id="alphaLoggedEmail">carregando...</span> <span id="alphaLastSync" class="alpha-sync-time">· última leitura: —</span></div>
+                  <span id="alphaLoggedName">ALPHA</span> · <span id="alphaLoggedRole">SUPER ADMIN</span> <span id="alphaLastSync" class="alpha-sync-time">· última leitura: —</span></div>
       <div class="alpha-quickbar" aria-label="Atalhos do Command Center">
         <button type="button" onclick="loadCandidates()">↻ ATUALIZAR</button>
         <button type="button" onclick="openDashboard041()">📊 DASHBOARD</button>
@@ -3174,6 +3181,40 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 .crm043-form{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;margin:0 0 18px;padding:15px;border:1px dashed rgba(255,215,90,.22);border-radius:16px;background:rgba(255,215,90,.025)}.crm043-form input,.crm043-form select{width:100%;box-sizing:border-box;background:#0c121b;border:1px solid rgba(255,255,255,.1);color:#fff;border-radius:10px;padding:11px}.crm043-note{font-size:11px;opacity:.5;margin:-8px 0 14px}.crm043-empty{padding:28px;text-align:center;opacity:.55;border:1px dashed rgba(255,255,255,.1);border-radius:16px}
 @media(max-width:900px){.crm043-grid{grid-template-columns:repeat(2,1fr)}.crm043-row{grid-template-columns:1fr 1fr}.crm043-actions{justify-content:flex-start}.crm043-form{grid-template-columns:1fr 1fr}.crm043-form button{grid-column:1/-1}.crm043-overlay{padding:10px}}
 @media(max-width:560px){.crm043-grid{grid-template-columns:1fr 1fr}.crm043-title{font-size:22px}.crm043-body{padding:15px}.crm043-row{grid-template-columns:1fr}.crm043-form{grid-template-columns:1fr}.crm043-actions{flex-wrap:wrap}}
+/* =====================================================
+   CRM 044 — MOBILE CRM PRO
+===================================================== */
+.crm044-mobilebar{display:none}
+.crm044-mobile-actions{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}
+.crm044-mobile-actions button{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);color:#fff;border-radius:10px;padding:9px 11px;font-size:10px;font-weight:900;cursor:pointer}
+.crm044-mobile-actions button:hover{border-color:rgba(255,215,90,.42);color:#f5d37d}
+.crm044-role-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.crm044-role-actions button{font-size:9px!important;padding:7px 9px!important}
+.crm044-promote{border-color:rgba(119,224,161,.25)!important;color:#9aefba!important}
+.crm044-demote{border-color:rgba(255,136,136,.22)!important;color:#ff9b9b!important}
+.crm044-nameedit{border-color:rgba(255,215,90,.25)!important;color:#f5d37d!important}
+.crm044-roleflow{font-size:9px;opacity:.52;margin-top:5px}
+@media(max-width:700px){
+ .crm043-overlay{padding:0}
+ .crm043-modal{width:100%;min-height:100vh;margin:0;border-radius:0;border-left:0;border-right:0}
+ .crm043-head{position:sticky;top:0;z-index:5;padding:17px 15px}
+ .crm043-sub{font-size:11px;line-height:1.4}
+ .crm043-close{width:38px;height:38px;flex:0 0 38px}
+ .crm043-body{padding:12px}
+ .crm043-grid{gap:8px;margin-bottom:12px}
+ .crm043-kpi{padding:12px;border-radius:13px}
+ .crm043-kpi b{font-size:20px}
+ .crm043-kpi span{font-size:9px}
+ .crm044-mobilebar{display:flex;position:sticky;top:72px;z-index:4;gap:7px;overflow:auto;padding:8px 0 10px;background:linear-gradient(180deg,#101722 80%,rgba(16,23,34,0))}
+ .crm044-mobilebar button{flex:0 0 auto;border:1px solid rgba(255,215,90,.20);background:rgba(255,215,90,.07);color:#fff;border-radius:10px;padding:9px 12px;font-size:9px;font-weight:900}
+ .crm043-toolbar{overflow:auto;flex-wrap:nowrap;padding-bottom:3px}
+ .crm043-toolbar button{flex:0 0 auto;font-size:9px;padding:9px 11px}
+ .crm043-row{gap:9px;padding:13px;border-radius:14px}
+ .crm043-actions{gap:6px}
+ .crm043-actions button{font-size:9px;padding:8px 9px}
+ .crm044-role-actions button{min-height:34px}
+}
+
 </style>
 
 <script>
@@ -3249,7 +3290,8 @@ function renderAlphaCommand(){
   const active=activeCandidates(), stale=alphaStaleCandidates(), hot=alphaHotCandidates();
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   set("alphaTotal",active.length); set("alphaNew",active.filter(c=>(c.status||"Novo")==="Novo").length); set("alphaInterview",active.filter(c=>(c.status||"")==="Entrevista").length); set("alphaApproved",active.filter(c=>(c.status||"")==="Aprovado").length); set("alphaPriority",stale.length+hot.length); set("alphaStale",stale.length);
-  const e=document.getElementById("alphaLoggedEmail"); if(e)e.textContent=window.afincoAdminEmail||afincoAdminEmailValue||adminEmail.textContent||"ADMIN";
+  const n=document.getElementById("alphaLoggedName"); if(n)n.textContent=window.afincoAdminName||afincoAdminName||"ALPHA";
+  const r=document.getElementById("alphaLoggedRole"); if(r)r.textContent=(window.afincoAdminRole||"Super Admin").toUpperCase();
   renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts();
 }
 function alphaJump(id){
@@ -4271,10 +4313,10 @@ async function loadAdminProfile(){
     afincoAdminName = profile.nome || "ALPHA";
     window.afincoAdminRole = profile.role || "Super Admin";
 
-    const emailEl=document.getElementById("alphaLoggedEmail");
-    if(emailEl) emailEl.textContent=afincoAdminEmailValue;
     const nameEl=document.getElementById("alphaLoggedName");
     if(nameEl) nameEl.textContent=afincoAdminName;
+    const roleEl=document.getElementById("alphaLoggedRole");
+    if(roleEl) roleEl.textContent=String(window.afincoAdminRole||"Super Admin").toUpperCase();
     window.afincoAdminEmail=afincoAdminEmailValue;
     window.afincoAdminName=afincoAdminName;
     return true;
@@ -6201,7 +6243,7 @@ function renderTeam043(){
   const total=team043Users.length, active=team043Users.filter(u=>u.ativo).length;
   document.getElementById('crm043Total').textContent=total;document.getElementById('crm043Active').textContent=active;document.getElementById('crm043Managers').textContent=team043Users.filter(u=>['Super Admin','Gestor'].includes(u.role)).length;document.getElementById('crm043Recruiters').textContent=team043Users.filter(u=>u.role==='Recrutador').length;
   if(!filtered.length){list.innerHTML='<div class="crm043-empty">Nenhum usuário neste filtro.</div>';return;}
-  list.innerHTML=filtered.map((u,i)=>{const role=u.role||'Recrutador';const cls=role==='Super Admin'?'super':role==='Gestor'?'gestor':role==='Visualização'?'viewer':'recrutador';return `<div class="crm043-row"><div class="crm043-user"><strong>${escapeHTML(u.nome||'Sem nome')}</strong><small>${escapeHTML(u.email||'')}</small></div><div class="crm043-role ${cls}">${escapeHTML(role)}</div><div><span class="crm043-pill ${u.ativo?'on':'off'}">${u.ativo?'ATIVO':'INATIVO'}</span></div><div><small>${u.auth_user_id?'🔗 AUTH VINCULADO':'⏳ AGUARDANDO AUTH'}</small></div><div class="crm043-actions"><button onclick="editTeam043('${escapeHTML(u.email||'')}')">✏️ EDITAR</button>${u.email!==afincoAdminEmailValue?`<button onclick="toggleTeam043('${escapeHTML(u.email||'')}',${!u.ativo})">${u.ativo?'⛔':'✅'} ${u.ativo?'DESATIVAR':'ATIVAR'}</button>`:''}</div></div>`}).join('');
+  list.innerHTML=filtered.map((u,i)=>{const role=u.role||'Recrutador';const cls=role==='Super Admin'?'super':role==='Gestor'?'gestor':role==='Visualização'?'viewer':'recrutador';return `<div class="crm043-row"><div class="crm043-user"><strong>${escapeHTML(u.nome||'Sem nome')}</strong><small>${escapeHTML(u.email||'')}</small></div><div class="crm043-role ${cls}">${escapeHTML(role)}</div><div><span class="crm043-pill ${u.ativo?'on':'off'}">${u.ativo?'ATIVO':'INATIVO'}</span></div><div><small>${u.auth_user_id?'🔗 AUTH VINCULADO':'⏳ AGUARDANDO AUTH'}</small></div><div class="crm043-actions"><button class="crm044-nameedit" onclick="editTeam043('${escapeHTML(u.email||'')}')">✏️ NOME</button>${u.email!==afincoAdminEmailValue?`<button onclick="toggleTeam043('${escapeHTML(u.email||'')}',${!u.ativo})">${u.ativo?'⛔':'✅'} ${u.ativo?'DESATIVAR':'ATIVAR'}</button>`:''}<div class="crm044-role-actions">${role!=='Super Admin'?`<button class="crm044-promote" onclick="promoteTeam044('${escapeHTML(u.email||'')}')">⬆️ PROMOVER</button>`:''}${role!=='Visualização'&&u.email!==afincoAdminEmailValue?`<button class="crm044-demote" onclick="demoteTeam044('${escapeHTML(u.email||'')}')">⬇️ REBAIXAR</button>`:''}</div></div></div>`}).join('');
   const wrap=document.getElementById('crm043AddWrap');if(wrap)wrap.style.display=canManageTeam043()?'block':'none';
 }
 async function saveTeamUser043(){
@@ -6211,10 +6253,49 @@ async function saveTeamUser043(){
   try{const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users`,{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({nome,email,ativo:true,role,auth_user_id})});const raw=await r.text();if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);document.getElementById('crm043Name').value='';document.getElementById('crm043Email').value='';document.getElementById('crm043AuthId').value='';await loadTeam043();alert('Usuário autorizado com sucesso.');}catch(e){alert('Não foi possível autorizar: '+(e.message||'Erro'));}
 }
 async function editTeam043(email){
-  if(!canManageTeam043())return; const u=team043Users.find(x=>String(x.email).toLowerCase()===String(email).toLowerCase());if(!u)return;
-  const nome=prompt('Nome do usuário:',u.nome||'');if(nome===null)return;const roles=['Super Admin','Gestor','Recrutador','Visualização'];const role=prompt('Perfil (Super Admin / Gestor / Recrutador / Visualização):',u.role||'Recrutador');if(role===null)return;if(!roles.includes(role)){alert('Perfil inválido.');return;}
-  try{const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?email=eq.${encodeURIComponent(email)}`,{method:'PATCH',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({nome,role})});const raw=await r.text();if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);await loadTeam043();}catch(e){alert('Erro ao atualizar usuário: '+(e.message||'Erro'));}
+  if(!canManageTeam043())return;
+  const u=team043Users.find(x=>String(x.email).toLowerCase()===String(email).toLowerCase());
+  if(!u)return;
+  const nome=prompt('EDITAR NOME DO USUÁRIO:',u.nome||'');
+  if(nome===null)return;
+  const novoNome=nome.trim();
+  if(!novoNome){alert('O nome não pode ficar vazio.');return;}
+  try{
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?email=eq.${encodeURIComponent(email)}`,{
+      method:'PATCH',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=minimal'},
+      body:JSON.stringify({nome:novoNome})
+    });
+    const raw=await r.text();
+    if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);
+    await loadTeam043();
+  }catch(e){alert('Erro ao editar nome: '+(e.message||'Erro'));}
 }
+const TEAM044_ROLE_ORDER=['Visualização','Recrutador','Gestor','Super Admin'];
+async function changeRoleTeam044(email,direction){
+  if(!canManageTeam043())return;
+  const u=team043Users.find(x=>String(x.email).toLowerCase()===String(email).toLowerCase());
+  if(!u)return;
+  if(String(email).toLowerCase()===String(afincoAdminEmailValue).toLowerCase()){alert('O ALPHA é o Super Admin principal e não pode ser rebaixado por aqui.');return;}
+  const current=u.role||'Recrutador';
+  const index=TEAM044_ROLE_ORDER.indexOf(current);
+  const targetIndex=index+direction;
+  if(index<0||targetIndex<0||targetIndex>=TEAM044_ROLE_ORDER.length){alert(direction>0?'Este membro já está no maior cargo permitido.':'Este membro já está no menor cargo permitido.');return;}
+  const target=TEAM044_ROLE_ORDER[targetIndex];
+  const action=direction>0?'PROMOVER':'REBAIXAR';
+  if(!confirm(`${action} ${u.nome||u.email}?\n\n${current} → ${target}\n\nEssa alteração muda as permissões do membro no CRM.`))return;
+  try{
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?email=eq.${encodeURIComponent(email)}`,{
+      method:'PATCH',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=minimal'},
+      body:JSON.stringify({role:target})
+    });
+    const raw=await r.text();
+    if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);
+    await loadTeam043();
+    alert(`Cargo atualizado: ${current} → ${target}`);
+  }catch(e){alert('Erro ao alterar cargo: '+(e.message||'Erro'));}
+}
+function promoteTeam044(email){return changeRoleTeam044(email,1)}
+function demoteTeam044(email){return changeRoleTeam044(email,-1)}
 async function toggleTeam043(email,ativo){
   if(!canManageTeam043())return; if(!confirm(`${ativo?'Ativar':'Desativar'} este usuário?`))return;
   try{const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?email=eq.${encodeURIComponent(email)}`,{method:'PATCH',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({ativo})});const raw=await r.text();if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);await loadTeam043();}catch(e){alert('Erro ao alterar acesso: '+(e.message||'Erro'));}
@@ -6231,6 +6312,7 @@ async function toggleTeam043(email,ativo){
       <button class="crm043-close" type="button" onclick="closeTeam043()">×</button>
     </div>
     <div class="crm043-body">
+      <div class="crm044-mobilebar"><button type="button" onclick="loadTeam043()">↻ ATUALIZAR</button><button type="button" onclick="filterTeam043('Ativos',document.querySelector('.crm043-toolbar button:nth-child(2)'))">🟢 ATIVOS</button><button type="button" onclick="filterTeam043('Todos',document.querySelector('.crm043-toolbar button:first-child'))">👑 EQUIPE</button></div>
       <div class="crm043-grid">
         <div class="crm043-kpi"><b id="crm043Total">0</b><span>Usuários cadastrados</span></div>
         <div class="crm043-kpi"><b id="crm043Active">0</b><span>Ativos</span></div>
