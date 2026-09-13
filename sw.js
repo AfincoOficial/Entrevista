@@ -1,10 +1,11 @@
-const CACHE_NAME = 'afinco-alpha-crm-045-v1';
+const CACHE_NAME = 'afinco-alpha-crm-047-v1';
+const BASE = '/Entrevista/';
 const APP_SHELL = [
-  './',
-  './admin.html',
-  './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  BASE,
+  BASE + 'admin.html',
+  BASE + 'manifest.webmanifest',
+  BASE + 'icons/icon-192.png',
+  BASE + 'icons/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -26,21 +27,19 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
+  if (url.origin !== self.location.origin || !url.pathname.startsWith(BASE)) return;
 
-  // HTML: rede sempre primeiro para evitar painel desatualizado.
-  if (request.mode === 'navigate' || url.pathname.endsWith('/admin.html')) {
+  if (request.mode === 'navigate' || url.pathname === BASE + 'admin.html') {
     event.respondWith(
       fetch(request).then(response => {
         const copy = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
         return response;
-      }).catch(() => caches.match(request).then(cached => cached || caches.match('./admin.html')))
+      }).catch(() => caches.match(request).then(cached => cached || caches.match(BASE + 'admin.html')))
     );
     return;
   }
 
-  // Arquivos estáticos: cache primeiro, com atualização em segundo plano.
   event.respondWith(
     caches.match(request).then(cached => {
       const network = fetch(request).then(response => {
