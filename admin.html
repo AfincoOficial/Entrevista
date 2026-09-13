@@ -6360,44 +6360,100 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<!-- 045.1 — BOTÃO DE INSTALAÇÃO DO ALPHA CRM -->
+<!-- 046 — INSTALAÇÃO PWA CORRIGIDA -->
 <style>
   .alpha-install-wrap{max-width:760px;margin:42px auto 28px;padding:22px 18px;text-align:center}
-  .alpha-install-btn{appearance:none;border:1px solid rgba(245,196,66,.5);background:linear-gradient(135deg,#161616,#292929);color:#fff;padding:15px 24px;border-radius:14px;font-weight:900;letter-spacing:.4px;font-size:14px;cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,.22)}
-  .alpha-install-btn:hover{transform:translateY(-1px)}
-  .alpha-install-help{margin:10px 0 0;color:#8f96a3;font-size:12px;line-height:1.45}
+  .alpha-install-btn{appearance:none;border:1px solid rgba(245,196,66,.55);background:linear-gradient(135deg,#161616,#292929);color:#fff;padding:15px 24px;border-radius:14px;font-weight:900;letter-spacing:.4px;font-size:14px;cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,.22)}
+  .alpha-install-btn:active{transform:scale(.98)}
+  .alpha-install-help{margin:12px auto 0;max-width:620px;color:#c6cbd4;font-size:13px;line-height:1.55;min-height:42px}
+  .alpha-install-status{display:none;margin:14px auto 0;max-width:620px;padding:14px 16px;border:1px solid rgba(245,196,66,.28);border-radius:12px;background:rgba(255,255,255,.035);color:#fff;font-size:13px;line-height:1.55;text-align:left}
+  .alpha-install-status.show{display:block}
 </style>
 <div class="alpha-install-wrap" id="alphaInstallWrap">
   <button class="alpha-install-btn" id="alphaInstallBtn" type="button">📲 INSTALAR ALPHA CRM</button>
-  <div class="alpha-install-help" id="alphaInstallHelp">Instale o ALPHA CRM na tela inicial para usar como aplicativo.</div>
+  <div class="alpha-install-help" id="alphaInstallHelp">Instale o ALPHA CRM na tela inicial para abrir como aplicativo.</div>
+  <div class="alpha-install-status" id="alphaInstallStatus" role="status" aria-live="polite"></div>
 </div>
 <script>
 (function(){
-  let alphaInstallPrompt=null;
-  const btn=document.getElementById('alphaInstallBtn');
-  const help=document.getElementById('alphaInstallHelp');
-  if(!btn)return;
-  window.addEventListener('beforeinstallprompt',function(event){
-    event.preventDefault();
-    alphaInstallPrompt=event;
-  });
-  btn.addEventListener('click',async function(){
-    if(alphaInstallPrompt){
-      alphaInstallPrompt.prompt();
-      try{await alphaInstallPrompt.userChoice;}catch(e){}
-      alphaInstallPrompt=null;
-      return;
+  function initAlphaInstall(){
+    const btn=document.getElementById('alphaInstallBtn');
+    const help=document.getElementById('alphaInstallHelp');
+    const status=document.getElementById('alphaInstallStatus');
+    if(!btn || !help || !status) return;
+
+    let deferredPrompt=null;
+
+    function showStatus(message){
+      status.textContent=message;
+      status.classList.add('show');
     }
-    if(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches){
-      help.textContent='O ALPHA CRM já está instalado neste aparelho.';
-      return;
+
+    function isStandalone(){
+      return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
     }
-    help.textContent='No Chrome: abra o menu ⋮ e procure “Instalar aplicativo” ou “Adicionar à tela inicial”.';
-  });
-  window.addEventListener('appinstalled',function(){
-    help.textContent='ALPHA CRM instalado com sucesso. 👑';
-    btn.textContent='✅ ALPHA CRM INSTALADO';
-  });
+
+    function isIOS(){
+      return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
+    window.addEventListener('beforeinstallprompt',function(event){
+      event.preventDefault();
+      deferredPrompt=event;
+      btn.textContent='📲 INSTALAR ALPHA CRM';
+      help.textContent='O navegador liberou a instalação. Toque no botão para instalar.';
+    });
+
+    window.addEventListener('appinstalled',function(){
+      deferredPrompt=null;
+      btn.textContent='✅ ALPHA CRM INSTALADO';
+      help.textContent='O ALPHA CRM foi instalado neste aparelho.';
+      showStatus('Instalação concluída. Agora você pode abrir o ALPHA CRM pela tela inicial do celular.');
+    });
+
+    btn.addEventListener('click',function(){
+      if(isStandalone()){
+        showStatus('O ALPHA CRM já está instalado e aberto como aplicativo neste aparelho.');
+        btn.textContent='✅ ALPHA CRM INSTALADO';
+        return;
+      }
+
+      if(deferredPrompt){
+        try{
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function(result){
+            if(result && result.outcome === 'accepted'){
+              help.textContent='A instalação foi iniciada. Aguarde a confirmação do navegador.';
+            }else{
+              help.textContent='A instalação foi cancelada. Você pode tocar novamente quando quiser.';
+            }
+            deferredPrompt=null;
+          }).catch(function(){
+            deferredPrompt=null;
+            showStatus('O navegador não abriu a instalação automática. Use o menu ⋮ do Chrome e escolha “Instalar aplicativo” ou “Adicionar à tela inicial”.');
+          });
+        }catch(e){
+          deferredPrompt=null;
+          showStatus('O navegador não abriu a instalação automática. Use o menu ⋮ do Chrome e escolha “Instalar aplicativo” ou “Adicionar à tela inicial”.');
+        }
+        return;
+      }
+
+      if(isIOS()){
+        showStatus('No iPhone/iPad: toque em Compartilhar (□↑) no Safari e escolha “Adicionar à Tela de Início”. O iPhone não permite que este botão abra a instalação automaticamente.');
+        return;
+      }
+
+      showStatus('No Android/Chrome, toque no menu ⋮ do Chrome e procure “Instalar aplicativo” ou “Adicionar à tela inicial”. Se essas opções ainda não aparecerem, o navegador ainda não liberou a instalação automática desta página.');
+      help.textContent='O botão está funcionando. O navegador é quem precisa liberar a instalação.';
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded',initAlphaInstall);
+  }else{
+    initAlphaInstall();
+  }
 })();
 </script>
 
