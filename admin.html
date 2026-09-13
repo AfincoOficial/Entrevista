@@ -2072,7 +2072,7 @@ main.container > section.dashboard, main.container > section.analytics{display:n
 .kanban-card-age{font-size:8px;color:#687485;margin-top:2px}
 .kanban-card-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
 .kanban-chip{padding:5px 7px;border-radius:7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.055);color:#aeb8c7;font-size:8px;font-weight:800}
-.kanban-card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.055)}
+.kanban-card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.055)}.kanban-task-summary{margin-top:8px;padding:8px 9px;border:1px solid rgba(214,178,91,.14);border-radius:10px;background:rgba(214,178,91,.045);display:flex;align-items:flex-start;gap:7px;min-width:0}.kanban-task-summary .kts-icon{font-size:12px;line-height:1.2}.kanban-task-summary .kts-main{min-width:0;flex:1}.kanban-task-summary strong{display:block;font-size:9px;color:#f0d58c;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kanban-task-summary span{display:block;margin-top:3px;font-size:8px;color:#7f8b9a;line-height:1.35}.kanban-task-summary.overdue{border-color:rgba(255,93,103,.25);background:rgba(255,93,103,.06)}.kanban-task-summary.overdue strong{color:#ff8991}.kanban-task-summary.done{opacity:.7;border-color:rgba(99,223,155,.14)}.kanban-task-summary.done strong{color:#8be5b1}.kanban-task-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.kanban-task-badge{font-size:8px;font-weight:950;border-radius:999px;padding:4px 6px;border:1px solid rgba(255,255,255,.08);background:#0c1118;color:#aeb8c5}.kanban-task-badge.hot{color:#ff8b92;border-color:rgba(255,100,110,.2)}.kanban-task-badge.today{color:#f4d991;border-color:rgba(214,178,91,.2)}.kanban-task-badge.ok{color:#83e2aa;border-color:rgba(99,223,155,.18)}
 .kanban-open{border:0;background:none;color:#7fb0ff;font-size:8px;font-weight:950;cursor:pointer;padding:0}
 .kanban-empty{display:grid;place-items:center;min-height:180px;text-align:center;color:#4f5b6a;font-size:9px;line-height:1.5;border:1px dashed rgba(255,255,255,.055);border-radius:11px;padding:20px}
 .kanban-empty b{display:block;color:#727e8e;margin-bottom:3px}
@@ -2918,6 +2918,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
       <button type="button" class="crm039-modal-close" onclick="closeTask039Modal()">✕ FECHAR</button>
     </div>
     <form id="crm039TaskForm" class="crm039-form">
+      <input type="hidden" id="crm039TaskId" value="">
       <div class="crm039-form-grid">
         <div class="crm039-field full"><label>Candidato</label><select id="crm039Candidate" required></select></div>
         <div class="crm039-field"><label>Ação</label><select id="crm039Title" required>
@@ -2936,7 +2937,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
         <div class="crm039-field"><label>Prazo</label><input id="crm039DueAt" type="datetime-local"></div>
         <div class="crm039-field full"><label>Observação da tarefa</label><textarea id="crm039Description" rows="4" placeholder="Ex.: ligar após 18h, confirmar interesse, cobrar documento..."></textarea></div>
       </div>
-      <div class="crm039-form-actions"><button type="button" class="crm039-cancel" onclick="closeTask039Modal()">Cancelar</button><button type="submit" class="crm039-save">🔥 Criar tarefa</button></div>
+      <div class="crm039-form-actions"><button type="button" class="crm039-cancel" onclick="closeTask039Modal()">Cancelar</button><button type="submit" class="crm039-save" id="crm039SubmitTaskBtn">🔥 Criar tarefa</button></div>
     </form>
   </div>
 </div>
@@ -3242,6 +3243,7 @@ function renderKanban(){
               <span class="kanban-chip">${c.entrevista_dia&&c.entrevista_horario?"🎯":"○"} ${escapeHTML(interview)}</span>
             </div>
             <div class="crm037-cardline">${crm037FormatAction(c)}<span class="kanban-chip">👤 ${escapeHTML(c.responsavel||"ALPHA")}</span></div>
+            ${crm039RenderKanbanTaskSummary(c.id)}
             <div class="kanban-card-footer"><span class="kanban-chip">${escapeHTML(c.telefone||"Sem telefone")}</span><button class="kanban-open" type="button" data-open-id="${escapeHTML(c.id)}">VER FICHA →</button></div>
           </article>`;
         }).join("") : `<div class="kanban-empty"><div><b>${col.icon} ${escapeHTML(col.label)}</b>Arraste candidatos para esta etapa.</div></div>`}
@@ -3315,6 +3317,25 @@ function crm039Sort(a,b){
   return new Date(b.created_at||0)-new Date(a.created_at||0);
 }
 function crm039PriorityClass(p){ return p==='Alta'?'alta':p==='Baixa'?'baixa':'media'; }
+function crm039CandidateTasks(id){
+  return crm039Tasks.filter(t=>String(t.candidatura_id)===String(id)).sort(crm039Sort);
+}
+function crm039RenderKanbanTaskSummary(id){
+  const items=crm039CandidateTasks(id);
+  if(!items.length) return `<div class="kanban-task-summary"><div class="kts-icon">🎯</div><div class="kts-main"><strong>SEM TAREFA DE FOLLOW-UP</strong><span>Defina a próxima ação para este candidato.</span></div></div>`;
+  const pending=items.filter(t=>t.status==='Pendente');
+  const overdue=pending.filter(crm039IsOverdue).length;
+  const today=pending.filter(crm039IsToday).length;
+  const next=pending.slice().sort(crm039Sort)[0] || items[0];
+  const overdueClass=crm039IsOverdue(next);
+  const done=next.status==='Concluída';
+  const due=next.due_at?formatDate(next.due_at):'Sem prazo';
+  const icon=overdueClass?'🔴':today?'🟡':done?'🟢':'🎯';
+  const title=next.titulo||'Tarefa';
+  const sub=done?`Concluída · ${due}`:(overdueClass?`Atrasada · ${due}`:today?`Hoje · ${due}`:`Próxima ação · ${due}`);
+  return `<div class="kanban-task-summary ${overdueClass?'overdue':''} ${done?'done':''}"><div class="kts-icon">${icon}</div><div class="kts-main"><strong>${escapeHTML(title)}</strong><span>${escapeHTML(sub)} · ${escapeHTML(next.responsavel||'ALPHA')}</span><div class="kanban-task-badges">${pending.length?`<span class="kanban-task-badge ${overdue?'hot':''}">🎯 ${pending.length} aberta${pending.length===1?'':'s'}</span>`:`<span class="kanban-task-badge ok">✓ Tudo concluído</span>`}${overdue?`<span class="kanban-task-badge hot">🔴 ${overdue} atrasada${overdue===1?'':'s'}</span>`:''}${today?`<span class="kanban-task-badge today">🟡 ${today} hoje</span>`:''}</div></div></div>`;
+}
+
 function crm039RenderTask(t, compact=false){
   const candidate=crm039CandidateName(t.candidatura_id);
   const due=t.due_at?formatDate(t.due_at):'Sem prazo';
@@ -3329,7 +3350,7 @@ function crm039RenderTask(t, compact=false){
       <div class="crm039-task-meta"><span>⏱ ${escapeHTML(due)}</span><span>👑 ${escapeHTML(t.responsavel||'ALPHA')}</span><span>${status}</span></div>
     </div>
     <div class="crm039-task-actions">
-      ${done?`<button type="button" onclick="toggleTask039('${escapeHTML(t.id)}')">↩ Reabrir</button>`:`<button type="button" onclick="toggleTask039('${escapeHTML(t.id)}')">✓ Concluir</button>`}
+      ${done?`<button type="button" onclick="toggleTask039('${escapeHTML(t.id)}')">↩ Reabrir</button>`:`<button type="button" onclick="toggleTask039('${escapeHTML(t.id)}')">✓ Concluir</button>`}<button type="button" onclick="openTask039Modal('', '${escapeHTML(t.id)}')">✏ Editar</button>
     </div>
   </article>`;
 }
@@ -3356,12 +3377,20 @@ function populateTaskCandidates039(selectedId=''){
   const active=activeCandidates().sort((a,b)=>String(a.nome_completo||'').localeCompare(String(b.nome_completo||''),'pt-BR'));
   sel.innerHTML=`<option value="">Selecione o candidato</option>`+active.map(c=>`<option value="${escapeHTML(c.id)}" ${String(c.id)===String(selectedId)?'selected':''}>${escapeHTML(c.nome_completo||'Candidato')}</option>`).join('');
 }
-function openTask039Modal(candidateId=''){
+function openTask039Modal(candidateId='', taskId=''){
   const modal=document.getElementById('crm039TaskModal'); if(!modal) return;
-  populateTaskCandidates039(candidateId);
   const form=document.getElementById('crm039TaskForm'); if(form) form.reset();
-  document.getElementById('crm039Responsible').value=window.afincoAdminName||'ALPHA';
-  populateTaskCandidates039(candidateId);
+  const task=taskId?crm039Tasks.find(t=>String(t.id)===String(taskId)):null;
+  const selectedCandidate=task?.candidatura_id || candidateId || '';
+  populateTaskCandidates039(selectedCandidate);
+  document.getElementById('crm039TaskId').value=task?.id||'';
+  document.getElementById('crm039Responsible').value=task?.responsavel||window.afincoAdminName||'ALPHA';
+  document.getElementById('crm039Title').value=task?.titulo||'';
+  document.getElementById('crm039Priority').value=task?.prioridade||'Média';
+  document.getElementById('crm039Description').value=task?.descricao||'';
+  document.getElementById('crm039DueAt').value=task?.due_at?crm039DateValue(task.due_at):'';
+  const title=document.getElementById('crm039TaskModalTitle'); if(title) title.textContent=task?'✏️ Editar tarefa':'🎯 Nova tarefa';
+  const btn=document.getElementById('crm039SubmitTaskBtn'); if(btn) btn.textContent=task?'💾 Salvar alteração':'🔥 Criar tarefa';
   modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
 }
 function closeTask039Modal(){ const modal=document.getElementById('crm039TaskModal'); if(!modal)return; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); if(!document.getElementById('detailsOverlay')?.style.display || document.getElementById('detailsOverlay').style.display!=='flex') document.body.style.overflow=''; }
@@ -3371,7 +3400,7 @@ async function loadTasks039(){
     const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas?select=*&order=created_at.desc&limit=1000`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Accept':'application/json'},cache:'no-store'});
     const raw=await response.text(); let payload; try{payload=raw?JSON.parse(raw):[];}catch{payload=[];}
     if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${payload?.message||payload?.details||raw||'Não foi possível carregar as tarefas.'}`);
-    crm039Tasks=Array.isArray(payload)?payload:[]; renderTasks039();
+    crm039Tasks=Array.isArray(payload)?payload:[]; renderTasks039(); renderKanban();
     if(document.getElementById('detailsOverlay')?.style.display==='flex'){
       const id=window.afincoOpenCandidateId; if(id) renderCandidateTasks039(id);
     }
@@ -3379,6 +3408,7 @@ async function loadTasks039(){
 }
 async function saveTask039(event){
   event.preventDefault();
+  const taskId=document.getElementById('crm039TaskId')?.value||'';
   const candidatura_id=document.getElementById('crm039Candidate')?.value||'';
   const titulo=document.getElementById('crm039Title')?.value||'';
   const prioridade=document.getElementById('crm039Priority')?.value||'Média';
@@ -3388,15 +3418,30 @@ async function saveTask039(event){
   const due_at=rawDue?new Date(rawDue).toISOString():null;
   if(!candidatura_id||!titulo){showToast('Escolha o candidato e a ação.');return;}
   const candidate=candidates.find(c=>String(c.id)===String(candidatura_id));
-  const body={candidatura_id:String(candidatura_id),candidato_nome:candidate?.nome_completo||'Candidato',titulo,descricao,prioridade,responsavel,due_at,status:'Pendente',created_by_email:afincoAdminEmailValue||window.afincoAdminEmail||'',created_by_name:afincoAdminName||window.afincoAdminName||'ALPHA'};
+  const now=new Date().toISOString();
   try{
-    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)});
-    const raw=await response.text(); let payload; try{payload=raw?JSON.parse(raw):null;}catch{payload=null;}
-    if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${payload?.message||payload?.details||raw}`);
-    if(Array.isArray(payload)&&payload[0]) crm039Tasks.unshift(payload[0]);
-    closeTask039Modal(); renderTasks039(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); showToast('✓ Tarefa criada e registrada no histórico.');
+    let response, payload;
+    if(taskId){
+      const body={candidatura_id:String(candidatura_id),candidato_nome:candidate?.nome_completo||'Candidato',titulo,descricao,prioridade,responsavel,due_at,updated_at:now};
+      response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas?id=eq.${encodeURIComponent(taskId)}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)});
+    }else{
+      const body={candidatura_id:String(candidatura_id),candidato_nome:candidate?.nome_completo||'Candidato',titulo,descricao,prioridade,responsavel,due_at,status:'Pendente',created_by_email:afincoAdminEmailValue||window.afincoAdminEmail||'',created_by_name:afincoAdminName||window.afincoAdminName||'ALPHA'};
+      response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)});
+    }
+    const raw=await response.text(); try{payload=raw?JSON.parse(raw):null;}catch{payload=null;}
+    if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${payload?.message||payload?.details||raw||'Não foi possível salvar a tarefa.'}`);
+    if(Array.isArray(payload)&&payload[0]){
+      const saved=payload[0];
+      if(taskId){ const idx=crm039Tasks.findIndex(t=>String(t.id)===String(taskId)); if(idx>=0) crm039Tasks[idx]={...crm039Tasks[idx],...saved}; }
+      else crm039Tasks.unshift(saved);
+    }
+    closeTask039Modal();
+    renderTasks039();
+    renderKanban();
+    if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId);
     await loadHistory038();
-  }catch(error){console.error('CRM039 SAVE TASK ERROR:',error);showToast(`Não foi possível criar a tarefa: ${error.message||'erro no Supabase'}`);}
+    showToast(taskId?'✓ Tarefa alterada e registrada no histórico.':'✓ Tarefa criada e registrada no histórico.');
+  }catch(error){console.error('CRM039 SAVE TASK ERROR:',error);showToast(`Não foi possível salvar a tarefa: ${error.message||'erro no Supabase'}`);}
 }
 async function toggleTask039(id){
   const task=crm039Tasks.find(t=>String(t.id)===String(id)); if(!task)return;
@@ -3404,7 +3449,7 @@ async function toggleTask039(id){
   try{
     const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({status,completed_at:done?null:now,updated_at:now})});
     const raw=await response.text(); if(!response.ok) throw new Error(raw);
-    task.status=status; task.completed_at=done?null:now; task.updated_at=now; renderTasks039(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); await loadHistory038(); showToast(done?'✓ Tarefa reaberta.':'✓ Tarefa concluída e registrada no histórico.');
+    task.status=status; task.completed_at=done?null:now; task.updated_at=now; renderTasks039(); renderKanban(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); await loadHistory038(); showToast(done?'✓ Tarefa reaberta.':'✓ Tarefa concluída e registrada no histórico.');
   }catch(error){console.error('CRM039 TOGGLE TASK ERROR:',error);showToast('Não foi possível atualizar a tarefa.');}
 }
 function bindCRM039(){
