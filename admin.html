@@ -2429,6 +2429,36 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
     </div>
   </section>
 
+
+  <!-- ALPHA CRM 039 — TAREFAS + FOLLOW-UP -->
+  <section class="crm039-section" id="alphaTasks">
+    <div class="crm039-head">
+      <div>
+        <div class="crm039-kicker">CRM 039 // ACTION ENGINE</div>
+        <div class="crm039-title">🎯 Tarefas & Follow-up</div>
+        <div class="crm039-sub">Transforme cada candidato em uma próxima ação clara. Prazo, responsável, prioridade e conclusão ficam registrados no CRM.</div>
+      </div>
+      <div class="crm039-head-actions">
+        <div class="crm039-live"><i></i><span id="crm039TotalLabel">0 tarefas</span></div>
+        <button type="button" class="crm039-new" onclick="openTask039Modal()">＋ NOVA TAREFA</button>
+      </div>
+    </div>
+    <div class="crm039-kpis">
+      <div class="crm039-kpi crm039-red"><span>🔴 ATRASADAS</span><b id="crm039Overdue">0</b><small>prazo vencido</small></div>
+      <div class="crm039-kpi crm039-gold"><span>🟡 HOJE</span><b id="crm039Today">0</b><small>ação para hoje</small></div>
+      <div class="crm039-kpi crm039-blue"><span>🔵 PENDENTES</span><b id="crm039Pending">0</b><small>em aberto</small></div>
+      <div class="crm039-kpi crm039-green"><span>🟢 CONCLUÍDAS</span><b id="crm039Done">0</b><small>finalizadas</small></div>
+    </div>
+    <div class="crm039-toolbar">
+      <button type="button" class="crm039-filter active" data-crm039-filter="Todas">Todas</button>
+      <button type="button" class="crm039-filter" data-crm039-filter="Atrasadas">🔴 Atrasadas</button>
+      <button type="button" class="crm039-filter" data-crm039-filter="Hoje">🟡 Hoje</button>
+      <button type="button" class="crm039-filter" data-crm039-filter="Pendentes">🔵 Pendentes</button>
+      <button type="button" class="crm039-filter" data-crm039-filter="Concluídas">🟢 Concluídas</button>
+    </div>
+    <div id="crm039TaskList" class="crm039-list"></div>
+  </section>
+
   <!-- DASHBOARD -->
 
   <section class="dashboard">
@@ -2876,6 +2906,41 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
   </div>
 </div>
 
+
+<div id="crm039TaskModal" class="crm039-modal" aria-hidden="true">
+  <div class="crm039-modal-shell" role="dialog" aria-modal="true" aria-labelledby="crm039TaskModalTitle">
+    <div class="crm039-modal-head">
+      <div>
+        <div class="crm039-modal-kicker">CRM 039 // ACTION ENGINE</div>
+        <div class="crm039-modal-title" id="crm039TaskModalTitle">🎯 Nova tarefa</div>
+        <div class="crm039-modal-sub">Crie uma ação objetiva para um candidato e defina quem, o quê e quando.</div>
+      </div>
+      <button type="button" class="crm039-modal-close" onclick="closeTask039Modal()">✕ FECHAR</button>
+    </div>
+    <form id="crm039TaskForm" class="crm039-form">
+      <div class="crm039-form-grid">
+        <div class="crm039-field full"><label>Candidato</label><select id="crm039Candidate" required></select></div>
+        <div class="crm039-field"><label>Ação</label><select id="crm039Title" required>
+          <option value="">Selecione a ação</option>
+          <option>Entrar em contato</option>
+          <option>Ligar para candidato</option>
+          <option>Confirmar entrevista</option>
+          <option>Solicitar documento</option>
+          <option>Fazer follow-up</option>
+          <option>Entrevistar candidato</option>
+          <option>Apresentar oportunidade</option>
+          <option>Outro</option>
+        </select></div>
+        <div class="crm039-field"><label>Prioridade</label><select id="crm039Priority"><option value="Alta">🔥 Alta</option><option value="Média" selected>🟡 Média</option><option value="Baixa">🔵 Baixa</option></select></div>
+        <div class="crm039-field"><label>Responsável</label><input id="crm039Responsible" value="ALPHA" placeholder="Responsável"></div>
+        <div class="crm039-field"><label>Prazo</label><input id="crm039DueAt" type="datetime-local"></div>
+        <div class="crm039-field full"><label>Observação da tarefa</label><textarea id="crm039Description" rows="4" placeholder="Ex.: ligar após 18h, confirmar interesse, cobrar documento..."></textarea></div>
+      </div>
+      <div class="crm039-form-actions"><button type="button" class="crm039-cancel" onclick="closeTask039Modal()">Cancelar</button><button type="submit" class="crm039-save">🔥 Criar tarefa</button></div>
+    </form>
+  </div>
+</div>
+
 <div
   id="detailsOverlay"
   class="overlay"
@@ -2953,6 +3018,19 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 .alpha-history-open{display:inline-flex;align-items:center;gap:7px}
 .alpha-history-open span{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:rgba(214,178,91,.14);border:1px solid rgba(214,178,91,.24);color:#d6b25b;font-size:9px}
 @media(max-width:600px){.crm038-modal{padding:0}.crm038-modal-shell{width:100%;height:100%;border-radius:0}.crm038-modal-head{padding:18px}.crm038-modal .crm038-filterbar,.crm038-modal .crm038-feed{padding-left:15px;padding-right:15px}.crm038-modal-title{font-size:21px}}
+
+
+/* =====================================================
+   ALPHA CRM 039 — TAREFAS + FOLLOW-UP
+===================================================== */
+.crm039-section{margin:0 0 22px;border:1px solid rgba(214,178,91,.20);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:0 18px 60px rgba(0,0,0,.23),inset 0 1px 0 rgba(255,255,255,.025);overflow:hidden}
+.crm039-head{padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:18px;border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(90deg,rgba(214,178,91,.07),rgba(65,130,255,.035),transparent)}
+.crm039-kicker{font-size:10px;letter-spacing:2px;color:#d6b25b;font-weight:950}.crm039-title{font-size:25px;font-weight:950;margin-top:4px}.crm039-sub{font-size:11px;color:#8f9aaa;margin-top:6px;max-width:760px;line-height:1.5}.crm039-head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.crm039-live{font-size:10px;color:#aeb8c5;font-weight:900;display:flex;align-items:center;gap:7px}.crm039-live i{width:7px;height:7px;border-radius:50%;background:#55d98b;box-shadow:0 0 12px rgba(85,217,139,.65)}.crm039-new,.crm039-mini-new{border:1px solid rgba(214,178,91,.32);background:linear-gradient(135deg,rgba(214,178,91,.14),rgba(214,178,91,.05));color:#f4d991;border-radius:12px;padding:11px 14px;font:inherit;font-weight:950;cursor:pointer}.crm039-new:hover,.crm039-mini-new:hover{border-color:#d6b25b;transform:translateY(-1px)}
+.crm039-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px}.crm039-kpi{padding:15px;border-radius:16px;background:rgba(7,10,15,.55);border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:4px}.crm039-kpi span{font-size:9px;font-weight:950;letter-spacing:.7px;color:#9aa5b3}.crm039-kpi b{font-size:28px;line-height:1}.crm039-kpi small{font-size:10px;color:#697483}.crm039-red b{color:#ff6e78}.crm039-gold b{color:#d6b25b}.crm039-blue b{color:#6eaeff}.crm039-green b{color:#63df9b}
+.crm039-toolbar{display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 14px}.crm039-filter{border:1px solid rgba(255,255,255,.09);background:#0d1118;color:#aeb8c5;border-radius:10px;padding:9px 12px;font:inherit;font-size:10px;font-weight:900;cursor:pointer}.crm039-filter.active{border-color:rgba(214,178,91,.45);color:#f4d991;background:rgba(214,178,91,.09)}.crm039-list{padding:0 14px 18px;display:grid;gap:8px}.crm039-task{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));transition:.18s}.crm039-task:hover{border-color:rgba(214,178,91,.24);transform:translateY(-1px)}.crm039-task.is-done{opacity:.62}.crm039-task.is-overdue{border-color:rgba(255,93,103,.20);box-shadow:inset 3px 0 rgba(255,93,103,.55)}.crm039-check{width:28px;height:28px;border-radius:9px;border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;color:#07100b;background:#10151d;font-weight:950;cursor:pointer}.crm039-check.done{background:#63df9b;border-color:#63df9b}.crm039-task-main{min-width:0}.crm039-task-top{display:flex;align-items:center;gap:8px;justify-content:space-between}.crm039-task-top strong{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crm039-priority{font-size:8px;font-weight:950;padding:4px 7px;border-radius:999px;white-space:nowrap;border:1px solid rgba(255,255,255,.09)}.crm039-priority.alta{color:#ff8790;border-color:rgba(255,100,110,.22);background:rgba(255,100,110,.07)}.crm039-priority.media{color:#e6c978}.crm039-priority.baixa{color:#72b5ff}.crm039-task-candidate{margin-top:4px;color:#d6b25b;font-size:10px;font-weight:900;cursor:pointer}.crm039-task-desc{margin-top:5px;color:#8792a1;font-size:10px;line-height:1.45}.crm039-task-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:7px;color:#707c8c;font-size:9px;font-weight:800}.crm039-task-actions button{border:1px solid rgba(255,255,255,.10);background:#0c1118;color:#c5ccd5;border-radius:9px;padding:8px 10px;font:inherit;font-size:9px;font-weight:900;cursor:pointer}.crm039-task-actions button:hover{color:#f4d991;border-color:rgba(214,178,91,.35)}.crm039-empty{padding:35px;text-align:center;border:1px dashed rgba(255,255,255,.10);border-radius:16px;color:#8792a1}.crm039-empty div{font-size:26px;margin-bottom:6px}.crm039-empty strong{display:block;color:#dfe5ec;font-size:12px}.crm039-empty span{display:block;margin-top:5px;font-size:10px}
+.crm039-modal{position:fixed;inset:0;z-index:9999;background:rgba(3,5,9,.82);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:18px}.crm039-modal.open{display:flex}.crm039-modal-shell{width:min(760px,100%);max-height:90vh;overflow:auto;border:1px solid rgba(214,178,91,.28);border-radius:24px;background:linear-gradient(145deg,#0e131b,#07090e);box-shadow:0 30px 100px rgba(0,0,0,.6)}.crm039-modal-head{display:flex;justify-content:space-between;gap:15px;padding:22px;border-bottom:1px solid rgba(255,255,255,.07)}.crm039-modal-kicker{font-size:9px;letter-spacing:2px;color:#d6b25b;font-weight:950}.crm039-modal-title{font-size:22px;font-weight:950;margin-top:4px}.crm039-modal-sub{font-size:10px;color:#8792a1;margin-top:5px}.crm039-modal-close{border:1px solid rgba(255,255,255,.12);background:#11161e;color:#fff;border-radius:10px;padding:9px 11px;font:inherit;font-weight:900;cursor:pointer;height:max-content}.crm039-form{padding:20px}.crm039-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.crm039-field{display:flex;flex-direction:column;gap:6px}.crm039-field.full{grid-column:1/-1}.crm039-field label{font-size:9px;color:#98a3b0;text-transform:uppercase;letter-spacing:.7px;font-weight:950}.crm039-field input,.crm039-field select,.crm039-field textarea{width:100%;box-sizing:border-box;background:#0c1118;border:1px solid rgba(255,255,255,.10);color:#eef2f6;border-radius:10px;padding:11px;font:inherit;font-size:11px;outline:none}.crm039-field input:focus,.crm039-field select:focus,.crm039-field textarea:focus{border-color:rgba(214,178,91,.45)}.crm039-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.crm039-cancel{border:1px solid rgba(255,255,255,.10);background:#10151c;color:#aeb8c5;border-radius:10px;padding:10px 14px;font:inherit;font-weight:900}.crm039-save{border:1px solid rgba(214,178,91,.35);background:linear-gradient(135deg,rgba(214,178,91,.18),rgba(214,178,91,.06));color:#f4d991;border-radius:10px;padding:10px 15px;font:inherit;font-weight:950;cursor:pointer}.crm039-detail-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.crm039-detail-head b{display:block;font-size:11px}.crm039-detail-head span{display:block;color:#7f8a99;font-size:9px;margin-top:3px}.crm039-detail-list{display:grid;gap:7px}.crm039-detail-list .crm039-task{grid-template-columns:30px 1fr auto;padding:10px}.crm039-detail-empty{padding:18px;border:1px dashed rgba(255,255,255,.09);border-radius:12px;color:#7f8a99;font-size:10px;text-align:center}
+@media(max-width:800px){.crm039-kpis{grid-template-columns:repeat(2,1fr)}.crm039-head{align-items:flex-start;flex-direction:column}.crm039-head-actions{width:100%;justify-content:space-between}.crm039-task{grid-template-columns:30px 1fr}.crm039-task-actions{grid-column:2}.crm039-task-actions button{width:100%}.crm039-form-grid{grid-template-columns:1fr}.crm039-field.full{grid-column:auto}}
+@media(max-width:520px){.crm039-kpis{grid-template-columns:1fr 1fr}.crm039-modal{padding:0}.crm039-modal-shell{width:100%;height:100%;max-height:none;border-radius:0}.crm039-modal-head{padding:18px}.crm039-form{padding:16px}.crm039-title{font-size:21px}}
 </style>
 
 <script>
@@ -3192,6 +3270,147 @@ function bindKanbanEvents(){
     });
   });
   board.querySelectorAll("[data-open-id]").forEach(btn=>btn.addEventListener("click",()=>openDetails(btn.dataset.openId)));
+}
+
+
+/* =====================================================
+   ALPHA CRM 039 — TAREFAS + FOLLOW-UP
+===================================================== */
+let crm039Tasks=[];
+let crm039Filter='Todas';
+
+function crm039DateValue(value){
+  if(!value) return '';
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime())) return '';
+  const pad=n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+function crm039StartToday(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+function crm039EndToday(){ const d=crm039StartToday(); d.setHours(23,59,59,999); return d; }
+function crm039IsOverdue(t){ return t.status==='Pendente' && t.due_at && new Date(t.due_at).getTime()<Date.now(); }
+function crm039IsToday(t){ if(!t.due_at) return false; const d=new Date(t.due_at); return d>=crm039StartToday() && d<=crm039EndToday(); }
+function crm039StatusLabel(t){
+  if(t.status==='Concluída') return '🟢 Concluída';
+  if(t.status==='Cancelada') return '⚪ Cancelada';
+  if(crm039IsOverdue(t)) return '🔴 Atrasada';
+  if(crm039IsToday(t)) return '🟡 Hoje';
+  return '🔵 Pendente';
+}
+function crm039CandidateName(id){ return candidates.find(c=>String(c.id)===String(id))?.nome_completo || 'Candidato'; }
+function crm039Matches(t){
+  if(crm039Filter==='Todas') return true;
+  if(crm039Filter==='Atrasadas') return crm039IsOverdue(t);
+  if(crm039Filter==='Hoje') return crm039IsToday(t) && t.status==='Pendente';
+  if(crm039Filter==='Pendentes') return t.status==='Pendente';
+  if(crm039Filter==='Concluídas') return t.status==='Concluída';
+  return true;
+}
+function crm039Sort(a,b){
+  const ad=a.status==='Concluída'?1:0, bd=b.status==='Concluída'?1:0;
+  if(ad!==bd) return ad-bd;
+  const at=a.due_at?new Date(a.due_at).getTime():Number.MAX_SAFE_INTEGER;
+  const bt=b.due_at?new Date(b.due_at).getTime():Number.MAX_SAFE_INTEGER;
+  if(at!==bt) return at-bt;
+  return new Date(b.created_at||0)-new Date(a.created_at||0);
+}
+function crm039PriorityClass(p){ return p==='Alta'?'alta':p==='Baixa'?'baixa':'media'; }
+function crm039RenderTask(t, compact=false){
+  const candidate=crm039CandidateName(t.candidatura_id);
+  const due=t.due_at?formatDate(t.due_at):'Sem prazo';
+  const status=crm039StatusLabel(t);
+  const done=t.status==='Concluída';
+  return `<article class="crm039-task ${done?'is-done':''} ${crm039IsOverdue(t)?'is-overdue':''}">
+    <div class="crm039-check ${done?'done':''}" onclick="toggleTask039('${escapeHTML(t.id)}')">${done?'✓':''}</div>
+    <div class="crm039-task-main">
+      <div class="crm039-task-top"><strong>${escapeHTML(t.titulo||'Tarefa')}</strong><span class="crm039-priority ${crm039PriorityClass(t.prioridade)}">${escapeHTML(t.prioridade||'Média')}</span></div>
+      <div class="crm039-task-candidate" onclick="openDetails('${escapeHTML(t.candidatura_id)}')">👤 ${escapeHTML(candidate)}</div>
+      ${t.descricao?`<div class="crm039-task-desc">${escapeHTML(t.descricao)}</div>`:''}
+      <div class="crm039-task-meta"><span>⏱ ${escapeHTML(due)}</span><span>👑 ${escapeHTML(t.responsavel||'ALPHA')}</span><span>${status}</span></div>
+    </div>
+    <div class="crm039-task-actions">
+      ${done?`<button type="button" onclick="toggleTask039('${escapeHTML(t.id)}')">↩ Reabrir</button>`:`<button type="button" onclick="toggleTask039('${escapeHTML(t.id)}')">✓ Concluir</button>`}
+    </div>
+  </article>`;
+}
+function renderTasks039(){
+  const list=document.getElementById('crm039TaskList'); if(!list) return;
+  const pending=crm039Tasks.filter(t=>t.status==='Pendente');
+  const overdue=pending.filter(crm039IsOverdue).length;
+  const today=pending.filter(crm039IsToday).length;
+  const done=crm039Tasks.filter(t=>t.status==='Concluída').length;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  set('crm039Overdue',overdue);set('crm039Today',today);set('crm039Pending',pending.length);set('crm039Done',done);set('crm039TotalLabel',`${crm039Tasks.length} tarefa${crm039Tasks.length===1?'':'s'}`);
+  document.querySelectorAll('[data-crm039-filter]').forEach(b=>b.classList.toggle('active',b.dataset.crm039Filter===crm039Filter));
+  const visible=crm039Tasks.filter(crm039Matches).sort(crm039Sort);
+  list.innerHTML=visible.length?visible.map(t=>crm039RenderTask(t)).join(''):`<div class="crm039-empty"><div>🎯</div><strong>Nenhuma tarefa nesta visão.</strong><span>Crie uma nova tarefa para colocar o próximo passo em movimento.</span></div>`;
+}
+function renderCandidateTasks039(id){
+  const el=document.getElementById('crm039CandidateTasks'); if(!el) return;
+  const items=crm039Tasks.filter(t=>String(t.candidatura_id)===String(id)).sort(crm039Sort);
+  const count=document.getElementById('crm039CandidateTaskCount'); if(count) count.textContent=`${items.length} tarefa${items.length===1?'':'s'}`;
+  el.innerHTML=items.length?items.map(t=>crm039RenderTask(t,true)).join(''):`<div class="crm039-detail-empty">Nenhuma tarefa criada para este candidato.</div>`;
+}
+function populateTaskCandidates039(selectedId=''){
+  const sel=document.getElementById('crm039Candidate'); if(!sel) return;
+  const active=activeCandidates().sort((a,b)=>String(a.nome_completo||'').localeCompare(String(b.nome_completo||''),'pt-BR'));
+  sel.innerHTML=`<option value="">Selecione o candidato</option>`+active.map(c=>`<option value="${escapeHTML(c.id)}" ${String(c.id)===String(selectedId)?'selected':''}>${escapeHTML(c.nome_completo||'Candidato')}</option>`).join('');
+}
+function openTask039Modal(candidateId=''){
+  const modal=document.getElementById('crm039TaskModal'); if(!modal) return;
+  populateTaskCandidates039(candidateId);
+  const form=document.getElementById('crm039TaskForm'); if(form) form.reset();
+  document.getElementById('crm039Responsible').value=window.afincoAdminName||'ALPHA';
+  populateTaskCandidates039(candidateId);
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+}
+function closeTask039Modal(){ const modal=document.getElementById('crm039TaskModal'); if(!modal)return; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); if(!document.getElementById('detailsOverlay')?.style.display || document.getElementById('detailsOverlay').style.display!=='flex') document.body.style.overflow=''; }
+async function loadTasks039(){
+  if(!accessToken) return;
+  try{
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas?select=*&order=created_at.desc&limit=1000`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Accept':'application/json'},cache:'no-store'});
+    const raw=await response.text(); let payload; try{payload=raw?JSON.parse(raw):[];}catch{payload=[];}
+    if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${payload?.message||payload?.details||raw||'Não foi possível carregar as tarefas.'}`);
+    crm039Tasks=Array.isArray(payload)?payload:[]; renderTasks039();
+    if(document.getElementById('detailsOverlay')?.style.display==='flex'){
+      const id=window.afincoOpenCandidateId; if(id) renderCandidateTasks039(id);
+    }
+  }catch(error){ console.error('CRM039 TASKS ERROR:',error); crm039Tasks=[]; renderTasks039(); const list=document.getElementById('crm039TaskList'); if(list) list.innerHTML=`<div class="crm039-empty"><div>⚠️</div><strong>Não foi possível carregar as tarefas.</strong><span>${escapeHTML(error.message||'Verifique o SQL 039.')}</span></div>`; }
+}
+async function saveTask039(event){
+  event.preventDefault();
+  const candidatura_id=document.getElementById('crm039Candidate')?.value||'';
+  const titulo=document.getElementById('crm039Title')?.value||'';
+  const prioridade=document.getElementById('crm039Priority')?.value||'Média';
+  const responsavel=(document.getElementById('crm039Responsible')?.value||'ALPHA').trim()||'ALPHA';
+  const descricao=(document.getElementById('crm039Description')?.value||'').trim()||null;
+  const rawDue=document.getElementById('crm039DueAt')?.value||'';
+  const due_at=rawDue?new Date(rawDue).toISOString():null;
+  if(!candidatura_id||!titulo){showToast('Escolha o candidato e a ação.');return;}
+  const candidate=candidates.find(c=>String(c.id)===String(candidatura_id));
+  const body={candidatura_id:String(candidatura_id),candidato_nome:candidate?.nome_completo||'Candidato',titulo,descricao,prioridade,responsavel,due_at,status:'Pendente',created_by_email:afincoAdminEmailValue||window.afincoAdminEmail||'',created_by_name:afincoAdminName||window.afincoAdminName||'ALPHA'};
+  try{
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)});
+    const raw=await response.text(); let payload; try{payload=raw?JSON.parse(raw):null;}catch{payload=null;}
+    if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${payload?.message||payload?.details||raw}`);
+    if(Array.isArray(payload)&&payload[0]) crm039Tasks.unshift(payload[0]);
+    closeTask039Modal(); renderTasks039(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); showToast('✓ Tarefa criada e registrada no histórico.');
+    await loadHistory038();
+  }catch(error){console.error('CRM039 SAVE TASK ERROR:',error);showToast(`Não foi possível criar a tarefa: ${error.message||'erro no Supabase'}`);}
+}
+async function toggleTask039(id){
+  const task=crm039Tasks.find(t=>String(t.id)===String(id)); if(!task)return;
+  const done=task.status==='Concluída'; const now=new Date().toISOString(); const status=done?'Pendente':'Concluída';
+  try{
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_tarefas?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({status,completed_at:done?null:now,updated_at:now})});
+    const raw=await response.text(); if(!response.ok) throw new Error(raw);
+    task.status=status; task.completed_at=done?null:now; task.updated_at=now; renderTasks039(); if(window.afincoOpenCandidateId) renderCandidateTasks039(window.afincoOpenCandidateId); await loadHistory038(); showToast(done?'✓ Tarefa reaberta.':'✓ Tarefa concluída e registrada no histórico.');
+  }catch(error){console.error('CRM039 TOGGLE TASK ERROR:',error);showToast('Não foi possível atualizar a tarefa.');}
+}
+function bindCRM039(){
+  document.querySelectorAll('[data-crm039-filter]').forEach(btn=>btn.addEventListener('click',()=>{crm039Filter=btn.dataset.crm039Filter;renderTasks039();}));
+  document.getElementById('crm039TaskForm')?.addEventListener('submit',saveTask039);
+  document.getElementById('crm039TaskModal')?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeTask039Modal();});
 }
 
 /* =====================================================
@@ -3766,6 +3985,7 @@ async function loadCandidates(){
     }));
     candidates.forEach(c=>{ if(c.anotacao_interna!=null) candidateNotes[c.id]=c.anotacao_interna; });
     await loadHistory038();
+    await loadTasks039();
 
     updateDashboard();
     updateTrashCount();
@@ -4868,6 +5088,8 @@ async function saveCRM037(id){
 
 function openDetails(id){
 
+  window.afincoOpenCandidateId = id;
+
   const candidate =
     candidates.find(
       item =>
@@ -5085,6 +5307,13 @@ function openDetails(id){
       <button class="crm037-save" type="button" onclick="saveCRM037('${escapeHTML(candidate.id)}')">💾 Salvar dados do CRM</button>
     </section>
 
+
+    <section class="detail-section">
+      <div class="detail-section-title">🎯 Tarefas deste candidato</div>
+      <div class="crm039-detail-head"><div><b id="crm039CandidateTaskCount">0 tarefas</b><span>Follow-ups vinculados diretamente a esta ficha.</span></div><button type="button" class="crm039-mini-new" onclick="openTask039Modal('${escapeHTML(candidate.id)}')">＋ NOVA TAREFA</button></div>
+      <div id="crm039CandidateTasks" class="crm039-detail-list"></div>
+    </section>
+
     <section class="detail-section">
       <div class="detail-section-title">🧠 Histórico completo deste candidato</div>
       <div class="crm038-badge">● MEMÓRIA PERSISTENTE · SUPABASE</div>
@@ -5137,6 +5366,7 @@ function openDetails(id){
 
   document.body.style.overflow =
     "hidden";
+  renderCandidateTasks039(candidate.id);
 
 }
 
@@ -5234,6 +5464,8 @@ document.getElementById('crm038Modal')?.addEventListener('click',function(event)
 ===================================================== */
 
 function closeDetails(){
+
+  window.afincoOpenCandidateId = null;
 
   detailsOverlay.style.display =
     "none";
@@ -5518,6 +5750,7 @@ async function initialize(){
 
 bindCRM037Filters();
 bindCRM038Filters();
+bindCRM039();
 
 /* =====================================================
    START
