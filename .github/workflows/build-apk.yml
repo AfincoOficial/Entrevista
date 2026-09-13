@@ -35,6 +35,11 @@ jobs:
         with:
           gradle-version: '8.7'
 
+      - name: Corrigir compatibilidade Java e Kotlin
+        working-directory: android-project/APK-ANDROID
+        run: |
+          printf '\n\ntasks.withType(JavaCompile).configureEach { options.release = 17 }\n' >> app/build.gradle
+
       - name: Gerar APK
         working-directory: android-project/APK-ANDROID
         run: gradle assembleDebug --stacktrace
