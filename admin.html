@@ -2106,6 +2106,28 @@ main.container > section.dashboard, main.container > section.analytics{display:n
 
 
 .crm-agenda-internal-badge{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:8px 12px;border:1px solid rgba(212,175,55,.28);border-radius:999px;background:linear-gradient(90deg,rgba(212,175,55,.10),rgba(70,140,255,.08));color:#d9c27a;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+
+/* =====================================================
+   ALPHA CRM 038 — TIMELINE / HISTÓRICO PRO
+===================================================== */
+.crm038-section{margin-top:22px;border:1px solid rgba(214,178,91,.22);border-radius:24px;background:linear-gradient(145deg,rgba(13,16,23,.98),rgba(8,10,15,.98));box-shadow:0 20px 60px rgba(0,0,0,.28);overflow:hidden}
+.crm038-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px 26px;border-bottom:1px solid rgba(255,255,255,.07)}
+.crm038-kicker{font-size:10px;letter-spacing:2px;font-weight:950;color:#d6b25b;text-transform:uppercase}
+.crm038-title{font-size:25px;font-weight:950;letter-spacing:-.7px;margin-top:5px}
+.crm038-sub{font-size:12px;color:#8f9aaa;margin-top:5px;line-height:1.5}
+.crm038-live{font-size:11px;font-weight:900;color:#aeb8c8;padding:11px 14px;border-radius:13px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);white-space:nowrap}
+.crm038-live b{color:#71e7a2}
+.crm038-feed{padding:8px 20px 22px}
+.crm038-event{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:13px;align-items:start;padding:16px 8px;border-bottom:1px solid rgba(255,255,255,.055);cursor:pointer;transition:.18s}
+.crm038-event:hover{background:rgba(255,255,255,.025);border-radius:14px}
+.crm038-dot{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(214,178,91,.10);border:1px solid rgba(214,178,91,.22);font-size:16px}
+.crm038-event-main{min-width:0}.crm038-event-title{font-size:13px;font-weight:900;color:#f5f7fa}.crm038-event-desc{font-size:11px;color:#929dac;margin-top:4px;line-height:1.45}.crm038-event-name{color:#d6b25b}.crm038-event-meta{font-size:10px;color:#697484;margin-top:6px;font-weight:750}.crm038-event-time{font-size:10px;color:#7d8999;font-weight:850;white-space:nowrap}
+.crm038-empty{padding:34px 15px;text-align:center;color:#778394;font-size:12px}.crm038-empty strong{display:block;color:#dfe5ee;font-size:14px;margin-bottom:5px}
+.crm038-filterbar{display:flex;gap:7px;flex-wrap:wrap;padding:16px 20px 8px}.crm038-filter{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);color:#9aa5b5;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900;cursor:pointer}.crm038-filter.active{color:#111;background:#d6b25b;border-color:#d6b25b}
+.crm038-modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.crm038-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;font-size:9px;font-weight:950;border:1px solid rgba(214,178,91,.25);background:rgba(214,178,91,.08);color:#d6b25b}
+.crm038-timeline{position:relative;padding:8px 0 5px 28px}.crm038-timeline:before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:linear-gradient(#d6b25b,rgba(214,178,91,.08))}.crm038-item{position:relative;padding:0 0 18px 14px}.crm038-item:before{content:"";position:absolute;left:-21px;top:5px;width:9px;height:9px;border-radius:50%;background:#d6b25b;box-shadow:0 0 0 4px rgba(214,178,91,.10)}.crm038-item-card{padding:12px 13px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025)}.crm038-item-top{display:flex;justify-content:space-between;gap:10px}.crm038-item-title{font-size:11px;font-weight:950;color:#eef2f7}.crm038-item-date{font-size:9px;color:#748091;white-space:nowrap}.crm038-item-desc{font-size:10px;color:#909baa;margin-top:5px;line-height:1.45}.crm038-item-actor{font-size:9px;color:#687486;margin-top:6px}
+@media(max-width:720px){.crm038-head{align-items:flex-start;flex-direction:column}.crm038-live{width:100%;white-space:normal}.crm038-event{grid-template-columns:36px minmax(0,1fr);}.crm038-event-time{grid-column:2}.crm038-dot{width:32px;height:32px}.crm038-title{font-size:21px}.crm038-feed{padding-left:12px;padding-right:12px}}
+
 </style>
 
 <style>
@@ -2308,6 +2330,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
         <button type="button" onclick="loadCandidates()">↻ ATUALIZAR</button>
         <button type="button" onclick="alphaJump('alphaKanban')">🐺 KANBAN</button>
         <button type="button" onclick="alphaJump('alphaInterviewAgenda')">🎯 AGENDA</button>
+        <button type="button" onclick="alphaJump('alphaHistory')">🧠 HISTÓRICO</button>
         <button type="button" onclick="alphaJump('candidatesList')">👥 CANDIDATOS</button>
       </div></div>
     </div>
@@ -2404,6 +2427,27 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
       <button type="button" class="crm037-action" data-crm037-filter="Frio">❄️ Frios</button>
       <button type="button" class="crm037-action" data-crm037-filter="acao">⚠️ Com ação</button>
     </div>
+  </section>
+
+  <!-- ALPHA CRM 038 — TIMELINE / HISTÓRICO -->
+  <section class="crm038-section" id="alphaHistory">
+    <div class="crm038-head">
+      <div>
+        <div class="crm038-kicker">CRM 038 // MEMORY ENGINE</div>
+        <div class="crm038-title">🧠 Histórico operacional</div>
+        <div class="crm038-sub">Tudo que acontece no CRM fica registrado: status, prioridade, responsável, próxima ação, agenda e anotações.</div>
+      </div>
+      <div class="crm038-live"><b>● HISTÓRICO ONLINE</b> · <span id="crm038Total">0 eventos</span></div>
+    </div>
+    <div class="crm038-filterbar">
+      <button type="button" class="crm038-filter active" data-crm038-filter="Todos">Todos</button>
+      <button type="button" class="crm038-filter" data-crm038-filter="Status">Status</button>
+      <button type="button" class="crm038-filter" data-crm038-filter="CRM">CRM</button>
+      <button type="button" class="crm038-filter" data-crm038-filter="Agenda">Agenda</button>
+      <button type="button" class="crm038-filter" data-crm038-filter="Nota">Notas</button>
+      <button type="button" class="crm038-filter" data-crm038-filter="Sistema">Sistema</button>
+    </div>
+    <div class="crm038-feed" id="crm038Feed"></div>
   </section>
 
   <!-- DASHBOARD -->
@@ -3310,6 +3354,8 @@ let viewMode = "active";
 let afincoAdminName = "ALPHA";
 let afincoAdminEmailValue = "";
 let crm037Filter = "Todos";
+let crm038History = [];
+let crm038Filter = "Todos";
 
 
 /* =====================================================
@@ -3689,6 +3735,8 @@ async function loadCandidates(){
       ...candidate,
       status: candidate.status || "Novo"
     }));
+    candidates.forEach(c=>{ if(c.anotacao_interna!=null) candidateNotes[c.id]=c.anotacao_interna; });
+    await loadHistory038();
 
     updateDashboard();
     updateTrashCount();
@@ -4548,6 +4596,42 @@ function statusOptions(current){
    ALTERAR STATUS
 ===================================================== */
 
+/* =====================================================
+   CRM 038 — HISTÓRICO PERSISTENTE
+===================================================== */
+function crm038Icon(type){
+  return ({Status:"↔",CRM:"⚡",Agenda:"🎯",Nota:"📝",Sistema:"●"}[type]||"•");
+}
+function crm038Type(item){ return String(item?.tipo||"Sistema"); }
+function crm038Candidate(id){ return candidates.find(c=>String(c.id)===String(id)); }
+function crm038HistoryFor(id){ return crm038History.filter(h=>String(h.candidatura_id)===String(id)).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)); }
+function renderCandidateHistory038(id){
+  const items=crm038HistoryFor(id);
+  if(!items.length) return '<div class="crm038-empty"><strong>Nenhum evento registrado ainda.</strong>As próximas ações deste candidato aparecerão aqui automaticamente.</div>';
+  return items.map(item=>`<div class="crm038-item"><div class="crm038-item-card"><div class="crm038-item-top"><div class="crm038-item-title">${crm038Icon(item.tipo)} ${escapeHTML(item.titulo||"Evento")}</div><div class="crm038-item-date">${formatDate(item.created_at)}</div></div><div class="crm038-item-desc">${escapeHTML(item.descricao||"")}</div><div class="crm038-item-actor">👤 ${escapeHTML(item.ator_nome||item.ator_email||"Sistema")}</div></div></div>`).join('');
+}
+function renderHistory038(){
+  const feed=document.getElementById('crm038Feed'); if(!feed) return;
+  const filtered=crm038History.filter(h=>crm038Filter==='Todos'||String(h.tipo)===crm038Filter).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,20);
+  const total=document.getElementById('crm038Total'); if(total) total.textContent=`${crm038History.length} evento${crm038History.length===1?'':'s'}`;
+  if(!filtered.length){feed.innerHTML='<div class="crm038-empty"><strong>Nenhuma atividade nesta categoria.</strong>Quando houver movimentação, ela aparecerá aqui.</div>';return;}
+  feed.innerHTML=filtered.map(item=>{const c=crm038Candidate(item.candidatura_id);const name=c?.nome_completo||item.candidato_nome||'Candidato';return `<div class="crm038-event" onclick="openDetails('${escapeHTML(item.candidatura_id)}')"><div class="crm038-dot">${crm038Icon(item.tipo)}</div><div class="crm038-event-main"><div class="crm038-event-title">${escapeHTML(item.titulo||'Evento')} · <span class="crm038-event-name">${escapeHTML(name)}</span></div><div class="crm038-event-desc">${escapeHTML(item.descricao||'')}</div><div class="crm038-event-meta">${escapeHTML(item.ator_nome||item.ator_email||'Sistema')} · ${escapeHTML(item.tipo||'Sistema')}</div></div><div class="crm038-event-time">${formatDate(item.created_at)}</div></div>`}).join('');
+}
+function bindCRM038Filters(){document.querySelectorAll('[data-crm038-filter]').forEach(btn=>btn.addEventListener('click',()=>{crm038Filter=btn.dataset.crm038Filter;document.querySelectorAll('[data-crm038-filter]').forEach(b=>b.classList.toggle('active',b===btn));renderHistory038();}));}
+async function loadHistory038(){
+  if(!accessToken) return;
+  try{
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidatura_historico?select=*&order=created_at.desc&limit=1000`,{headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${accessToken}`,"Accept":"application/json"},cache:'no-store'});
+    if(response.status===404){throw new Error('A tabela candidatura_historico ainda não existe. Execute o SQL do CRM 038.');}
+    const raw=await response.text(); let payload; try{payload=raw?JSON.parse(raw):[];}catch{payload=[];}
+    if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${typeof payload==='object'?(payload.message||payload.details||JSON.stringify(payload)):payload}`);
+    crm038History=Array.isArray(payload)?payload:[];
+    renderHistory038();
+  }catch(error){console.error('CRM038 HISTORY ERROR:',error);const feed=document.getElementById('crm038Feed');if(feed)feed.innerHTML=`<div class="crm038-empty"><strong>Histórico aguardando banco 038</strong><span>${escapeHTML(error.message||'Execute o SQL 038.')}</span></div>`;}
+}
+async function refreshHistory038(candidateId){ await loadHistory038(); if(candidateId) renderHistory038(); }
+async function initializeHistory038(){bindCRM038Filters();await loadHistory038();}
+
 async function updateStatus(
   id,
   newStatus
@@ -4570,34 +4654,7 @@ async function updateStatus(
     "Novo";
 
 
-  if(
-    oldStatus !==
-    newStatus
-  ){
-
-    if(
-      !candidateHistory[id]
-    ){
-
-      candidateHistory[id] = [];
-
-    }
-
-
-    candidateHistory[id].push({
-
-      from:
-        oldStatus,
-
-      to:
-        newStatus,
-
-      date:
-        new Date().toISOString()
-
-    });
-
-  }
+  if(oldStatus !== newStatus){ if(!candidateHistory[id]) candidateHistory[id]=[]; candidateHistory[id].push({from:oldStatus,to:newStatus,date:new Date().toISOString()}); }
 
 
   candidate.status =
@@ -4671,6 +4728,7 @@ async function updateStatus(
     }
 
 
+    await refreshHistory038(id);
     showToast(
       `✓ Status atualizado para "${newStatus}".`
     );
@@ -4734,6 +4792,7 @@ async function saveInterview037(id){
     if(!response.ok) throw new Error(await response.text());
     Object.assign(candidate,{entrevista_data:null,entrevista_dia:dia,entrevista_horario:horario,ultima_atividade_at:now});
     renderInterviewAgenda(); renderKanban(); applyFilters(); updateDashboard(); updateAnalytics();
+    await refreshHistory038(id);
     showToast(`✓ Entrevista marcada para ${dia} às ${horario}.`);
     openDetails(id);
   }catch(error){ console.error(error); showToast('Não foi possível salvar a agenda. Confira o SQL 037 e as permissões do Supabase.'); }
@@ -4755,6 +4814,7 @@ async function saveCRM037(id){
     if(!response.ok) throw new Error(await response.text());
     Object.assign(candidate,{prioridade,responsavel,proxima_acao,proxima_acao_at,ultima_atividade_at:now});
     renderCRM037();renderKanban();applyFilters();updateDashboard();updateAnalytics();
+    await refreshHistory038(id);
     showToast('✓ CRM atualizado e salvo no Supabase.');
     openDetails(id);
   }catch(error){console.error(error);showToast('Não foi possível salvar o CRM. Confira o SQL 037 e as permissões do Supabase.');}
@@ -4793,7 +4853,7 @@ function openDetails(id){
 
 
   const notes =
-    candidateNotes[id] ||
+    candidate.anotacao_interna ?? candidateNotes[id] ??
     "";
 
 
@@ -4980,60 +5040,15 @@ function openDetails(id){
     </section>
 
     <section class="detail-section">
-
-      <div class="detail-section-title">
-        Histórico desta sessão
+      <div class="detail-section-title">🧠 Histórico completo deste candidato</div>
+      <div class="crm038-badge">● MEMÓRIA PERSISTENTE · SUPABASE</div>
+      <div class="crm038-timeline" style="margin-top:12px">
+        ${renderCandidateHistory038(candidate.id)}
       </div>
-
-
-      <div class="history">
-
-        ${
-          history.length
-            ? history.map(
-                item => `
-
-                  <div class="history-item">
-
-                    <div class="history-top">
-
-                      <div class="history-status">
-
-                        ${escapeHTML(item.from)}
-                        →
-                        ${escapeHTML(item.to)}
-
-                      </div>
-
-                      <div class="history-date">
-                        ${formatDate(item.date)}
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                `
-              ).join("")
-            : `
-              <div
-                style="
-                  color:var(--muted);
-                  font-size:10px;
-                "
-              >
-                Nenhuma alteração registrada nesta sessão.
-              </div>
-            `
-        }
-
-      </div>
-
     </section>
 
 
     <section class="detail-section">
-
       <div class="detail-section-title">
         Anotação interna
       </div>
@@ -5137,32 +5152,31 @@ function detailBox(
    NOTAS
 ===================================================== */
 
-function saveNote(id){
-
-  const textarea =
-    document.getElementById(
-      "candidateNote"
-    );
-
-
-  candidateNotes[id] =
-    textarea.value;
-
-
-  localStorage.setItem(
-    "afinco_candidate_notes",
-    JSON.stringify(
-      candidateNotes
-    )
-  );
-
-
-  showToast(
-    "✓ Anotação salva neste navegador."
-  );
-
+async function saveNote(id){
+  const textarea=document.getElementById("candidateNote");
+  const note=String(textarea?.value||"").trim();
+  const candidate=candidates.find(c=>c.id===id);
+  if(!candidate) return;
+  const now=new Date().toISOString();
+  try{
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidaturas?id=eq.${encodeURIComponent(id)}`,{
+      method:"PATCH",
+      headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${accessToken}`,"Content-Type":"application/json","Prefer":"return=minimal"},
+      body:JSON.stringify({anotacao_interna:note||null,ultima_atividade_at:now})
+    });
+    if(!response.ok) throw new Error(await response.text());
+    candidate.anotacao_interna=note||null;
+    candidateNotes[id]=note;
+    localStorage.setItem("afinco_candidate_notes",JSON.stringify(candidateNotes));
+    await refreshHistory038(id);
+    showToast("✓ Anotação salva no CRM e registrada no histórico.");
+    openDetails(id);
+    renderHistory038();
+  }catch(error){
+    console.error("ALPHA NOTE ERROR:",error);
+    showToast("Não foi possível salvar a anotação no Supabase.");
+  }
 }
-
 
 /* =====================================================
    FECHAR MODAL
@@ -5447,6 +5461,7 @@ async function initialize(){
 
 
 bindCRM037Filters();
+bindCRM038Filters();
 
 /* =====================================================
    START
