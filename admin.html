@@ -2329,7 +2329,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
       <div class="alpha-quickbar" aria-label="Atalhos do Command Center">
         <button type="button" onclick="loadCandidates()">↻ ATUALIZAR</button>
         <button type="button" onclick="alphaJump('alphaKanban')">🐺 KANBAN</button>
-        <button type="button" onclick="alphaJump('alphaInterviewAgenda')">🎯 AGENDA</button>
+        <button type="button" onclick="openAgenda040()">🎯 AGENDA 2.0</button>
         <button type="button" class="alpha-history-open" onclick="openHistory038Modal()">🧠 HISTÓRICO <span id="alphaHistoryQuickCount">0</span></button>
         <button type="button" onclick="alphaJump('candidatesList')">👥 CANDIDATOS</button>
       </div></div>
@@ -2373,20 +2373,45 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
   </section>
 
 
-  <!-- ALPHA CRM — AGENDA -->
-  <section class="alpha-agenda" id="alphaInterviewAgenda">
-    <div class="crm-head">
-      <div>
-        <div class="crm-kicker">CRM // AGENDA OPERACIONAL</div>
-        <div class="crm-title">🎯 Entrevistas selecionadas</div>
-        <div class="crm-sub">Todas as preferências registradas pelos candidatos, organizadas por dia e horário.</div>
-      </div>
-      <div class="crm-live-count" id="crmInterviewTotal">0 entrevistas registradas</div>
+  <!-- ALPHA CRM 040 — AGENDA 2.0 -->
+  <section class="crm040-launcher" id="alphaInterviewAgenda">
+    <div class="crm040-launcher-main">
+      <div class="crm040-kicker">CRM 040 // AGENDA COMMAND</div>
+      <div class="crm040-launcher-title">🎯 Agenda 2.0</div>
+      <div class="crm040-launcher-sub">Entrevistas operacionais da equipe em quatro slots oficiais. Abra a central para confirmar, acompanhar presença, registrar resultado e organizar reagendamentos.</div>
+      <div class="crm040-summary" id="crm040Summary"></div>
     </div>
-    <div class="crm-slots" id="crmInterviewSlots"></div>
+    <div class="crm040-launcher-actions">
+      <button type="button" class="crm040-primary" onclick="openAgenda040()">🎯 ABRIR AGENDA 2.0</button>
+    </div>
   </section>
 
-
+  <div id="crm040Modal" class="crm040-modal" aria-hidden="true">
+    <div class="crm040-shell" role="dialog" aria-modal="true" aria-labelledby="crm040Title">
+      <div class="crm040-head">
+        <div>
+          <div class="crm040-kicker">ALPHA CRM 040 // AGENDA COMMAND</div>
+          <div class="crm040-title" id="crm040Title">🎯 Agenda 2.0</div>
+          <div class="crm040-sub">Operação oficial: terça e quinta · 11:00 e 15:30.</div>
+        </div>
+        <div class="crm040-head-actions">
+          <button type="button" class="crm040-refresh" onclick="renderAgenda040Modal()">↻ ATUALIZAR</button>
+          <button type="button" class="crm040-close" onclick="closeAgenda040()">✕ FECHAR</button>
+        </div>
+      </div>
+      <div class="crm040-kpis" id="crm040Kpis"></div>
+      <div class="crm040-filters" id="crm040Filters">
+        <button type="button" class="crm040-filter active" data-crm040-filter="Todos">TODOS</button>
+        <button type="button" class="crm040-filter" data-crm040-filter="Agendada">🕐 AGENDADAS</button>
+        <button type="button" class="crm040-filter" data-crm040-filter="Confirmada">✅ CONFIRMADAS</button>
+        <button type="button" class="crm040-filter" data-crm040-filter="Compareceu">🏆 COMPARECEU</button>
+        <button type="button" class="crm040-filter" data-crm040-filter="Não compareceu">❌ FALTOU</button>
+        <button type="button" class="crm040-filter" data-crm040-filter="Reagendar">🔄 REAGENDAR</button>
+        <button type="button" class="crm040-filter" data-crm040-filter="Cancelada">⛔ CANCELADAS</button>
+      </div>
+      <div id="crm040Slots" class="crm040-slots"></div>
+    </div>
+  </div>
 
   <!-- ALPHA CRM — KANBAN PRO -->
   <section class="kanban-section" id="alphaKanban">
@@ -3060,6 +3085,15 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 .crm039-launcher-main{min-width:0}.crm039-launcher-title{font-size:21px;font-weight:950;margin-top:4px}.crm039-launcher-sub{font-size:10px;color:#8792a1;margin-top:5px;line-height:1.45;max-width:760px}.crm039-launcher-stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:11px;color:#788493;font-size:9px;font-weight:850}.crm039-launcher-stats b{color:#e5ebf2}.crm039-launcher-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.crm039-new-secondary{background:#0c1118;color:#c9d0d9;border-color:rgba(255,255,255,.10)}
 .crm039-center{position:fixed;inset:0;z-index:9996;background:rgba(3,5,9,.84);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:18px}.crm039-center.open{display:flex}.crm039-center-shell{width:min(1180px,100%);height:min(900px,94vh);overflow:hidden;border:1px solid rgba(214,178,91,.25);border-radius:26px;background:linear-gradient(145deg,#0d121a,#07090e);box-shadow:0 35px 120px rgba(0,0,0,.65);display:flex;flex-direction:column}.crm039-center-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(90deg,rgba(214,178,91,.07),rgba(65,130,255,.035),transparent)}.crm039-center-title{font-size:25px;font-weight:950;margin-top:4px}.crm039-center-sub{font-size:10px;color:#8792a1;margin-top:5px}.crm039-center-head-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.crm039-center .crm039-kpis{flex:none}.crm039-center .crm039-list{overflow:auto;min-height:0;flex:1}.crm039-center .crm039-task{margin-right:2px}
 @media(max-width:800px){.crm039-launcher{align-items:flex-start;flex-direction:column}.crm039-launcher-actions{width:100%;justify-content:flex-start}.crm039-launcher-actions button{flex:1}.crm039-center{padding:0}.crm039-center-shell{width:100%;height:100%;border-radius:0}.crm039-center-head{padding:17px;align-items:flex-start;flex-direction:column}.crm039-center-head-actions{width:100%;justify-content:stretch}.crm039-center-head-actions button{flex:1}.crm039-center-title{font-size:21px}.crm039-center .crm039-kpis{grid-template-columns:repeat(2,1fr)}}
+
+/* =====================================================
+   ALPHA CRM 040 — AGENDA 2.0
+===================================================== */
+.crm040-launcher{margin:0 0 22px;border:1px solid rgba(214,178,91,.22);border-radius:22px;padding:20px 22px;background:linear-gradient(135deg,rgba(214,178,91,.055),rgba(29,92,168,.06),rgba(255,255,255,.012));display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 18px 55px rgba(0,0,0,.2)}
+.crm040-kicker{font-size:10px;letter-spacing:2px;color:#d6b25b;font-weight:950;text-transform:uppercase}.crm040-launcher-title{font-size:22px;font-weight:950;margin-top:4px}.crm040-launcher-sub{font-size:10px;color:#8792a1;margin-top:6px;line-height:1.5;max-width:800px}.crm040-summary{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.crm040-summary span{padding:7px 9px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);color:#8d98a7;font-size:9px;font-weight:850}.crm040-summary span b{color:#dfe6ef}.crm040-summary .crm040-summary-total{color:#d6b25b;border-color:rgba(214,178,91,.18)}.crm040-primary,.crm040-refresh,.crm040-close{border:1px solid rgba(214,178,91,.32);background:linear-gradient(135deg,rgba(214,178,91,.15),rgba(214,178,91,.04));color:#f4d991;border-radius:12px;padding:11px 14px;font:inherit;font-size:10px;font-weight:950;cursor:pointer}.crm040-refresh,.crm040-close{background:#10151d;color:#cbd3dd;border-color:rgba(255,255,255,.10)}
+.crm040-modal{position:fixed;inset:0;z-index:10000;background:rgba(2,4,8,.86);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:18px}.crm040-modal.open{display:flex}.crm040-shell{width:min(1240px,100%);height:min(920px,94vh);display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(214,178,91,.28);border-radius:26px;background:linear-gradient(145deg,#0d121a,#07090e);box-shadow:0 35px 120px rgba(0,0,0,.7)}.crm040-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(90deg,rgba(214,178,91,.08),rgba(29,92,168,.06),transparent)}.crm040-title{font-size:27px;font-weight:950;margin-top:4px}.crm040-sub{font-size:11px;color:#8792a1;margin-top:5px}.crm040-head-actions{display:flex;gap:8px;flex-wrap:wrap}.crm040-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;padding:14px}.crm040-kpis>div{padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.025)}.crm040-kpis span{display:block;color:#8d98a7;font-size:8px;font-weight:950;letter-spacing:.5px}.crm040-kpis b{display:block;color:#fff;font-size:23px;margin-top:6px}.crm040-kpis small{display:block;color:#687484;font-size:8px;margin-top:3px}.crm040-filters{display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 14px}.crm040-filter{border:1px solid rgba(255,255,255,.08);background:#0d1118;color:#aeb8c5;border-radius:999px;padding:8px 11px;font:inherit;font-size:9px;font-weight:900;cursor:pointer}.crm040-filter.active{background:#d6b25b;color:#111;border-color:#d6b25b}.crm040-slots{padding:0 14px 20px;overflow:auto;min-height:0;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px}.crm040-slot{border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.025);overflow:hidden}.crm040-slot-head{display:flex;justify-content:space-between;align-items:center;padding:15px 16px;border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(90deg,rgba(214,178,91,.06),transparent)}.crm040-slot-head b{display:block;font-size:12px}.crm040-slot-head span{display:block;color:#6f7b8b;font-size:9px;margin-top:3px}.crm040-slot-head strong{font-size:21px;color:#d6b25b}.crm040-people{padding:9px}.crm040-person{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:11px;border-radius:13px;border:1px solid rgba(255,255,255,.055);background:rgba(0,0,0,.12);margin-bottom:7px}.crm040-person:last-child{margin-bottom:0}.crm040-avatar{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#1d5ca8,#10151d);color:#fff;font-size:10px;font-weight:950}.crm040-person-main{min-width:0}.crm040-person-main>strong{display:block;color:#f1f4f8;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crm040-person-main>span{display:block;color:#707d8d;font-size:8px;margin-top:4px}.crm040-person-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px}.crm040-person-meta em{font-style:normal;color:#7c8795;font-size:8px}.crm040-status{font-style:normal;display:inline-flex;padding:4px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.08);font-size:8px;font-weight:900}.crm040-status.agendada{color:#d6b25b}.crm040-status.confirmada{color:#70b5ff}.crm040-status.compareceu{color:#63df9b}.crm040-status.nao-compareceu{color:#ff7c86}.crm040-status.reagendar{color:#b28cff}.crm040-status.cancelada{color:#9aa4b2}.crm040-person-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.crm040-person-actions button{border:1px solid rgba(255,255,255,.09);background:#0c1118;color:#c4ccd6;border-radius:8px;padding:7px 8px;font:inherit;font-size:8px;font-weight:900;cursor:pointer}.crm040-person-actions button:hover{border-color:rgba(214,178,91,.35);color:#f4d991}.crm040-empty{padding:35px;text-align:center;color:#667282}.crm040-empty b{display:block;color:#9aa5b4;font-size:10px}.crm040-empty span{display:block;margin-top:5px;font-size:9px}.crm040-detail-status{display:flex;align-items:center;gap:8px;margin:0 0 12px}.crm040-status-pill{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);font-size:9px;font-weight:950}.crm040-detail-status small{color:#737f8e;font-size:9px}.crm040-quick-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.crm040-quick-actions button{border:1px solid rgba(255,255,255,.09);background:#0d1219;color:#bac4cf;border-radius:9px;padding:8px 10px;font:inherit;font-size:8px;font-weight:900;cursor:pointer}.crm040-quick-actions button:hover{color:#f4d991;border-color:rgba(214,178,91,.3)}.crm040-help{margin-top:9px;color:#6f7b8a;font-size:9px;line-height:1.5}.crm040-help b{color:#c9a55d}
+@media(max-width:950px){.crm040-kpis{grid-template-columns:repeat(3,1fr)}.crm040-slots{grid-template-columns:1fr}.crm040-launcher{align-items:flex-start;flex-direction:column}.crm040-launcher-actions{width:100%}.crm040-primary{width:100%}}
+@media(max-width:600px){.crm040-modal{padding:0}.crm040-shell{width:100%;height:100%;border-radius:0}.crm040-head{padding:17px;align-items:flex-start;flex-direction:column}.crm040-head-actions{width:100%}.crm040-head-actions button{flex:1}.crm040-kpis{grid-template-columns:1fr 1fr;padding:10px}.crm040-filters{padding-left:10px;padding-right:10px}.crm040-slots{padding:0 10px 16px}.crm040-person{grid-template-columns:34px 1fr}.crm040-person-actions{grid-column:2;justify-content:flex-start}.crm040-title{font-size:22px}.crm040-summary{gap:5px}}
 </style>
 
 <script>
@@ -3156,32 +3190,92 @@ function crmInitials(name){
   const parts=String(name||"Candidato").trim().split(/\s+/).filter(Boolean);
   return ((parts[0]?.[0]||"")+(parts.length>1?parts[parts.length-1][0]:"" )).toUpperCase().slice(0,2)||"CA";
 }
+function crm040Slots(){
+  return [
+    {day:'Terça-feira',time:'11:00',label:'TERÇA · 11H'},
+    {day:'Terça-feira',time:'15:30',label:'TERÇA · 15H30'},
+    {day:'Quinta-feira',time:'11:00',label:'QUINTA · 11H'},
+    {day:'Quinta-feira',time:'15:30',label:'QUINTA · 15H30'}
+  ];
+}
+function crm040StatusClass(status){
+  return String(status||'Agendada').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
+}
+function crm040StatusIcon(status){
+  return ({'Agendada':'🕐','Confirmada':'✅','Compareceu':'🏆','Não compareceu':'❌','Reagendar':'🔄','Cancelada':'⛔'}[status||'Agendada']||'🕐');
+}
+function crm040Status(candidate){ return candidate.entrevista_status || (candidate.entrevista_dia&&candidate.entrevista_horario ? 'Agendada' : 'Sem entrevista'); }
 function renderInterviewAgenda(){
-  const slotsEl=document.getElementById("crmInterviewSlots");
-  const totalEl=document.getElementById("crmInterviewTotal");
-  if(!slotsEl) return;
+  const summary=document.getElementById('crm040Summary');
   const active=activeCandidates();
   const scheduled=active.filter(c=>c.entrevista_dia&&c.entrevista_horario);
-  if(totalEl) totalEl.textContent=`${scheduled.length} entrevista${scheduled.length===1?"":"s"} registrada${scheduled.length===1?"":"s"}`;
-
-  // AGENDA OPERACIONAL FIXA: somente TERÇA e QUINTA.
-  // A data exata não faz parte da operação do painel. O dia da semana é a referência.
-  const slots=[
-    {day:'Terça-feira', key:'Terça-feira', time:'11:00', label:'TERÇA · 11H'},
-    {day:'Terça-feira', key:'Terça-feira', time:'15:30', label:'TERÇA · 15H30'},
-    {day:'Quinta-feira', key:'Quinta-feira', time:'11:00', label:'QUINTA · 11H'},
-    {day:'Quinta-feira', key:'Quinta-feira', time:'15:30', label:'QUINTA · 15H30'}
-  ];
-  let html=`<div class="crm-week-focus"><div><b>⚡ AGENDA OPERACIONAL</b><span>Entrevistas oficiais da equipe</span></div><strong>TERÇA + QUINTA</strong></div>`;
-  html+=slots.map(slot=>{
-    const people=active.filter(c=>String(c.entrevista_dia||'').replace('-feira','-feira')===slot.key && String(c.entrevista_horario)===slot.time).sort((a,b)=>new Date(a.created_at||0)-new Date(b.created_at||0));
-    return `<div class="crm-slot"><div class="crm-slot-head"><div><div class="crm-slot-day">${escapeHTML(slot.day)}</div><div class="crm-slot-count">${people.length} selecionado${people.length===1?"":"s"}</div></div><div class="crm-slot-time">${slot.time.replace(":","h")}</div></div><div class="crm-slot-body">${people.length?people.map(c=>`<div class="crm-person" onclick="openDetails('${escapeHTML(c.id)}')"><div class="crm-avatar">${crmInitials(c.nome_completo)}</div><div style="min-width:0"><strong>${escapeHTML(c.nome_completo||"Candidato")}</strong><span>${escapeHTML(c.status||"Novo")} · ${escapeHTML(c.telefone||"sem telefone")}</span></div></div>`).join(""):`<div class="crm-empty"><b>${escapeHTML(slot.label)}</b>Nenhuma entrevista agendada.</div>`}</div></div>`;
-  }).join('');
-  const legacy=active.filter(c=>c.entrevista_horario && c.entrevista_dia && !['Terça-feira','Quinta-feira'].includes(c.entrevista_dia));
-  if(legacy.length){
-    html+=`<div class="crm-slot"><div class="crm-slot-head"><div><div class="crm-slot-day">REGISTROS PARA REVISAR</div><div class="crm-slot-count">${legacy.length} registro${legacy.length===1?'':'s'}</div></div><div class="crm-slot-time">ATENÇÃO</div></div><div class="crm-slot-body">${legacy.map(c=>`<div class="crm-person" onclick="openDetails('${escapeHTML(c.id)}')"><div class="crm-avatar">${crmInitials(c.nome_completo)}</div><div style="min-width:0"><strong>${escapeHTML(c.nome_completo||"Candidato")}</strong><span>${escapeHTML(c.entrevista_dia||"")} · ${escapeHTML(c.entrevista_horario||"")}</span></div></div>`).join('')}</div></div>`;
+  const counts={};
+  crm040Slots().forEach(s=>counts[`${s.day}|${s.time}`]=active.filter(c=>c.entrevista_dia===s.day&&c.entrevista_horario===s.time).length);
+  if(summary){
+    summary.innerHTML=crm040Slots().map(s=>`<span><b>${escapeHTML(s.day.replace('-feira',''))} ${s.time.replace(':','h')}</b> ${counts[`${s.day}|${s.time}`]}</span>`).join('') + `<span class="crm040-summary-total">🎯 ${scheduled.length} entrevistas</span>`;
   }
-  slotsEl.innerHTML=html;
+  if(document.getElementById('crm040Modal')?.classList.contains('open')) renderAgenda040Modal();
+}
+function crm040FilteredPeople(filter){
+  const active=activeCandidates();
+  return active.filter(c=>{
+    if(!c.entrevista_dia||!c.entrevista_horario) return false;
+    const st=crm040Status(c);
+    return filter==='Todos'||st===filter;
+  });
+}
+function renderAgenda040Modal(){
+  const slotsEl=document.getElementById('crm040Slots'); if(!slotsEl) return;
+  const filter=window.crm040Filter||'Todos';
+  const active=activeCandidates();
+  const scheduled=active.filter(c=>c.entrevista_dia&&c.entrevista_horario);
+  const counts={Agendada:0,Confirmada:0,Compareceu:0,'Não compareceu':0,Reagendar:0,Cancelada:0};
+  scheduled.forEach(c=>{const st=crm040Status(c);if(counts[st]!==undefined)counts[st]++;});
+  const k=document.getElementById('crm040Kpis');
+  if(k) k.innerHTML=`<div><span>🎯 TOTAL</span><b>${scheduled.length}</b><small>entrevistas</small></div><div><span>🕐 AGENDADAS</span><b>${counts.Agendada}</b><small>aguardando confirmação</small></div><div><span>✅ CONFIRMADAS</span><b>${counts.Confirmada}</b><small>presença confirmada</small></div><div><span>🏆 COMPARECERAM</span><b>${counts.Compareceu}</b><small>entrevistas realizadas</small></div><div><span>❌ FALTAS</span><b>${counts['Não compareceu']}</b><small>não compareceram</small></div><div><span>🔄 REAGENDAR</span><b>${counts.Reagendar}</b><small>pedem nova agenda</small></div>`;
+  const peopleForSlot=(slot)=>active.filter(c=>c.entrevista_dia===slot.day&&c.entrevista_horario===slot.time&&(filter==='Todos'||crm040Status(c)===filter)).sort((a,b)=>new Date(a.created_at||0)-new Date(b.created_at||0));
+  slotsEl.innerHTML=crm040Slots().map(slot=>{
+    const people=peopleForSlot(slot);
+    const totalSlot=active.filter(c=>c.entrevista_dia===slot.day&&c.entrevista_horario===slot.time).length;
+    return `<div class="crm040-slot"><div class="crm040-slot-head"><div><b>${escapeHTML(slot.day)}</b><span>${totalSlot} agendada${totalSlot===1?'':'s'} neste horário</span></div><strong>${slot.time.replace(':','h')}</strong></div><div class="crm040-people">${people.length?people.map(c=>{
+      const st=crm040Status(c);
+      return `<div class="crm040-person"><div class="crm040-avatar">${crmInitials(c.nome_completo)}</div><div class="crm040-person-main"><strong>${escapeHTML(c.nome_completo||'Candidato')}</strong><span>${escapeHTML(c.telefone||'sem telefone')} · ${escapeHTML(c.responsavel||'ALPHA')}</span><div class="crm040-person-meta"><i class="crm040-status ${crm040StatusClass(st)}">${crm040StatusIcon(st)} ${escapeHTML(st)}</i>${c.entrevista_observacao?`<em>${escapeHTML(c.entrevista_observacao)}</em>`:''}</div></div><div class="crm040-person-actions"><button onclick="openDetails('${escapeHTML(c.id)}')">VER FICHA</button>${st==='Agendada'?`<button onclick="setInterviewStatus040('${escapeHTML(c.id)}','Confirmada')">✓ CONFIRMAR</button>`:''}${st==='Confirmada'?`<button onclick="setInterviewStatus040('${escapeHTML(c.id)}','Compareceu')">🏆 COMPARECEU</button><button onclick="setInterviewStatus040('${escapeHTML(c.id)}','Não compareceu')">❌ FALTOU</button>`:''}${st!=='Cancelada'&&st!=='Compareceu'?`<button onclick="setInterviewStatus040('${escapeHTML(c.id)}','Reagendar')">🔄 REAGENDAR</button>`:''}</div></div>`;
+    }).join(''):`<div class="crm040-empty"><b>${escapeHTML(slot.day)} · ${escapeHTML(slot.time)}</b><span>${filter==='Todos'?'Nenhuma entrevista neste slot.':'Nenhuma entrevista com este status.'}</span></div>`}</div></div>`;
+  }).join('');
+}
+function openAgenda040(){
+  const modal=document.getElementById('crm040Modal'); if(!modal) return;
+  window.crm040Filter='Todos';
+  document.querySelectorAll('[data-crm040-filter]').forEach(b=>b.classList.toggle('active',b.dataset.crm040Filter==='Todos'));
+  renderAgenda040Modal(); modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+}
+function closeAgenda040(){
+  const modal=document.getElementById('crm040Modal'); if(!modal)return;
+  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+  const taskOpen=document.getElementById('crm039TaskModal')?.classList.contains('open'); const historyOpen=document.getElementById('crm038Modal')?.classList.contains('open'); const detailsOpen=document.getElementById('detailsOverlay')?.style.display==='flex';
+  if(!taskOpen&&!historyOpen&&!detailsOpen) document.body.style.overflow='';
+}
+async function saveInterview040(id){
+  const candidate=candidates.find(c=>String(c.id)===String(id)); if(!candidate)return;
+  const dia=document.getElementById('crmInterviewDay')?.value||''; const horario=document.getElementById('crmInterviewTime')?.value||''; const status=document.getElementById('crmInterviewStatus')?.value||'Agendada'; const observacao=(document.getElementById('crmInterviewNote')?.value||'').trim()||null;
+  if(!dia||!horario){showToast('Escolha o dia e o horário.');return;}
+  if(!['Terça-feira','Quinta-feira'].includes(dia)||!['11:00','15:30'].includes(horario)){showToast('Use somente terça/quinta e 11:00/15:30.');return;}
+  const body={entrevista_data:null,entrevista_dia:dia,entrevista_horario:horario,entrevista_status:status,entrevista_observacao:observacao,entrevista_confirmada_at:status==='Confirmada'?(candidate.entrevista_confirmada_at||new Date().toISOString()):candidate.entrevista_confirmada_at,ultima_atividade_at:new Date().toISOString()};
+  try{
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidaturas?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(body)});
+    const raw=await response.text(); if(!response.ok) throw new Error(raw||`SUPABASE ${response.status}`);
+    Object.assign(candidate,body); renderInterviewAgenda(); renderKanban(); applyFilters(); updateDashboard(); updateAnalytics(); await refreshHistory038(id); openDetails(id); showToast('✓ Agenda 2.0 salva e registrada no histórico.');
+  }catch(error){console.error('CRM040 SAVE AGENDA ERROR:',error);showToast('Não foi possível salvar a agenda 2.0.');}
+}
+async function setInterviewStatus040(id,status){
+  const candidate=candidates.find(c=>String(c.id)===String(id)); if(!candidate)return;
+  const now=new Date().toISOString();
+  try{
+    const body={entrevista_status:status,entrevista_confirmada_at:status==='Confirmada'?(candidate.entrevista_confirmada_at||now):candidate.entrevista_confirmada_at,ultima_atividade_at:now};
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/candidaturas?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(body)});
+    const raw=await response.text(); if(!response.ok) throw new Error(raw||`SUPABASE ${response.status}`);
+    Object.assign(candidate,body); renderInterviewAgenda(); renderKanban(); applyFilters(); updateDashboard(); updateAnalytics(); await refreshHistory038(id); if(document.getElementById('crm040Modal')?.classList.contains('open'))renderAgenda040Modal(); if(document.getElementById('detailsOverlay')?.style.display==='flex')openDetails(id); showToast(`✓ Entrevista: ${status}.`);
+  }catch(error){console.error('CRM040 STATUS ERROR:',error);showToast('Não foi possível atualizar o status da entrevista.');}
 }
 
 /* =====================================================
@@ -3268,7 +3362,7 @@ function renderKanban(){
             <div class="kanban-card-meta">
               <span class="kanban-chip">${crm037Priority(c)==="Quente"?"🔥":crm037Priority(c)==="Frio"?"❄️":"🟡"} ${escapeHTML(crm037Priority(c))}</span>
               <span class="kanban-chip">📍 ${escapeHTML(c.como_soube||"Origem n/i")}</span>
-              <span class="kanban-chip">${c.entrevista_dia&&c.entrevista_horario?"🎯":"○"} ${escapeHTML(interview)}</span>
+              <span class="kanban-chip">${c.entrevista_dia&&c.entrevista_horario?"🎯":"○"} ${escapeHTML(interview)}${c.entrevista_dia&&c.entrevista_horario?` · ${crm040StatusIcon(crm040Status(c))} ${escapeHTML(crm040Status(c))}`:''}</span>
             </div>
             <div class="crm037-cardline">${crm037FormatAction(c)}<span class="kanban-chip">👤 ${escapeHTML(c.responsavel||"ALPHA")}</span></div>
             ${crm039RenderKanbanTaskSummary(c.id)}
@@ -3507,6 +3601,16 @@ function bindCRM039(){
   document.getElementById('crm039TaskModal')?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeTask039Modal();});
   document.getElementById('crm039Center')?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeTasks039Center();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('crm039TaskModal')?.classList.contains('open')) closeTask039Modal(); else if(document.getElementById('crm039Center')?.classList.contains('open')) closeTasks039Center();}});
+}
+
+function bindCRM040(){
+  document.querySelectorAll('[data-crm040-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+    window.crm040Filter=btn.dataset.crm040Filter;
+    document.querySelectorAll('[data-crm040-filter]').forEach(b=>b.classList.toggle('active',b===btn));
+    renderAgenda040Modal();
+  }));
+  document.getElementById('crm040Modal')?.addEventListener('click',e=>{if(e.target===e.currentTarget)closeAgenda040();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('crm040Modal')?.classList.contains('open'))closeAgenda040();});
 }
 
 /* =====================================================
@@ -5303,8 +5407,12 @@ function openDetails(id){
 
 
     <section class="detail-section">
-      <div class="detail-section-title">🎯 Agenda de entrevista — gestão interna</div>
+      <div class="detail-section-title">🎯 Agenda 2.0 — gestão interna</div>
       <div class="crm-agenda-internal-badge">⚡ AGENDA OFICIAL · TERÇA OU QUINTA</div>
+      <div class="crm040-detail-status">
+        <span class="crm040-status-pill ${crm040StatusClass(candidate.entrevista_status)}">${crm040StatusIcon(candidate.entrevista_status)} ${escapeHTML(candidate.entrevista_status || (candidate.entrevista_dia ? "Agendada" : "Sem entrevista"))}</span>
+        ${candidate.entrevista_confirmada_at ? `<small>Confirmada em ${escapeHTML(formatDate(candidate.entrevista_confirmada_at))}</small>` : ''}
+      </div>
       <div class="crm037-editor">
         <div class="crm037-field"><label>Dia da entrevista</label><select id="crmInterviewDay">
           <option value="">Selecione o dia</option>
@@ -5312,11 +5420,26 @@ function openDetails(id){
           <option value="Quinta-feira" ${candidate.entrevista_dia==='Quinta-feira'?'selected':''}>Quinta-feira</option>
         </select></div>
         <div class="crm037-field"><label>Horário</label><select id="crmInterviewTime"><option value="">Selecione o horário</option><option value="11:00" ${candidate.entrevista_horario==='11:00'?'selected':''}>11:00</option><option value="15:30" ${candidate.entrevista_horario==='15:30'?'selected':''}>15:30</option></select></div>
+        <div class="crm037-field"><label>Status da entrevista</label><select id="crmInterviewStatus">
+          <option value="Agendada" ${(candidate.entrevista_status||'Agendada')==='Agendada'?'selected':''}>🕐 Agendada</option>
+          <option value="Confirmada" ${candidate.entrevista_status==='Confirmada'?'selected':''}>✅ Confirmada</option>
+          <option value="Compareceu" ${candidate.entrevista_status==='Compareceu'?'selected':''}>🏆 Compareceu</option>
+          <option value="Não compareceu" ${candidate.entrevista_status==='Não compareceu'?'selected':''}>❌ Não compareceu</option>
+          <option value="Reagendar" ${candidate.entrevista_status==='Reagendar'?'selected':''}>🔄 Reagendar</option>
+          <option value="Cancelada" ${candidate.entrevista_status==='Cancelada'?'selected':''}>⛔ Cancelada</option>
+        </select></div>
+        <div class="crm037-field"><label>Observação da entrevista</label><input id="crmInterviewNote" value="${escapeHTML(candidate.entrevista_observacao||'')}" placeholder="Ex.: confirmou, faltou, pediu novo horário..."></div>
       </div>
-      <button class="crm037-save" type="button" onclick="saveInterview037('${escapeHTML(candidate.id)}')">📅 Salvar entrevista na agenda</button>
-      <div style="margin-top:10px;color:#8e99a8;font-size:12px;font-weight:700">A agenda do processo trabalha somente com <b>terça-feira ou quinta-feira</b>, nos horários <b>11:00 ou 15:30</b>. Sem calendário e sem seleção de outras datas.</div>
+      <button class="crm037-save" type="button" onclick="saveInterview040('${escapeHTML(candidate.id)}')">💾 Salvar agenda 2.0</button>
+      <div class="crm040-quick-actions">
+        <button type="button" onclick="setInterviewStatus040('${escapeHTML(candidate.id)}','Confirmada')">✅ Confirmar</button>
+        <button type="button" onclick="setInterviewStatus040('${escapeHTML(candidate.id)}','Compareceu')">🏆 Compareceu</button>
+        <button type="button" onclick="setInterviewStatus040('${escapeHTML(candidate.id)}','Não compareceu')">❌ Faltou</button>
+        <button type="button" onclick="setInterviewStatus040('${escapeHTML(candidate.id)}','Reagendar')">🔄 Reagendar</button>
+        <button type="button" onclick="setInterviewStatus040('${escapeHTML(candidate.id)}','Cancelada')">⛔ Cancelar</button>
+      </div>
+      <div class="crm040-help">A operação trabalha somente com <b>terça-feira ou quinta-feira</b>, nos horários <b>11:00 ou 15:30</b>. Não existe calendário nem outras datas.</div>
     </section>
-
 
     <section class="detail-section">
 
@@ -5847,6 +5970,7 @@ async function initialize(){
 bindCRM037Filters();
 bindCRM038Filters();
 bindCRM039();
+  bindCRM040();
 
 /* =====================================================
    START
