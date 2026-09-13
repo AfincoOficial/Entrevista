@@ -1,0 +1,46 @@
+name: Gerar APK ALPHA CRM
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Preparar projeto Android
+        run: |
+          unzip -q APK-ANDROID-047.zip -d android-project
+          echo "Conteúdo encontrado:"
+          find android-project -maxdepth 3 -type f | head -50
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Configurar Android
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar Android SDK
+        run: |
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Gerar APK
+        working-directory: android-project/APK-ANDROID
+        run: gradle assembleDebug --stacktrace
+
+      - name: Disponibilizar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ALPHA-CRM-APK
+          path: android-project/APK-ANDROID/app/build/outputs/apk/debug/app-debug.apk
