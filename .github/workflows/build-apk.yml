@@ -28,6 +28,7 @@ jobs:
           rm -rf android-project
           mkdir -p android-project
           unzip -q APK-ANDROID-047.zip -d android-project
+
           test -d android-project/APK-ANDROID
           test -f android-project/APK-ANDROID/settings.gradle
           test -f android-project/APK-ANDROID/app/src/main/AndroidManifest.xml
@@ -36,12 +37,14 @@ jobs:
         working-directory: android-project/APK-ANDROID
         run: |
           set -euxo pipefail
+
           cat > build.gradle <<'EOF'
           plugins {
               id 'com.android.application' version '8.6.1' apply false
               id 'org.jetbrains.kotlin.android' version '2.0.21' apply false
           }
           EOF
+
           cat > app/build.gradle <<'EOF'
           plugins {
               id 'com.android.application'
@@ -78,23 +81,27 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      # Não usamos android-actions/setup-android@v3.
-      # Na execução anterior, essa action tentou executar "sdkmanager tools".
-      # O pacote "tools" não existe mais no repositório atual do Android SDK.
       - name: Preparar Android SDK
         shell: bash
         run: |
           set -euxo pipefail
+
           export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
           export ANDROID_HOME="$ANDROID_SDK_ROOT"
+
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
           echo "ANDROID_HOME=$ANDROID_HOME" >> "$GITHUB_ENV"
 
           SDKMANAGER="$(find "$ANDROID_SDK_ROOT/cmdline-tools" -type f -path '*/bin/sdkmanager' | sort -V | tail -1)"
+
           test -x "$SDKMANAGER"
 
           yes | "$SDKMANAGER" --licenses >/dev/null || true
-          "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+          "$SDKMANAGER" \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
 
           echo "=== SDK INSTALADO ==="
           "$SDKMANAGER" --list_installed | sed -n '1,160p'
@@ -114,17 +121,26 @@ jobs:
         working-directory: android-project/APK-ANDROID
         run: |
           set -euxo pipefail
+
           java -version
           gradle --version
+
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
           echo "ANDROID_HOME=$ANDROID_HOME"
+
           find . -maxdepth 5 -type f | sort | head -250
 
       - name: Gerar APK 048
         working-directory: android-project/APK-ANDROID
         run: |
           set -o pipefail
-          gradle clean assembleDebug --no-daemon --no-watch-fs --refresh-dependencies --stacktrace --info 2>&1 | tee "$GITHUB_WORKSPACE/gradle-build.log"
+
+          gradle clean assembleDebug \
+            --no-daemon \
+            --no-watch-fs \
+            --refresh-dependencies \
+            --stacktrace \
+            --info 2>&1 | tee "$GITHUB_WORKSPACE/gradle-build.log"
 
       - name: Publicar log do Gradle
         if: always()
