@@ -1115,6 +1115,32 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
 @keyframes alphaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media(max-width:700px){.hero:after{width:300px;height:300px;right:-180px;top:26%}.hero-content{padding:70px 0 90px}section{padding:88px 0}.hero h1{font-size:clamp(43px,13vw,66px)}}
 
+
+/* =========================================================
+   ALPHA CRM 052 — PUBLIC EXPERIENCE / PREMIUM POLISH
+   ========================================================= */
+:root{--afinco-gold:#d7b56d;--afinco-gold-light:#f5dfa2;--afinco-ink:#07090d;--afinco-panel:#0e131b;--afinco-border:rgba(215,181,109,.22)}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(circle at 50% -10%,rgba(215,181,109,.12),transparent 32%),#07090d;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 0 46%,rgba(255,255,255,.018) 50%,transparent 54%);opacity:.45;z-index:-1}
+header{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(7,9,13,.84)!important;border-bottom:1px solid rgba(215,181,109,.14);box-shadow:0 10px 35px rgba(0,0,0,.22);position:sticky!important;top:0;z-index:50}
+header .menu a{transition:transform .2s ease,color .2s ease,opacity .2s ease}
+header .menu a:hover{transform:translateY(-1px);color:var(--afinco-gold-light);opacity:1}
+.hero{position:relative;isolation:isolate;overflow:hidden}
+.hero:after{content:"";position:absolute;width:420px;height:420px;right:-180px;top:-140px;border-radius:50%;background:radial-gradient(circle,rgba(215,181,109,.22),transparent 68%);filter:blur(4px);z-index:-1}
+.hero h1{letter-spacing:-.035em;text-wrap:balance}
+.hero p{max-width:760px}
+section:not(.hero):not(.section-dark):not(.final-cta):not(.mega-candidate-cta){position:relative}
+section:not(.hero):not(.section-dark):not(.final-cta):not(.mega-candidate-cta) .card,section:not(.hero):not(.section-dark):not(.final-cta):not(.mega-candidate-cta) article{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+section:not(.hero):not(.section-dark):not(.final-cta):not(.mega-candidate-cta) .card:hover,section:not(.hero):not(.section-dark):not(.final-cta):not(.mega-candidate-cta) article:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:var(--afinco-border)}
+.mega-candidate-cta,.final-cta{box-shadow:inset 0 1px rgba(255,255,255,.04),0 25px 70px rgba(0,0,0,.22)}
+.primary-button,.cta-button,button[type=submit]{box-shadow:0 12px 30px rgba(215,181,109,.16);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+.primary-button:hover,.cta-button:hover,button[type=submit]:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 16px 38px rgba(215,181,109,.24)}
+input,select,textarea{transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
+input:focus,select:focus,textarea:focus{border-color:rgba(215,181,109,.72)!important;box-shadow:0 0 0 4px rgba(215,181,109,.09)!important;outline:none}
+footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180deg,#080b10,#05070a)}
+@media(max-width:700px){header{position:sticky!important}.hero h1{font-size:clamp(2.2rem,10vw,4rem)}.hero{padding-top:34px}.primary-button,.cta-button,button[type=submit]{width:100%}}
+
 </style>
 </head>
 
