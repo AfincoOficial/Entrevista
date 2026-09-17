@@ -24,11 +24,12 @@
   <meta property="og:image" content="https://afincooficial.github.io/Entrevista/afinco-social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="AFINCO IMÓVEIS — Faça parte do extraordinário">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Afinco Imóveis | Faça Parte do Extraordinário">
   <meta name="twitter:description" content="Conheça a oportunidade e candidate-se para fazer parte da Afinco Imóveis.">
   <meta name="twitter:image" content="https://afincooficial.github.io/Entrevista/afinco-social-card.png">
+  <meta property="og:url" content="https://afincooficial.github.io/Entrevista/">
+  <meta property="og:image:alt" content="AFINCO IMÓVEIS — Faça parte do extraordinário">
   <meta name="twitter:image:alt" content="AFINCO IMÓVEIS — Faça parte do extraordinário">
 
   <style>
@@ -1063,6 +1064,27 @@
       }
     }
 
+
+    /* PERFIL PROFISSIONAL 052 */
+    .professional-divider{grid-column:1/-1;margin-top:10px;padding:22px 0 4px;border-top:1px solid rgba(245,197,66,.22)}
+    .professional-divider small{display:block;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px}
+    .professional-divider h3{font-size:22px;text-transform:uppercase;margin-bottom:7px}
+    .professional-divider p{color:#999;font-size:13px}
+    .success-overlay{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.82);backdrop-filter:blur(12px)}
+    .success-overlay.show{display:flex;animation:successFade .25s ease both}
+    .success-card{position:relative;width:min(620px,100%);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#171717,#070707);border:1px solid rgba(245,197,66,.48);border-radius:24px;padding:38px;box-shadow:0 35px 100px rgba(0,0,0,.65),0 0 45px rgba(245,197,66,.10);text-align:center}
+    .success-close{position:absolute;top:14px;right:16px;width:38px;height:38px;border-radius:50%;border:1px solid #333;background:#0b0b0b;color:#aaa;cursor:pointer;font-size:20px}
+    .success-icon{width:76px;height:76px;margin:0 auto 20px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--gold);color:var(--gold);font-size:34px;box-shadow:0 0 35px rgba(245,197,66,.16)}
+    .success-eyebrow{color:var(--gold);font-size:12px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase}
+    .success-card h2{font-size:clamp(30px,5vw,46px);line-height:1;text-transform:uppercase;margin:10px 0 18px}.success-card h2 span{color:var(--gold)}
+    .success-recruiter{margin:20px 0;padding:20px;border-radius:16px;background:#0c0c0c;border:1px solid rgba(245,197,66,.22)}
+    .success-recruiter small{display:block;color:#888;font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase}.success-recruiter strong{display:block;color:white;font-size:24px;margin-top:4px}.success-recruiter em{color:var(--gold);font-style:normal;font-weight:800;font-size:13px}
+    .success-message{color:#c5c5c5;font-size:15px;line-height:1.7}.success-protocol{margin:22px 0;padding:15px;border:1px dashed rgba(245,197,66,.45);border-radius:12px;background:rgba(245,197,66,.04)}
+    .success-protocol small{display:block;color:#777;font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase}.success-protocol strong{display:block;color:var(--gold);font-size:20px;letter-spacing:1.5px;margin-top:4px}
+    .success-actions{display:flex;gap:12px;margin-top:20px}.success-actions a,.success-actions button{flex:1;min-height:52px}.success-dismiss{background:transparent;color:#ddd;border:1px solid #333;border-radius:8px;cursor:pointer;font-weight:800;text-transform:uppercase;font-size:12px}
+    @keyframes successFade{from{opacity:0}to{opacity:1}}
+    @media(max-width:600px){.success-card{padding:30px 20px;border-radius:18px}.success-actions{flex-direction:column}}
+
   </style>
 <style>
 
@@ -1093,35 +1115,7 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
 @keyframes alphaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media(max-width:700px){.hero:after{width:300px;height:300px;right:-180px;top:26%}.hero-content{padding:70px 0 90px}section{padding:88px 0}.hero h1{font-size:clamp(43px,13vw,66px)}}
 
-
-    /* =========================
-       CANDIDATURA RECEBIDA — ALPHA CRM 052
-    ========================= */
-    .success-overlay{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.78);backdrop-filter:blur(18px);}
-    .success-overlay.is-open{display:flex;animation:successFade .25s ease both;}
-    .success-modal{position:relative;width:min(620px,100%);padding:34px;border:1px solid rgba(245,197,66,.35);border-radius:24px;background:linear-gradient(145deg,#151515,#060708);box-shadow:0 35px 100px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden;}
-    .success-modal:before{content:"";position:absolute;width:280px;height:280px;right:-150px;top:-150px;border-radius:50%;background:rgba(245,197,66,.12);filter:blur(8px);pointer-events:none;}
-    .success-icon{width:68px;height:68px;display:grid;place-items:center;margin-bottom:20px;border-radius:20px;border:1px solid rgba(84,227,154,.42);background:rgba(84,227,154,.09);color:var(--green);font-size:32px;font-weight:900;box-shadow:0 0 35px rgba(84,227,154,.12);}
-    .success-kicker{margin-bottom:8px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;}
-    .success-modal h2{margin:0 0 12px;font-size:clamp(30px,6vw,48px);line-height:.98;text-transform:uppercase;letter-spacing:-.04em;}
-    .success-modal h2 span{color:var(--gold);}
-    .success-copy{color:#c5cbd3;font-size:15px;line-height:1.65;margin-bottom:24px;}
-    .success-recruiter{padding:18px;border:1px solid rgba(245,197,66,.22);border-radius:16px;background:rgba(245,197,66,.055);margin-bottom:18px;}
-    .success-label{display:block;margin-bottom:5px;color:#8f949c;font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;}
-    .success-recruiter strong{display:block;font-size:21px;color:#fff;}
-    .success-recruiter small{display:block;margin-top:2px;color:var(--gold);font-weight:800;}
-    .success-protocol{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:14px 16px;border:1px dashed rgba(255,255,255,.14);border-radius:13px;margin-bottom:18px;color:#aeb4bd;font-size:12px;}
-    .success-protocol b{color:#fff;font-size:14px;letter-spacing:.08em;}
-    .success-preference{margin:0 0 24px;color:#aeb4bd;font-size:13px;}
-    .success-preference b{color:#fff;}
-    .success-actions{display:flex;gap:10px;flex-wrap:wrap;}
-    .success-actions button,.success-actions a{flex:1;min-width:180px;border:none;cursor:pointer;text-align:center;}
-    .success-close{position:absolute;right:16px;top:14px;width:40px;height:40px;border:1px solid rgba(255,255,255,.12);border-radius:50%;background:rgba(255,255,255,.04);color:#fff;cursor:pointer;font-size:20px;}
-    .success-close:hover{border-color:var(--gold);color:var(--gold);}
-    body.success-locked{overflow:hidden;}
-    @keyframes successFade{from{opacity:0}to{opacity:1}}
-    @media(max-width:600px){.success-modal{padding:27px 20px}.success-actions{flex-direction:column}.success-actions button,.success-actions a{width:100%;min-width:0}.success-protocol{align-items:flex-start;flex-direction:column;gap:6px;}}
-  </style>
+</style>
 </head>
 
 <body>
@@ -2143,6 +2137,33 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
               </div>
 
 
+              <div class="professional-divider">
+                <small>Perfil profissional</small>
+                <h3>Mostre quem você é profissionalmente</h3>
+                <p>Essas informações ajudam nossa equipe a conhecer melhor sua trajetória e sua presença profissional.</p>
+              </div>
+
+              <div class="field">
+                <label for="site">Site profissional</label>
+                <input id="site" name="site" type="url" inputmode="url" autocomplete="url" placeholder="https://seusite.com">
+              </div>
+              <div class="field">
+                <label for="linkedin">LinkedIn</label>
+                <input id="linkedin" name="linkedin" type="url" inputmode="url" autocomplete="url" placeholder="https://linkedin.com/in/seuperfil">
+              </div>
+              <div class="field">
+                <label for="instagram">Instagram</label>
+                <input id="instagram" name="instagram" type="url" inputmode="url" autocomplete="url" placeholder="https://instagram.com/seuperfil">
+              </div>
+              <div class="field full">
+                <label for="apresentacao_profissional">Apresentação profissional</label>
+                <textarea id="apresentacao_profissional" name="apresentacao_profissional" placeholder="Conte um pouco sobre você, seus objetivos e sua trajetória profissional..."></textarea>
+              </div>
+              <div class="field full">
+                <label for="experiencia_profissional">Experiência profissional</label>
+                <textarea id="experiencia_profissional" name="experiencia_profissional" placeholder="Descreva suas principais experiências, funções, resultados ou áreas em que já atuou..."></textarea>
+              </div>
+
               <div class="field full">
 
                 <label for="motivo">
@@ -2184,29 +2205,19 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
   </main>
 
 
-  <!-- =========================
-       CONFIRMAÇÃO DE CANDIDATURA — ALPHA CRM 052
-  ========================= -->
-  <div class="success-overlay" id="successOverlay" aria-hidden="true">
-    <div class="success-modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
-      <button type="button" class="success-close" id="successClose" aria-label="Fechar confirmação">×</button>
+  <div class="success-overlay" id="successOverlay" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="success-card">
+      <button type="button" class="success-close" id="successClose" aria-label="Fechar">×</button>
       <div class="success-icon">✓</div>
-      <div class="success-kicker">Candidatura recebida</div>
-      <h2 id="successTitle">Tudo certo.<br><span>Seu perfil chegou.</span></h2>
-      <p class="success-copy">Sua candidatura foi registrada com sucesso. O <strong>Gerente Lucas Nascimento</strong> irá analisar seu perfil e entrar em contato com você caso seu perfil avance para a próxima etapa.</p>
-      <div class="success-recruiter">
-        <span class="success-label">Recrutador responsável</span>
-        <strong>Lucas Nascimento</strong>
-        <small>Gerente</small>
-      </div>
-      <div class="success-protocol">
-        <span>Protocolo da candidatura</span>
-        <b id="successProtocol">ALPHA-2026-0000</b>
-      </div>
-      <p class="success-preference" id="successPreference"></p>
+      <div class="success-eyebrow">Processo seletivo Afinco</div>
+      <h2 id="successTitle">Candidatura <span>recebida</span></h2>
+      <p class="success-message">Seu cadastro foi recebido com sucesso.</p>
+      <div class="success-recruiter"><small>Recrutador responsável</small><strong>Lucas Nascimento</strong><em>Gerente</em></div>
+      <p class="success-message">O Gerente Lucas Nascimento irá analisar seu perfil e entrar em contato com você caso seu perfil avance para a próxima etapa.</p>
+      <div class="success-protocol"><small>Seu protocolo</small><strong id="successProtocol">ALPHA-2026-0000</strong></div>
       <div class="success-actions">
-        <a class="primary-button" href="https://wa.me/5541998969919?text=Ol%C3%A1!%20Enviei%20minha%20candidatura%20para%20a%20Afinco%20e%20gostaria%20de%20falar%20com%20o%20recrutador." target="_blank" rel="noopener">Falar com recrutador ↗</a>
-        <button type="button" class="secondary-button" id="successDone">Voltar ao site</button>
+        <a class="primary-button whatsapp-button" target="_blank" rel="noopener" href="https://wa.me/5541998969919?text=Ol%C3%A1!%20Vim%20pelo%20processo%20seletivo%20da%20Afinco%20e%20gostaria%20de%20falar%20com%20o%20recrutador.">Falar no WhatsApp ↗</a>
+        <button type="button" class="success-dismiss" id="successDismiss">Fechar</button>
       </div>
     </div>
   </div>
@@ -2272,31 +2283,6 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
     }
     scheduleRadios.forEach(radio => radio.addEventListener("change", updateScheduleSummary));
 
-    function mostrarConfirmacaoCandidatura(dados, protocolo) {
-      const overlay = document.getElementById("successOverlay");
-      const protocolEl = document.getElementById("successProtocol");
-      const preferenceEl = document.getElementById("successPreference");
-
-      if (!overlay || !protocolEl || !preferenceEl) {
-        alert("Candidatura enviada com sucesso! O Gerente Lucas Nascimento irá analisar seu perfil.");
-        return;
-      }
-
-      protocolEl.textContent = protocolo;
-      preferenceEl.innerHTML = `Preferência de entrevista registrada: <b>${dados.entrevista_dia} às ${dados.entrevista_horario}</b>.`;
-      overlay.classList.add("is-open");
-      overlay.setAttribute("aria-hidden", "false");
-      document.body.classList.add("success-locked");
-    }
-
-    function fecharConfirmacaoCandidatura() {
-      const overlay = document.getElementById("successOverlay");
-      if (!overlay) return;
-      overlay.classList.remove("is-open");
-      overlay.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("success-locked");
-    }
-
     form.addEventListener("submit", async function(event) {
 
       event.preventDefault();
@@ -2341,7 +2327,12 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
         entrevista_horario: document.querySelector('input[name="entrevista_horario"]:checked')?.value || "",
         experiencia_vendas: document.getElementById("vendas").value,
         experiencia: document.getElementById("experiencia").value.trim(),
-        motivo: document.getElementById("motivo").value.trim()
+        motivo: document.getElementById("motivo").value.trim(),
+        site: document.getElementById("site").value.trim(),
+        linkedin: document.getElementById("linkedin").value.trim(),
+        instagram: document.getElementById("instagram").value.trim(),
+        apresentacao_profissional: document.getElementById("apresentacao_profissional").value.trim(),
+        experiencia_profissional: document.getElementById("experiencia_profissional").value.trim()
       };
 
       try {
@@ -2365,9 +2356,11 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
           throw new Error("Falha ao enviar candidatura.");
         }
 
-        const protocolo = `ALPHA-2026-${String(Math.floor(1000 + Math.random() * 9000))}`;
-        mostrarConfirmacaoCandidatura(dados, protocolo);
-
+        const protocolo = "ALPHA-2026-" + String(Math.floor(1000 + Math.random() * 9000));
+        const protocoloEl = document.getElementById("successProtocol");
+        const successModal = document.getElementById("successOverlay");
+        if (protocoloEl) protocoloEl.textContent = protocolo;
+        if (successModal) { successModal.classList.add("show"); document.body.style.overflow = "hidden"; }
         form.reset();
         updateScheduleSummary();
 
@@ -2388,18 +2381,14 @@ footer{border-top:1px solid rgba(255,255,255,.08)!important;background:#020304!i
 
     });
 
-    const successClose = document.getElementById("successClose");
-    const successDone = document.getElementById("successDone");
     const successOverlay = document.getElementById("successOverlay");
-
-    successClose?.addEventListener("click", fecharConfirmacaoCandidatura);
-    successDone?.addEventListener("click", fecharConfirmacaoCandidatura);
-    successOverlay?.addEventListener("click", function(event) {
-      if (event.target === successOverlay) fecharConfirmacaoCandidatura();
-    });
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "Escape") fecharConfirmacaoCandidatura();
-    });
+    const successClose = document.getElementById("successClose");
+    const successDismiss = document.getElementById("successDismiss");
+    function fecharConfirmacao(){ if(successOverlay) successOverlay.classList.remove("show"); document.body.style.overflow=""; }
+    successClose?.addEventListener("click",fecharConfirmacao);
+    successDismiss?.addEventListener("click",fecharConfirmacao);
+    successOverlay?.addEventListener("click",function(event){if(event.target===successOverlay)fecharConfirmacao();});
+    document.addEventListener("keydown",function(event){if(event.key==="Escape")fecharConfirmacao();});
 
   </script>
 
