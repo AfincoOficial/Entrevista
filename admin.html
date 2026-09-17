@@ -2388,7 +2388,15 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
         <button type="button" class="alpha-history-open" onclick="openHistory038Modal()">🧠 HISTÓRICO <span id="alphaHistoryQuickCount">0</span></button>
         <button type="button" onclick="alphaJump('candidatesList')">👥 CANDIDATOS</button>
         <button type="button" onclick="openTeam043()">👑 EQUIPE</button>
-      </div></div>
+        <button type="button" onclick="alphaSmartRefresh()">⚡ SINCRONIZAR</button>
+      </div>
+      <div class="alpha-smartbar" aria-live="polite">
+        <span class="alpha-smart-pill" id="alphaSmartNew">🆕 <b>0</b> novos</span>
+        <span class="alpha-smart-pill" id="alphaSmartToday">🎯 <b>0</b> hoje</span>
+        <span class="alpha-smart-pill alert" id="alphaSmartOverdue">🔴 <b>0</b> atrasadas</span>
+        <span class="alpha-smart-pill ok" id="alphaSmartStatus">● <b>ONLINE</b></span>
+        <button class="alpha-smart-refresh" type="button" onclick="alphaSmartRefresh()">↻ Atualizar dados agora</button>
+      </div>
     </div>
 
     <div class="alpha-grid">
@@ -6486,6 +6494,17 @@ input:focus,select:focus,textarea:focus{border-color:rgba(215,181,109,.68)!impor
 .modal,.modal-content{box-shadow:0 35px 100px rgba(0,0,0,.55)}
 @media(max-width:760px){.alpha-command{border-radius:18px}.page-head{padding-left:4px;padding-right:4px}.dashboard{grid-template-columns:repeat(2,minmax(0,1fr))!important}.candidate-card{border-radius:16px}}
 
+
+/* ALPHA CRM 052.1 — OPERAÇÃO INTELIGENTE */
+.alpha-smartbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:12px}
+.alpha-smart-pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);color:#9da8b7;font-size:9px;font-weight:900}
+.alpha-smart-pill b{color:#fff}.alpha-smart-pill.alert{border-color:rgba(255,104,114,.25);color:#ff9aa0;background:rgba(255,80,90,.045)}
+.alpha-smart-pill.ok{border-color:rgba(99,223,155,.18);color:#8be5b1;background:rgba(99,223,155,.035)}
+.alpha-smart-refresh{margin-left:auto;border:1px solid rgba(215,181,109,.25);background:rgba(215,181,109,.06);color:#e7ca82;border-radius:10px;padding:8px 11px;font:inherit;font-size:9px;font-weight:950;cursor:pointer}
+.alpha-smart-refresh.loading{opacity:.65;pointer-events:none}
+.alpha-toast{position:fixed;right:18px;bottom:18px;z-index:20000;max-width:min(420px,calc(100vw - 36px));padding:14px 16px;border:1px solid rgba(215,181,109,.25);border-radius:15px;background:rgba(10,14,20,.96);box-shadow:0 22px 70px rgba(0,0,0,.5);color:#eef2f7;font-size:11px;line-height:1.45;backdrop-filter:blur(14px);transform:translateY(18px);opacity:0;pointer-events:none;transition:.22s ease}
+.alpha-toast.show{transform:translateY(0);opacity:1}
+@media(max-width:650px){.alpha-smart-refresh{margin-left:0;width:100%}.alpha-smart-pill{flex:1;justify-content:center}}
 </style>
 <div class="alpha-install-wrap" id="alphaInstallWrap">
   <button class="alpha-install-btn" id="alphaInstallBtn" type="button">📲 INSTALAR ALPHA CRM</button>
@@ -6572,6 +6591,60 @@ input:focus,select:focus,textarea:focus{border-color:rgba(215,181,109,.68)!impor
   }else{
     initAlphaInstall();
   }
+})();
+</script>
+
+
+<script>
+/* ALPHA CRM 052.1 — sincronização operacional */
+(function(){
+  let alphaRefreshTimer=null;
+  let alphaPreviousIds=null;
+  let alphaToastTimer=null;
+
+  function smartSet(id,html){const e=document.getElementById(id);if(e)e.innerHTML=html;}
+  function smartToast(message){
+    let e=document.getElementById('alphaSmartToast');
+    if(!e){e=document.createElement('div');e.id='alphaSmartToast';e.className='alpha-toast';e.setAttribute('role','status');e.setAttribute('aria-live','polite');document.body.appendChild(e);}
+    e.innerHTML=message; e.classList.add('show'); clearTimeout(alphaToastTimer); alphaToastTimer=setTimeout(()=>e.classList.remove('show'),5200);
+  }
+  function smartMetrics(){
+    const active=typeof activeCandidates==='function'?activeCandidates():[];
+    const today=new Date(); today.setHours(0,0,0,0);
+    const tomorrow=new Date(today); tomorrow.setDate(tomorrow.getDate()+1);
+    const newCount=active.filter(c=>(c.status||'Novo')==='Novo').length;
+    const interviews=active.filter(c=>{if(!c.entrevista_dia||!c.entrevista_horario)return false; const raw=String(c.entrevista_dia); const d=new Date(raw); return !isNaN(d)&&d>=today&&d<tomorrow;}).length;
+    const tasks=typeof crm041TaskStats==='function'?crm041TaskStats():{overdue:0};
+    smartSet('alphaSmartNew',`🆕 <b>${newCount}</b> novos`);
+    smartSet('alphaSmartToday',`🎯 <b>${interviews}</b> hoje`);
+    smartSet('alphaSmartOverdue',`🔴 <b>${tasks.overdue||0}</b> atrasadas`);
+    const sync=document.getElementById('alphaLastSync'); if(sync) sync.textContent='· última leitura: '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  }
+  window.alphaSmartRefresh=async function(){
+    const btn=document.querySelector('.alpha-smart-refresh'); if(btn)btn.classList.add('loading');
+    try{
+      const before=new Set((candidates||[]).map(c=>String(c.id)));
+      await loadCandidates();
+      smartMetrics();
+      const after=(candidates||[]).filter(c=>!before.has(String(c.id)));
+      if(after.length) smartToast(`🆕 <b>${after.length} nova(s) candidatura(s)</b> recebida(s) desde a última leitura.`);
+      else smartToast('✓ <b>Dados sincronizados.</b> Nenhuma nova candidatura desde a última leitura.');
+    }catch(error){ smartToast('⚠️ Não foi possível concluir a sincronização agora.'); console.error(error);}
+    finally{if(btn)btn.classList.remove('loading');}
+  };
+  window.alphaStartSmartRefresh=function(){
+    clearInterval(alphaRefreshTimer);
+    alphaRefreshTimer=setInterval(()=>{
+      if(document.visibilityState==='visible' && typeof accessToken!=='undefined' && accessToken){
+        loadCandidates().then(smartMetrics).catch(()=>{});
+      }
+    },60000);
+    smartMetrics();
+  };
+  const oldInitialize=window.initialize;
+  if(typeof oldInitialize==='function'){
+    window.initialize=async function(){const result=await oldInitialize(); alphaStartSmartRefresh(); return result;};
+  }else{setTimeout(alphaStartSmartRefresh,2500);}
 })();
 </script>
 
