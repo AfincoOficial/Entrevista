@@ -2213,6 +2213,15 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 @media(max-width:760px){.crm052-links-grid{grid-template-columns:1fr}.crm052-protocol-bar{align-items:flex-start;flex-direction:column}.crm052-protocol-bar>div{width:100%}}
 </style>
 
+
+<style>
+/* ALPHA CRM 053.0 — CENTRAL DE PENDÊNCIAS */
+.crm053-pending{margin:18px 0 24px;padding:20px;border:1px solid rgba(215,181,109,.18);border-radius:22px;background:linear-gradient(145deg,rgba(18,21,28,.98),rgba(8,10,14,.98));box-shadow:0 20px 65px rgba(0,0,0,.24)}
+.crm053-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}.crm053-kicker{font-size:9px;letter-spacing:2px;color:#d7b56d;font-weight:950}.crm053-title{font-size:22px;font-weight:950;margin-top:4px}.crm053-sub{font-size:11px;color:var(--muted);margin-top:5px}.crm053-open-tasks{border:1px solid rgba(215,181,109,.32);background:rgba(215,181,109,.08);color:#f4e4b8;border-radius:11px;padding:10px 13px;font-size:10px;font-weight:950;cursor:pointer}.crm053-open-tasks:hover{background:rgba(215,181,109,.15);transform:translateY(-1px)}
+.crm053-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:13px}.crm053-metric{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:8px;text-align:left;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.025);color:var(--text);cursor:pointer}.crm053-metric>span{grid-row:1/3;font-size:18px;align-self:center}.crm053-metric b{font-size:20px;line-height:1}.crm053-metric small{color:var(--muted);font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-top:3px}.crm053-metric.danger{border-color:rgba(226,109,118,.25)}.crm053-metric.today{border-color:rgba(230,164,76,.22)}.crm053-metric.pending{border-color:rgba(92,169,233,.2)}
+.crm053-list{display:grid;gap:8px}.crm053-item{display:grid;grid-template-columns:42px 1fr auto;gap:11px;align-items:center;padding:12px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.022)}.crm053-item.is-overdue{border-color:rgba(226,109,118,.26);background:rgba(226,109,118,.045)}.crm053-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.055);font-size:17px}.crm053-main{min-width:0}.crm053-main strong{display:block;font-size:12px;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crm053-main span{display:block;color:var(--muted);font-size:10px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crm053-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.crm053-badge{padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.05);font-size:8px;font-weight:900;color:#cbd3dd}.crm053-badge.hot{color:#ffd4d7;background:rgba(226,109,118,.10)}.crm053-badge.today{color:#ffe0a7;background:rgba(230,164,76,.10)}.crm053-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.crm053-actions button{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);color:#e7ebf1;border-radius:9px;padding:8px 9px;font-size:9px;font-weight:900;cursor:pointer}.crm053-actions button:hover{border-color:rgba(215,181,109,.4);background:rgba(215,181,109,.08)}.crm053-actions .done{border-color:rgba(81,200,120,.25)}.crm053-empty{padding:20px;border:1px dashed rgba(255,255,255,.1);border-radius:14px;text-align:center;color:var(--muted)}.crm053-empty strong{display:block;color:#e9edf2;font-size:11px}.crm053-empty span{display:block;font-size:10px;margin-top:4px}@media(max-width:760px){.crm053-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.crm053-item{grid-template-columns:36px 1fr}.crm053-icon{width:36px;height:36px}.crm053-actions{grid-column:1/-1;justify-content:flex-start}}
+</style>
+
 </head>
 
 
@@ -2398,6 +2407,26 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
         <button class="alpha-smart-refresh" type="button" onclick="alphaSmartRefresh()">↻ Atualizar dados agora</button>
       </div>
     </div>
+
+    <section class="crm053-pending" id="crm053PendingCenter">
+      <div class="crm053-head">
+        <div>
+          <div class="crm053-kicker">ALPHA CRM 053.0 // OPERAÇÃO</div>
+          <div class="crm053-title">⚡ CENTRAL DE PENDÊNCIAS</div>
+          <div class="crm053-sub">Tudo que exige uma ação aparece aqui, organizado por urgência.</div>
+        </div>
+        <button type="button" class="crm053-open-tasks" onclick="crm053OpenTasks()">🎯 Abrir central de tarefas</button>
+      </div>
+      <div class="crm053-metrics">
+        <button type="button" class="crm053-metric danger" onclick="crm053Focus('overdue')"><span>🔴</span><b id="crm053Overdue">0</b><small>atrasadas</small></button>
+        <button type="button" class="crm053-metric today" onclick="crm053Focus('today')"><span>🟡</span><b id="crm053Today">0</b><small>para hoje</small></button>
+        <button type="button" class="crm053-metric pending" onclick="crm053Focus('pending')"><span>🎯</span><b id="crm053Pending">0</b><small>pendentes</small></button>
+        <button type="button" class="crm053-metric neutral" onclick="crm053Focus('nodate')"><span>⚪</span><b id="crm053NoDate">0</b><small>sem prazo</small></button>
+      </div>
+      <div class="crm053-list" id="crm053PendingList">
+        <div class="crm053-empty"><strong>Carregando operação...</strong><span>As pendências serão atualizadas junto com os dados do CRM.</span></div>
+      </div>
+    </section>
 
     <div class="alpha-grid">
       <div class="alpha-stat gold"><div class="label">Candidatos ativos</div><div class="value" id="alphaTotal">0</div><div class="micro">fora da lixeira</div></div>
@@ -6645,6 +6674,46 @@ input:focus,select:focus,textarea:focus{border-color:rgba(215,181,109,.68)!impor
   if(typeof oldInitialize==='function'){
     window.initialize=async function(){const result=await oldInitialize(); alphaStartSmartRefresh(); return result;};
   }else{setTimeout(alphaStartSmartRefresh,2500);}
+})();
+</script>
+
+
+<script>
+/* ALPHA CRM 053.0 — CENTRAL DE PENDÊNCIAS */
+(function(){
+  function esc(v){return typeof escapeHTML==='function'?escapeHTML(v??''):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+  function candidateName(id){return typeof crm039CandidateName==='function'?crm039CandidateName(id):((candidates||[]).find(c=>String(c.id)===String(id))?.nome_completo||'Candidato');}
+  function state(t){if(typeof crm039IsOverdue==='function'&&crm039IsOverdue(t))return {icon:'🔴',label:'Atrasada',cls:'is-overdue'};if(typeof crm039IsToday==='function'&&crm039IsToday(t))return {icon:'🟡',label:'Hoje',cls:'is-today'};if(!t.due_at)return {icon:'⚪',label:'Sem prazo',cls:'no-date'};return {icon:'🎯',label:'Pendente',cls:''};}
+  window.crm053RenderPending=function(){
+    const list=document.getElementById('crm053PendingList');if(!list)return;
+    const tasks=Array.isArray(window.crm039Tasks)?window.crm039Tasks:[];
+    const pending=tasks.filter(t=>t.status==='Pendente');
+    const overdue=pending.filter(t=>typeof crm039IsOverdue==='function'&&crm039IsOverdue(t));
+    const today=pending.filter(t=>typeof crm039IsToday==='function'&&crm039IsToday(t));
+    const noDate=pending.filter(t=>!t.due_at);
+    set('crm053Overdue',overdue.length);set('crm053Today',today.length);set('crm053Pending',pending.length);set('crm053NoDate',noDate.length);
+    const rank=t=>{const s=state(t);return s.cls==='is-overdue'?0:s.cls==='is-today'?1:!t.due_at?3:2};
+    const visible=pending.slice().sort((a,b)=>rank(a)-rank(b)||((a.due_at?new Date(a.due_at).getTime():Infinity)-(b.due_at?new Date(b.due_at).getTime():Infinity))).slice(0,8);
+    if(!visible.length){list.innerHTML='<div class="crm053-empty"><strong>✓ Operação em dia</strong><span>Nenhuma tarefa pendente foi encontrada nesta leitura.</span></div>';return;}
+    list.innerHTML=visible.map(t=>{const s=state(t),name=candidateName(t.candidatura_id),due=t.due_at&&typeof formatDate==='function'?formatDate(t.due_at):'Sem prazo';return `<article class="crm053-item ${s.cls}"><div class="crm053-icon">${s.icon}</div><div class="crm053-main"><strong>${esc(t.titulo||'Tarefa')}</strong><span>👤 ${esc(name)} · ${esc(t.responsavel||'ALPHA')} · ${esc(due)}</span><div class="crm053-badges"><span class="crm053-badge ${s.cls==='is-overdue'?'hot':''}">${esc(s.label)}</span>${t.prioridade?`<span class="crm053-badge">Prioridade ${esc(t.prioridade)}</span>`:''}</div></div><div class="crm053-actions"><button type="button" onclick="openDetails('${esc(t.candidatura_id)}')">👤 Abrir</button><button type="button" class="done" onclick="crm053Complete('${esc(t.id)}')">✓ Concluir</button></div></article>`;}).join('');
+  };
+  window.crm053Complete=async function(id){if(typeof toggleTask039==='function'){await toggleTask039(id);setTimeout(window.crm053RenderPending,80);}};
+  window.crm053OpenTasks=function(){const e=document.getElementById('crm039Center');if(e&&typeof openTasks039==='function'){openTasks039();return;}document.getElementById('crm039Center')?.scrollIntoView({behavior:'smooth',block:'start'});};
+  window.crm053Focus=function(kind){
+    if(kind==='overdue'||kind==='today'||kind==='pending'||kind==='nodate'){
+      const map={overdue:'Atrasadas',today:'Hoje',pending:'Pendentes',nodate:'Todas'};
+      const buttons=[...document.querySelectorAll('[data-crm039-filter]')]; const b=buttons.find(x=>x.dataset.crm039Filter===map[kind]);
+      if(b){b.click();}
+    }
+    crm053OpenTasks();
+  };
+  window.crm053Sync=function(){window.crm053RenderPending();};
+  const oldRenderTasks=window.renderTasks039;
+  if(typeof oldRenderTasks==='function'){window.renderTasks039=function(){const r=oldRenderTasks.apply(this,arguments);window.crm053RenderPending();return r;};}
+  const oldLoadTasks=window.loadTasks039;
+  if(typeof oldLoadTasks==='function'){window.loadTasks039=async function(){const r=await oldLoadTasks.apply(this,arguments);window.crm053RenderPending();return r;};}
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(window.crm053RenderPending,1200));
 })();
 </script>
 
