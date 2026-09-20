@@ -1997,7 +1997,8 @@ body:before{
 .login-brand p{text-transform:uppercase;letter-spacing:.16em}
 .login-button{box-shadow:0 10px 30px rgba(215,181,109,.15)}
 @media(max-width:1100px){.page-head:after{display:none}.page-head h1{font-size:26px}}
-@media(max-width:700px){.brand-division{display:none}.page-head{padding:18px}.hero-x{display:block;margin:7px 0 0}.live{margin-top:8px}.page-head{align-items:flex-start}.topbar-inner{min-height:68px}}
+@media(max-width:980px){.alpha-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.alpha-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.brand-division{display:none}.page-head{padding:18px}.hero-x{display:block;margin:7px 0 0}.live{margin-top:8px}.page-head{align-items:flex-start}.topbar-inner{min-height:68px}}
 
 
 /* =====================================================
@@ -2014,7 +2015,7 @@ body:before{
 .alpha-live i{width:7px;height:7px;border-radius:50%;background:#4ee08b;box-shadow:0 0 14px rgba(78,224,139,.8)}
 .alpha-admin{display:inline-flex;align-items:center;gap:9px;margin-top:17px;padding:9px 12px;border-radius:12px;border:1px solid rgba(212,175,55,.24);background:rgba(212,175,55,.06);color:#fff;font-size:10px;font-weight:900}
 .alpha-admin b{color:#d8b65b}.alpha-admin small{color:#7f8793;font-weight:700}
-.alpha-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.alpha-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
 .alpha-stat{position:relative;min-height:112px;padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 12px 30px rgba(0,0,0,.16);overflow:hidden;transition:.22s transform,.22s border-color}
 .alpha-stat:hover{transform:translateY(-3px);border-color:rgba(212,175,55,.3)}
 .alpha-stat:after{content:"";position:absolute;right:-22px;bottom:-32px;width:100px;height:100px;border-radius:50%;background:rgba(212,175,55,.06)}
@@ -2158,78 +2159,6 @@ main.container > section.dashboard, main.container > section.analytics{display:n
 .crm053-description h4{margin:0 0 8px;color:#d8dde5;font-size:9px;font-weight:950}
 .crm053-description p{margin:0;color:#c8ced7;font-size:9px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
 @media(max-width:560px){.crm053-ident{grid-template-columns:64px 1fr}.crm053-ident-logo{width:64px;height:64px}}
-
-/* ALPHA CRM 054 — COMMAND CENTER VISUAL */
-:root{--a-gold:#f2c14e;--a-gold2:#ffe08a;--a-ink:#07090c;--a-panel:rgba(13,17,23,.88)}
-body{background:
- radial-gradient(circle at 82% 12%,rgba(242,193,78,.08),transparent 24%),
- radial-gradient(circle at 8% 88%,rgba(255,255,255,.035),transparent 22%),
- #07090c!important;}
-body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
- background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
- background-size:38px 38px;mask-image:linear-gradient(to bottom,black,transparent 90%);opacity:.42}
-.card,.panel,.section,.detail-section,.crm053-ultra,.alpha-alert,.kanban-column,.task-panel{
- background:linear-gradient(145deg,rgba(18,23,30,.90),rgba(7,10,14,.92))!important;
- border-color:rgba(255,255,255,.065)!important;box-shadow:0 22px 70px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.025)!important;
- backdrop-filter:blur(12px)}
-button,.action,.alpha-smart-refresh{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-button:hover,.action:hover,.alpha-smart-refresh:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(0,0,0,.20)}
-.crm053-ultra{position:relative;overflow:hidden}
-.crm053-ultra:before{content:"";position:absolute;right:-90px;bottom:-120px;width:430px;height:300px;opacity:.07;
- background:
- radial-gradient(ellipse at 72% 70%,#fff 0 3%,transparent 4%),
- radial-gradient(ellipse at 35% 65%,#fff 0 2%,transparent 3%);
- filter:blur(1px);pointer-events:none}
-.crm053-ultra-head,.crm053-ultra-grid,.crm053-ultra-actions,.crm053-ultra-columns{position:relative;z-index:1}
-.crm053-ultra-title{font-size:20px!important;letter-spacing:-.4px}
-.crm053-ultra-badge{box-shadow:0 0 22px rgba(99,223,155,.08)}
-.alpha-smart-pill{box-shadow:inset 0 1px rgba(255,255,255,.03)}
-
-
-/* =========================================================
-   ALPHA 054.1 — HISTÓRICO GLOBAL COMPACTO
-========================================================= */
-.alpha-global-history{width:min(1180px,92%);margin:34px auto 70px;border:1px solid rgba(215,181,109,.18);border-radius:22px;background:linear-gradient(145deg,rgba(15,19,25,.94),rgba(7,10,14,.96));box-shadow:0 22px 70px rgba(0,0,0,.24);overflow:hidden}
-.alpha-global-history>summary{list-style:none;cursor:pointer;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.alpha-global-history>summary::-webkit-details-marker{display:none}
-.alpha-gh-left{display:flex;align-items:center;gap:12px;min-width:0}
-.alpha-gh-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(215,181,109,.10);border:1px solid rgba(215,181,109,.22);font-size:17px}
-.alpha-gh-title{font-size:13px;font-weight:950;color:#f4f6f9}
-.alpha-gh-sub{font-size:10px;color:#7f8a99;margin-top:3px}
-.alpha-gh-count{font-size:10px;font-weight:950;color:#d7b56d;padding:7px 10px;border-radius:999px;background:rgba(215,181,109,.07);border:1px solid rgba(215,181,109,.16);white-space:nowrap}
-.alpha-gh-chevron{color:#d7b56d;font-size:14px;transition:.2s}
-.alpha-global-history[open] .alpha-gh-chevron{transform:rotate(180deg)}
-.alpha-gh-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 20px 14px;border-top:1px solid rgba(255,255,255,.045)}
-.alpha-gh-search{flex:1;min-width:220px;margin-top:12px!important}
-.alpha-gh-filter{margin-top:12px!important}
-.alpha-gh-list{border-top:1px solid rgba(255,255,255,.055);max-height:620px;overflow:auto;padding:8px 14px 18px}
-.alpha-gh-person{border-bottom:1px solid rgba(255,255,255,.055)}
-.alpha-gh-person:last-child{border-bottom:0}
-.alpha-gh-person>summary{list-style:none;cursor:pointer;padding:13px 8px;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center}
-.alpha-gh-person>summary::-webkit-details-marker{display:none}
-.alpha-gh-person-name{font-size:11px;font-weight:900;color:#eef2f7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.alpha-gh-person-meta{font-size:9px;color:#6f7b8c;margin-top:3px}
-.alpha-gh-person-count{font-size:9px;font-weight:900;color:#d7b56d;white-space:nowrap}
-.alpha-gh-person-chevron{color:#748091;transition:.18s}
-.alpha-gh-person[open] .alpha-gh-person-chevron{transform:rotate(90deg);color:#d7b56d}
-.alpha-gh-events{padding:0 8px 12px 20px}
-.alpha-gh-event{display:grid;grid-template-columns:25px minmax(0,1fr) auto;gap:9px;padding:9px 0;border-top:1px solid rgba(255,255,255,.035)}
-.alpha-gh-dot{width:25px;height:25px;border-radius:8px;display:grid;place-items:center;background:rgba(215,181,109,.08);color:#d7b56d;font-size:11px}
-.alpha-gh-event-title{font-size:10px;font-weight:850;color:#e9edf2}
-.alpha-gh-event-desc{font-size:9px;color:#788493;margin-top:2px;line-height:1.4}
-.alpha-gh-event-meta{font-size:8px;color:#596575;margin-top:3px}
-.alpha-gh-event-time{font-size:8px;color:#667384;white-space:nowrap}
-.alpha-gh-empty{padding:28px;text-align:center;color:#778394;font-size:11px}
-@media(max-width:650px){
- .alpha-global-history{width:94%;margin-top:24px}
- .alpha-gh-toolbar{padding-left:12px;padding-right:12px}
- .alpha-gh-list{padding-left:8px;padding-right:8px}
- .alpha-gh-person>summary{grid-template-columns:minmax(0,1fr) auto}
- .alpha-gh-person-count{grid-column:2;grid-row:1}
- .alpha-gh-event{grid-template-columns:25px minmax(0,1fr)}
- .alpha-gh-event-time{grid-column:2}
-}
-
 </style>
 
 <style>
@@ -2308,7 +2237,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
 </head>
 
 
-<body data-alpha-version="054" data-alpha-mode="ALPHA 054 — COMMAND CENTER">
+<body>
 
 
 <!-- =====================================================
@@ -2467,7 +2396,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
     <div class="alpha-hero">
       <div class="alpha-live"><i></i> SISTEMA ONLINE · ALPHA MODE</div>
       <div class="bmw-alpha-badge" aria-label="BMW"><span class="bmw-top">BMW</span><div class="bmw-wheel"><i></i><i></i><i></i><i></i></div></div>
-      <div class="alpha-kicker">AFINCO // ALCATÉIA · EXECUTIVE CONTROL</div>
+      <div class="alpha-kicker">ALPHA CRM 055 // AFINCO · EXECUTIVE COMMAND CENTER</div>
       <h2 class="alpha-title">COMMAND <span>CENTER</span></h2>
       <div class="alpha-sub">Seu centro de comando para recrutamento. Dados, prioridades, performance e inteligência operacional em uma única visão.</div>
       <div class="alpha-admin">🐺 <b>ALPHA</b> <small>· ADMINISTRADOR AUTORIZADO ·</small> <span id="alphaConnectionState" class="connection-state">CONECTANDO...</span>
@@ -2518,6 +2447,7 @@ header{background:rgba(4,6,9,.72)!important;backdrop-filter:blur(18px);border-bo
       <div class="alpha-stat green"><div class="label">Aprovados</div><div class="value" id="alphaApproved">0</div><div class="micro">potencial convertido</div></div>
       <div class="alpha-stat"><div class="label">Prioridades</div><div class="value" id="alphaPriority">0</div><div class="micro">ação recomendada</div></div>
       <div class="alpha-stat red"><div class="label">Sem contato</div><div class="value" id="alphaStale">0</div><div class="micro">mais de 24h</div></div>
+      <div class="alpha-stat red"><div class="label">Tarefas atrasadas</div><div class="value" id="alphaTaskOverdue">0</div><div class="micro">ação imediata</div></div>
     </div>
 
     <div class="alpha-row">
@@ -3444,6 +3374,7 @@ function renderAlphaCommand(){
   const active=activeCandidates(), stale=alphaStaleCandidates(), hot=alphaHotCandidates();
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   set("alphaTotal",active.length); set("alphaNew",active.filter(c=>(c.status||"Novo")==="Novo").length); set("alphaInterview",active.filter(c=>(c.status||"")==="Entrevista").length); set("alphaApproved",active.filter(c=>(c.status||"")==="Aprovado").length); set("alphaPriority",stale.length+hot.length); set("alphaStale",stale.length);
+  const taskOverdue=(typeof crm041TaskStats==="function") ? crm041TaskStats().overdue : 0; set("alphaTaskOverdue",taskOverdue);
   const n=document.getElementById("alphaLoggedName"); if(n)n.textContent=window.afincoAdminName||afincoAdminName||"ALPHA";
   const r=document.getElementById("alphaLoggedRole"); if(r)r.textContent=(window.afincoAdminRole||"Super Admin").toUpperCase();
   renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts();
@@ -5461,7 +5392,6 @@ async function loadHistory038(){
     if(!response.ok) throw new Error(`SUPABASE ${response.status} — ${typeof payload==='object'?(payload.message||payload.details||JSON.stringify(payload)):payload}`);
     crm038History=Array.isArray(payload)?payload:[];
     renderHistory038();
-    if(typeof alphaRenderGlobalHistory==='function') alphaRenderGlobalHistory();
   }catch(error){console.error('CRM038 HISTORY ERROR:',error);const feed=document.getElementById('crm038Feed');if(feed)feed.innerHTML=`<div class="crm038-empty"><strong>Histórico aguardando banco 038</strong><span>${escapeHTML(error.message||'Execute o SQL 038.')}</span></div>`;}
 }
 async function refreshHistory038(candidateId){ await loadHistory038(); if(candidateId) renderHistory038(); }
@@ -6861,7 +6791,7 @@ function crm053UltraSection(c){
         <span class="crm053-ultra-badge">● PERFIL ${complete}% PREENCHIDO</span>
       </div>
       <div class="crm053-ident">
-        <img class="crm053-ident-logo" src="https://afincooficial.github.io/Entrevista/afinco-social-card.png" alt="AFINCO IMÓVEIS — identificação" loading="eager" decoding="async">
+        <img class="crm053-ident-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwNTA1MDUiLz4KICA8cGF0aCBkPSJNMzIgMTAgNDggNTBoLThsLTMuMi04SDI3LjJMMjQgNTBoLThMMzIgMTBabTAgMTMtMy4yIDEyaDYuNEwzMiAyM1oiIGZpbGw9IiNmNWM1NDIiLz4KPC9zdmc+Cg==" alt="AFINCO — identificação">
         <div>
           <div class="crm053-ident-kicker">IDENTIFICAÇÃO AFINCO · CANDIDATO</div>
           <div class="crm053-ident-name">${crm053Text(c.nome_completo,'Candidato sem nome')}</div>
@@ -6904,126 +6834,6 @@ function crm053UltraSection(c){
       </div>
     </section>`;
 }
-</script>\n
-<!-- ALPHA CRM 054.1 — HISTÓRICO GLOBAL COMPACTO -->
-<details class="alpha-global-history" id="alphaGlobalHistory">
-  <summary>
-    <div class="alpha-gh-left">
-      <div class="alpha-gh-icon">🧠</div>
-      <div>
-        <div class="alpha-gh-title">Histórico de todos os candidatos</div>
-        <div class="alpha-gh-sub">Compactado por candidato. Abra somente quem quiser consultar.</div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:9px">
-      <span class="alpha-gh-count" id="alphaGlobalHistoryCount">0 eventos</span>
-      <span class="alpha-gh-chevron">▼</span>
-    </div>
-  </summary>
-  <div class="alpha-gh-toolbar">
-    <input class="alpha-gh-search" id="alphaGlobalHistorySearch" type="search" placeholder="🔎 Buscar candidato ou evento...">
-    <select class="alpha-gh-filter" id="alphaGlobalHistoryFilter">
-      <option value="Todos">Todos os eventos</option>
-      <option value="Status">Status</option>
-      <option value="CRM">CRM</option>
-      <option value="Agenda">Agenda</option>
-      <option value="Nota">Notas</option>
-      <option value="Sistema">Sistema</option>
-    </select>
-  </div>
-  <div class="alpha-gh-list" id="alphaGlobalHistoryList">
-    <div class="alpha-gh-empty">Abra esta área para carregar o histórico.</div>
-  </div>
-</details>
-
-
-<script>
-/* ALPHA 054.1 — HISTÓRICO GLOBAL COMPACTO */
-(function(){
-  function globalHistoryRender(){
-    const list=document.getElementById('alphaGlobalHistoryList');
-    const count=document.getElementById('alphaGlobalHistoryCount');
-    const search=document.getElementById('alphaGlobalHistorySearch');
-    const filter=document.getElementById('alphaGlobalHistoryFilter');
-    if(!list||!count)return;
-
-    const term=String(search?.value||'').trim().toLowerCase();
-    const type=String(filter?.value||'Todos');
-
-    const groups={};
-    (window.crm038History||[]).forEach(function(item){
-      const itemType=String(item.tipo||'Sistema');
-      if(type!=='Todos' && itemType!==type)return;
-      const candidateId=String(item.candidatura_id||'sem-id');
-      const candidate=(window.candidates||[]).find(function(c){return String(c.id)===candidateId});
-      const name=String(candidate?.nome_completo||item.candidato_nome||'Candidato');
-      const hay=(name+' '+String(item.titulo||'')+' '+String(item.descricao||'')+' '+String(item.ator_nome||item.ator_email||'')).toLowerCase();
-      if(term && !hay.includes(term))return;
-      if(!groups[candidateId])groups[candidateId]={id:candidateId,name:name,items:[]};
-      groups[candidateId].items.push(item);
-    });
-
-    const groupsArr=Object.values(groups).sort(function(a,b){
-      return new Date(b.items[0]?.created_at||0)-new Date(a.items[0]?.created_at||0);
-    });
-    const total=(window.crm038History||[]).length;
-    count.textContent=total+' evento'+(total===1?'':'s');
-
-    if(!groupsArr.length){
-      list.innerHTML='<div class="alpha-gh-empty">Nenhum histórico encontrado para este filtro.</div>';
-      return;
-    }
-
-    list.innerHTML=groupsArr.map(function(group){
-      group.items.sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at)});
-      const latest=group.items[0]?.created_at;
-      return `<details class="alpha-gh-person">
-        <summary>
-          <div>
-            <div class="alpha-gh-person-name">${escapeHTML(group.name)}</div>
-            <div class="alpha-gh-person-meta">Última movimentação: ${escapeHTML(formatDate(latest))}</div>
-          </div>
-          <span class="alpha-gh-person-count">${group.items.length} evento${group.items.length===1?'':'s'}</span>
-          <span class="alpha-gh-person-chevron">▶</span>
-        </summary>
-        <div class="alpha-gh-events">
-          ${group.items.map(function(item){
-            return `<div class="alpha-gh-event">
-              <div class="alpha-gh-dot">${crm038Icon(item.tipo)}</div>
-              <div>
-                <div class="alpha-gh-event-title">${escapeHTML(item.titulo||'Evento')}</div>
-                <div class="alpha-gh-event-desc">${escapeHTML(item.descricao||'')}</div>
-                <div class="alpha-gh-event-meta">${escapeHTML(item.ator_nome||item.ator_email||'Sistema')} · ${escapeHTML(item.tipo||'Sistema')}</div>
-              </div>
-              <div class="alpha-gh-event-time">${escapeHTML(formatDate(item.created_at))}</div>
-            </div>`;
-          }).join('')}
-        </div>
-      </details>`;
-    }).join('');
-  }
-
-  window.alphaRenderGlobalHistory=globalHistoryRender;
-
-  document.addEventListener('DOMContentLoaded',function(){
-    document.getElementById('alphaGlobalHistorySearch')?.addEventListener('input',globalHistoryRender);
-    document.getElementById('alphaGlobalHistoryFilter')?.addEventListener('change',globalHistoryRender);
-    document.getElementById('alphaGlobalHistory')?.addEventListener('toggle',function(){
-      if(this.open)globalHistoryRender();
-    });
-  });
-
-  const oldLoadHistory038=window.loadHistory038;
-  if(typeof oldLoadHistory038==='function'){
-    window.loadHistory038=async function(){
-      const result=await oldLoadHistory038.apply(this,arguments);
-      globalHistoryRender();
-      return result;
-    };
-  }
-})();
-</script>
-
-</body>
+</script>\n</body>
 
 </html>
