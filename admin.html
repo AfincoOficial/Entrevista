@@ -1002,9 +1002,9 @@ button:disabled{
   display:grid;
 
   grid-template-columns:
-    repeat(2,minmax(0,1fr));
+    minmax(0,1fr);
 
-  gap:13px;
+  gap:14px;
 }
 
 
@@ -2452,6 +2452,133 @@ button:active{transform:translateY(0) scale(.985)}
 @media(max-width:560px){.a5901-profile-strip{grid-template-columns:1fr 1fr}.a5901-centerbar-main{width:100%}.a5901-controls{width:100%}.a5901-btn{flex:1}}
 </style>
 
+
+<style id="alpha0602-full-candidates">
+/* ALPHA 060.2 — CENTRAL FULL / TODAS AS INFORMAÇÕES */
+.a5901-candidates-shell::before{
+  content:"CENTRAL DE CANDIDATOS · MODO FULL · TODAS AS INFORMAÇÕES";
+  font-size:10px!important;
+  letter-spacing:.14em!important;
+  padding:11px 14px!important;
+  background:linear-gradient(90deg,rgba(232,185,79,.10),rgba(255,255,255,.025),rgba(232,185,79,.06))!important;
+}
+.a5901-candidates-shell .candidates{grid-template-columns:1fr!important;}
+.a5901-candidates-shell .candidate{
+  width:100%!important;
+  border-radius:20px!important;
+  background:
+    linear-gradient(135deg,rgba(20,27,36,.98),rgba(7,11,16,.98))!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:0 14px 42px rgba(0,0,0,.24)!important;
+}
+.a5901-candidates-shell .candidate-head{
+  padding:20px 22px!important;
+  align-items:flex-start!important;
+}
+.a5901-candidates-shell .candidate-name{
+  font-size:21px!important;
+  letter-spacing:-.02em!important;
+}
+.a5901-candidates-shell .candidate-date{font-size:10px!important;margin-top:5px}
+.a5901-candidates-shell .candidate-head > div:first-child{
+  min-width:0!important;flex:1!important;
+}
+.a5901-candidates-shell .candidate-head .status-area{
+  min-width:175px!important;
+}
+.a5901-candidates-shell .summary{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:1px!important;
+  background:rgba(255,255,255,.06)!important;
+  border-top:1px solid rgba(255,255,255,.06)!important;
+  border-bottom:1px solid rgba(255,255,255,.06)!important;
+}
+.a5901-candidates-shell .summary .info{
+  min-height:70px!important;
+  padding:12px 15px!important;
+  background:rgba(6,10,15,.72)!important;
+}
+.a5901-candidates-shell .info-label{
+  font-size:8px!important;
+  letter-spacing:.08em!important;
+}
+.a5901-candidates-shell .info-value{
+  font-size:11px!important;
+  margin-top:6px!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+}
+.a5901-full-extra{
+  display:grid;
+  grid-template-columns:1.35fr 1fr 1fr;
+  gap:10px;
+  padding:14px 16px;
+  background:rgba(3,7,11,.72);
+}
+.a5901-full-box{
+  min-width:0;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:13px;
+  background:rgba(255,255,255,.025);
+}
+.a5901-full-box label{
+  display:block;
+  color:#788594;
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.a5901-full-box strong{
+  display:block;
+  color:#f4f7fa;
+  font-size:11px;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.a5901-full-box span{
+  display:block;
+  color:#aab4bf;
+  font-size:10px;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.a5901-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.a5901-link{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 8px;border-radius:8px;
+  border:1px solid rgba(232,185,79,.18);
+  background:rgba(232,185,79,.055);
+  color:#f0d99a;text-decoration:none;font-size:8px;font-weight:900;
+}
+.a5901-link:hover{border-color:rgba(232,185,79,.55);background:rgba(232,185,79,.11)}
+.a5901-candidates-shell .candidate-click-hint{
+  margin:0!important;border-radius:0!important;border-left:0!important;border-right:0!important;
+  background:rgba(232,185,79,.035)!important;
+}
+.a5901-candidates-shell .candidate-actions{
+  padding:13px 16px!important;
+  background:rgba(2,5,9,.62)!important;
+  justify-content:flex-start!important;
+}
+.a5901-candidates-shell .candidate-actions .action.gold{
+  min-width:190px!important;
+}
+@media(max-width:1050px){
+  .a5901-candidates-shell .summary{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .a5901-full-extra{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .a5901-candidates-shell .candidate-head{display:block!important}
+  .a5901-candidates-shell .candidate-head .status-area{margin-top:12px;min-width:0!important}
+  .a5901-candidates-shell .summary{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .a5901-full-extra{grid-template-columns:1fr}
+}
+</style>
+
 </head>
 <body>
 <section id="loginScreen">
@@ -3106,7 +3233,7 @@ button:active{transform:translateY(0) scale(.985)}
         <div><h3>CENTRAL 360° · OPERAÇÃO DE CANDIDATOS</h3><p>Pesquisa, filtros, modos de visualização e acesso imediato à ficha completa.</p></div>
       </div>
       <div class="a5901-controls">
-        <button class="a5901-btn active" type="button" data-a5901-mode="normal" onclick="alpha0591SetMode('normal')">▦ NORMAL</button>
+        <button class="a5901-btn active" type="button" data-a5901-mode="normal" onclick="alpha0591SetMode('normal')">▦ FULL</button>
         <button class="a5901-btn" type="button" data-a5901-mode="compact" onclick="alpha0591SetMode('compact')">▤ COMPACTO</button>
         <button class="a5901-btn" type="button" data-a5901-mode="focus" onclick="alpha0591SetMode('focus')">◉ FOCO</button>
         <button class="a5901-btn" type="button" onclick="alpha0591ShowAll()">↻ TODOS</button>
@@ -5383,6 +5510,28 @@ ${viewMode === "trash" ? "" : `                  <select
 
               </div>
 
+              <div class="a5901-full-extra">
+                <div class="a5901-full-box">
+                  <label>APRESENTAÇÃO / PERFIL PROFISSIONAL</label>
+                  <strong>${escapeHTML(candidate.apresentacao_profissional || candidate.experiencia_profissional || candidate.experiencia || candidate.motivo || "Não informado")}</strong>
+                </div>
+                <div class="a5901-full-box">
+                  <label>CONTATO & IDENTIFICAÇÃO</label>
+                  <strong>${escapeHTML(candidate.email || "E-mail não informado")}</strong>
+                  <span>Protocolo: ${escapeHTML(candidate.protocolo || candidate.protocol || candidate.codigo_protocolo || candidate.codigo || "Não informado")}</span>
+                  <span>Responsável: ${escapeHTML(candidate.responsavel || "ALPHA")}</span>
+                </div>
+                <div class="a5901-full-box">
+                  <label>PRÓXIMA AÇÃO & PRESENÇA DIGITAL</label>
+                  <strong>${escapeHTML(candidate.proxima_acao || "Nenhuma próxima ação definida")}</strong>
+                  <span>${escapeHTML(candidate.proxima_acao_at ? "Data: "+formatDate(candidate.proxima_acao_at) : "Sem data de próxima ação")}</span>
+                  <div class="a5901-links">
+                    ${candidate.site ? `<a class="a5901-link" href="${crm052SafeUrl(candidate.site)}" target="_blank" rel="noopener">🌐 SITE</a>` : ""}
+                    ${candidate.linkedin ? `<a class="a5901-link" href="${crm052SafeUrl(candidate.linkedin)}" target="_blank" rel="noopener">in LINKEDIN</a>` : ""}
+                    ${candidate.instagram ? `<a class="a5901-link" href="${crm052SafeUrl(candidate.instagram)}" target="_blank" rel="noopener">◎ INSTAGRAM</a>` : ""}
+                  </div>
+                </div>
+              </div>
 
               <div class="candidate-click-hint"><span>◉ FICHA 360° COMPLETA</span><b>CLIQUE NO CARD OU EM VER FICHA →</b></div>
 
