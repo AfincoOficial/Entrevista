@@ -2382,22 +2382,41 @@ button:active{transform:translateY(0) scale(.985)}
 
 </style>
 
-<style id="alpha059-candidato-360">
-/* =========================================================
-   ALPHA 059 — CANDIDATO 360° COMMAND WORKSPACE
-   Camada aditiva: não remove módulos existentes.
-========================================================= */
-.a59-workbar{margin:0 0 12px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:9px 10px;border:1px solid rgba(232,185,79,.18);border-radius:14px;background:linear-gradient(145deg,rgba(10,16,23,.96),rgba(3,7,11,.96));box-shadow:0 14px 36px rgba(0,0,0,.2)}
-.a59-workbar-title{margin-right:auto;min-width:190px}.a59-workbar-title b{display:block;font-size:10px;letter-spacing:1.1px}.a59-workbar-title span{display:block;margin-top:3px;font-size:8px;color:#78838d}.a59-btn{border:1px solid rgba(255,255,255,.09);background:#0b1118;color:#dfe6eb;border-radius:8px;padding:7px 10px;font-size:8px;font-weight:900;cursor:pointer}.a59-btn:hover{border-color:rgba(232,185,79,.55);color:#fff;background:#111a23}.a59-btn.active{border-color:rgba(232,185,79,.65);color:#f3d47f;background:rgba(232,185,79,.09)}
-.a59-quick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}.a59-quick button{border:1px solid rgba(255,255,255,.07);background:#080d13;color:#9da8b2;border-radius:999px;padding:6px 9px;font-size:8px;font-weight:900;cursor:pointer}.a59-quick button:hover,.a59-quick button.active{border-color:rgba(232,185,79,.5);color:#f3d47f;background:rgba(232,185,79,.07)}
-.a59-collapsed-note{display:none;margin:10px 0;padding:12px;border:1px dashed rgba(232,185,79,.28);border-radius:12px;background:rgba(232,185,79,.035);color:#9da8b2;font-size:9px}.a59-collapsed-note b{color:#f3d47f}.a58-candidates-shell.collapsed + .a59-collapsed-note{display:block}
-.a59-compact .candidate{padding:10px 12px!important;border-radius:12px!important}.a59-compact .candidate-head{margin-bottom:6px!important}.a59-compact .candidate-date,.a59-compact .crm052-card-meta,.a59-compact .summary{display:none!important}.a59-compact .divider{margin:7px 0!important}.a59-compact .candidate-actions{margin-top:7px!important}.a59-compact .candidate-actions .action{padding:6px 8px!important;font-size:8px!important}
-.a59-focus .candidate:not(:first-child){display:none!important}.a59-focus .candidate:first-child{border-color:rgba(232,185,79,.55)!important;box-shadow:0 20px 60px rgba(0,0,0,.4)!important}
-.a59-360-head{position:sticky;top:-1px;z-index:8;display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:-6px -6px 16px;padding:10px;border:1px solid rgba(232,185,79,.22);border-radius:14px;background:rgba(5,9,14,.94);backdrop-filter:blur(14px);box-shadow:0 14px 35px rgba(0,0,0,.32)}
-.a59-360-head .a59-identity{margin-right:auto}.a59-360-head .a59-identity b{display:block;color:#fff;font-size:12px}.a59-360-head .a59-identity span{display:block;color:#7f8b96;font-size:8px;margin-top:3px}.a59-360-action{border:1px solid rgba(255,255,255,.09);background:#0b1118;color:#dfe6eb;border-radius:8px;padding:7px 9px;font-size:8px;font-weight:900;cursor:pointer}.a59-360-action:hover{border-color:rgba(232,185,79,.58);color:#f3d47f}.a59-360-action.gold{background:linear-gradient(135deg,rgba(232,185,79,.18),rgba(232,185,79,.05));border-color:rgba(232,185,79,.45)}
-.a59-profile-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin:0 0 15px}.a59-profile-card{border:1px solid rgba(255,255,255,.07);background:linear-gradient(145deg,rgba(11,17,24,.97),rgba(4,8,12,.97));border-radius:14px;padding:13px}.a59-profile-card h4{font-size:9px;letter-spacing:1px;margin-bottom:10px;color:#f0d27e}.a59-score{display:flex;align-items:center;gap:10px}.a59-score-ring{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#e8b94f calc(var(--score)*1%),#17212b 0);position:relative}.a59-score-ring::after{content:"";position:absolute;inset:7px;border-radius:50%;background:#080d13}.a59-score-ring b{position:relative;z-index:1;font-size:12px;color:#fff}.a59-score-copy b{display:block;font-size:10px}.a59-score-copy span{display:block;color:#7d8994;font-size:8px;margin-top:3px}.a59-missing{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.a59-missing span{border:1px solid rgba(226,109,118,.22);background:rgba(226,109,118,.06);color:#e9a2a8;border-radius:999px;padding:4px 6px;font-size:7px;font-weight:800}.a59-present{border-color:rgba(81,200,120,.22)!important;background:rgba(81,200,120,.05)!important;color:#91e4ac!important}.a59-nav{display:flex;flex-wrap:wrap;gap:5px}.a59-nav button{border:1px solid rgba(255,255,255,.07);background:#0a1016;color:#aab4bd;border-radius:7px;padding:6px 7px;font-size:7px;font-weight:900;cursor:pointer}.a59-nav button:hover{border-color:rgba(232,185,79,.45);color:#f3d47f}
-@media(max-width:760px){.a59-workbar-title{width:100%;margin-bottom:3px}.a59-profile-grid{grid-template-columns:1fr}.a59-360-head{top:0}.a59-360-action{flex:1;min-width:85px}}
+<style id="alpha05901-candidate-ultimate">
+/* ALPHA 059.0.1 — Central de Candidatos Ultimate */
+.a5901-centerbar{
+  margin:0 0 12px;padding:14px 16px;border:1px solid rgba(245,196,66,.22);
+  border-radius:16px;background:linear-gradient(145deg,rgba(10,18,27,.97),rgba(3,7,11,.97));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.a5901-centerbar-main{display:flex;align-items:center;gap:12px;min-width:0}
+.a5901-centerbar-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;
+  border:1px solid rgba(245,196,66,.4);color:#f5c44a;background:rgba(245,196,66,.08);font-size:18px}
+.a5901-centerbar h3{font-size:14px;margin:0;font-weight:950}
+.a5901-centerbar p{font-size:10px;color:#8f9aa7;margin:3px 0 0}
+.a5901-controls{display:flex;gap:7px;flex-wrap:wrap}
+.a5901-btn{border:1px solid rgba(245,196,66,.18);background:rgba(5,10,15,.9);color:#dce3e9;
+  border-radius:9px;padding:9px 11px;font-size:9px;font-weight:900;cursor:pointer}
+.a5901-btn:hover,.a5901-btn.active{border-color:#f5c44a;color:#fff;background:rgba(245,196,66,.09)}
+.a5901-shell.collapsed{display:none}
+.a5901-microfilters{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 12px}
+.a5901-filter{border:1px solid rgba(255,255,255,.08);background:rgba(3,7,11,.72);color:#9da8b4;
+  border-radius:999px;padding:7px 10px;font-size:9px;font-weight:900;cursor:pointer}
+.a5901-filter.active{color:#fff;border-color:rgba(245,196,66,.5);background:rgba(245,196,66,.1)}
+.a5901-profile-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 15px}
+.a5901-profile-card{padding:11px 12px;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(3,8,13,.55)}
+.a5901-profile-card b{display:block;font-size:16px;color:#fff}.a5901-profile-card span{display:block;font-size:8px;color:#7f8a97;text-transform:uppercase;font-weight:900;margin-top:3px}
+.crm059-actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;padding:12px;border:1px solid rgba(245,196,66,.16);border-radius:14px;background:rgba(4,9,14,.62)}
+.crm059-action{border:1px solid rgba(255,255,255,.09);background:#0a1118;color:#eaf0f4;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:900;cursor:pointer}
+.crm059-action:hover{border-color:#f5c44a;color:#fff;background:rgba(245,196,66,.08)}
+.crm059-completeness{padding:14px;border:1px solid rgba(73,216,255,.14);border-radius:14px;background:linear-gradient(135deg,rgba(73,216,255,.05),rgba(245,196,66,.035));margin-bottom:18px}
+.crm059-completeness-top{display:flex;justify-content:space-between;gap:10px;font-size:10px;font-weight:900}
+.crm059-progress{height:7px;background:#17212b;border-radius:99px;overflow:hidden;margin-top:9px}
+.crm059-progress>i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#49d8ff,#f5c44a);box-shadow:0 0 14px rgba(73,216,255,.25)}
+@media(max-width:900px){.a5901-profile-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.a5901-profile-strip{grid-template-columns:1fr 1fr}.a5901-centerbar-main{width:100%}.a5901-controls{width:100%}.a5901-btn{flex:1}}
 </style>
+
 </head>
 <body>
 <section id="loginScreen">
@@ -3039,7 +3058,26 @@ button:active{transform:translateY(0) scale(.985)}
       <button type="button" onclick="a58ToggleCandidates(event)">⌃ RECOLHER</button>
     </div>
     </div>
-    <div class="a58-candidates-shell" id="a58CandidatesShell">
+    <div class="a5901-centerbar">
+      <div class="a5901-centerbar-main">
+        <div class="a5901-centerbar-icon">♙</div>
+        <div><h3>CENTRAL 360° · OPERAÇÃO DE CANDIDATOS</h3><p>Pesquisa, filtros, modos de visualização e acesso imediato à ficha completa.</p></div>
+      </div>
+      <div class="a5901-controls">
+        <button class="a5901-btn active" type="button" data-a5901-mode="normal" onclick="alpha0591SetMode('normal')">▦ NORMAL</button>
+        <button class="a5901-btn" type="button" data-a5901-mode="compact" onclick="alpha0591SetMode('compact')">▤ COMPACTO</button>
+        <button class="a5901-btn" type="button" data-a5901-mode="focus" onclick="alpha0591SetMode('focus')">◉ FOCO</button>
+        <button class="a5901-btn" type="button" onclick="alpha0591ShowAll()">↻ TODOS</button>
+      </div>
+    </div>
+    <div class="a5901-microfilters">
+      <button class="a5901-filter active" data-a5901-filter="Todos" onclick="alpha0591Filter('Todos')">TODOS</button>
+      <button class="a5901-filter" data-a5901-filter="Novo" onclick="alpha0591Filter('Novo')">NOVOS</button>
+      <button class="a5901-filter" data-a5901-filter="Entrevista" onclick="alpha0591Filter('Entrevista')">ENTREVISTAS</button>
+      <button class="a5901-filter" data-a5901-filter="Aprovado" onclick="alpha0591Filter('Aprovado')">APROVADOS</button>
+      <button class="a5901-filter" data-a5901-filter="Sem contato" onclick="alpha0591Filter('Sem contato')">SEM CONTATO</button>
+    </div>
+    <div class="a5901-candidates-shell" id="a58CandidatesShell">
 <div
         id="candidatesList"
         class="candidates"
@@ -4923,8 +4961,6 @@ function updateAnalytics(){
 
 function applyFilters(){
 
-  const a59NoContact = window.a59NoContactMode === true;
-
   const search =
     searchInput.value
       .trim()
@@ -4996,14 +5032,11 @@ function applyFilters(){
           ) === origin;
 
 
-        const matchesNoContact = !a59NoContact || (!String(candidate.telefone||'').trim() && !String(candidate.email||'').trim());
-
         return (
           matchesView &&
           matchesSearch &&
           matchesStatus &&
-          matchesOrigin &&
-          matchesNoContact
+          matchesOrigin
         );
 
       }
@@ -5657,6 +5690,17 @@ function crm052LinkCard(icon,label,value,actionLabel){
   return `<a class="crm052-link-card" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer"><div class="crm052-link-icon">${icon}</div><div class="crm052-link-main"><strong>${escapeHTML(label)}</strong><span>${escapeHTML(value)}</span></div><div class="crm052-link-state">↗ ${escapeHTML(actionLabel)}</div></a>`;
 }
 
+
+function crm059Completeness(c){
+  const fields=['nome_completo','telefone','email','idade','como_soube','motivo','experiencia','apresentacao_profissional','experiencia_profissional','entrevista_dia','entrevista_horario','responsavel'];
+  return Math.round(fields.filter(k=>String(c?.[k]??'').trim()).length/fields.length*100);
+}
+function crm059Phone(c){ return String(c?.whatsapp||c?.telefone||'').replace(/\D/g,''); }
+function crm059WhatsApp(id){ const c=candidates.find(x=>String(x.id)===String(id)); if(!c)return; const p=crm059Phone(c); if(!p)return; window.open('https://wa.me/'+(p.startsWith('55')?p:'55'+p),'_blank','noopener'); }
+function crm059Call(id){ const c=candidates.find(x=>String(x.id)===String(id)); if(!c||!c.telefone)return; window.location.href='tel:'+String(c.telefone).replace(/[^\d+]/g,''); }
+function crm059Email(id){ const c=candidates.find(x=>String(x.id)===String(id)); if(!c||!c.email)return; window.location.href='mailto:'+c.email; }
+function crm059CopyProtocol(id){ const c=candidates.find(x=>String(x.id)===String(id)); if(!c)return; const p=c.protocolo||c.protocol||c.codigo_protocolo||c.codigo||''; if(navigator.clipboard&&p)navigator.clipboard.writeText(p).then(()=>{if(typeof showToast==='function')showToast('Protocolo copiado');}); }
+
 function openDetails(id){
 
   window.afincoOpenCandidateId = id;
@@ -5720,6 +5764,19 @@ function openDetails(id){
       </div>
     </div>
 
+    <div class="crm059-actions">
+      ${candidate.telefone || candidate.whatsapp ? `<button class="crm059-action" type="button" onclick="crm059WhatsApp('${escapeHTML(candidate.id)}')">💬 WHATSAPP</button>` : ''}
+      ${candidate.telefone ? `<button class="crm059-action" type="button" onclick="crm059Call('${escapeHTML(candidate.id)}')">📞 LIGAR</button>` : ''}
+      ${candidate.email ? `<button class="crm059-action" type="button" onclick="crm059Email('${escapeHTML(candidate.id)}')">✉️ E-MAIL</button>` : ''}
+      <button class="crm059-action" type="button" onclick="crm042QuickTask('${escapeHTML(candidate.id)}')">＋ TAREFA</button>
+      <button class="crm059-action" type="button" onclick="crm042QuickInterview('${escapeHTML(candidate.id)}')">📅 AGENDA</button>
+      <button class="crm059-action" type="button" onclick="crm042QuickHistory('${escapeHTML(candidate.id)}')">🧠 HISTÓRICO</button>
+      <button class="crm059-action" type="button" onclick="crm059CopyProtocol('${escapeHTML(candidate.id)}')">🆔 COPIAR PROTOCOLO</button>
+    </div>
+    <div class="crm059-completeness">
+      <div class="crm059-completeness-top"><span>COMPLETUDE DO PERFIL</span><strong>${crm059Completeness(candidate)}%</strong></div>
+      <div class="crm059-progress"><i style="width:${crm059Completeness(candidate)}%"></i></div>
+    </div>
     <div class="crm042-summary">
       <div class="crm042-stat"><div class="crm042-stat-label">Status</div><div class="crm042-stat-value">${escapeHTML(candidate.status||'Novo')}</div><div class="crm042-stat-note">Etapa atual</div></div>
       <div class="crm042-stat"><div class="crm042-stat-label">Temperatura</div><div class="crm042-stat-value">${escapeHTML(crm037Priority(candidate))}</div><div class="crm042-stat-note">Prioridade CRM</div></div>
@@ -7379,135 +7436,63 @@ function crm053UltraSection(c){
 }
 </style>
 
-<script id="alpha059-candidato-360-js">
+<script id="alpha05901-candidate-ultimate-js">
 (function(){
-  'use strict';
-  const $=id=>document.getElementById(id);
-  const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  const getCandidates=()=>{try{if(Array.isArray(window.candidates))return window.candidates;if(typeof candidates!=='undefined'&&Array.isArray(candidates))return candidates}catch(e){}return[]};
-  const normalize=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-  const phone=v=>String(v||'').replace(/\D/g,'');
-  const protocol=c=>c?.protocolo||c?.protocol||c?.codigo_protocolo||c?.codigo||'Sem protocolo';
-  let view='normal';
-
-  function installWorkbar(){
-    const toggle=$('a58CandidatesToggle');
-    const shell=$('a58CandidatesShell');
-    if(!toggle||!shell||$('a59Workbar'))return;
-    const bar=document.createElement('div');
-    bar.id='a59Workbar'; bar.className='a59-workbar';
-    bar.innerHTML=`
-      <div class="a59-workbar-title"><b>🎯 CANDIDATO 360° · CENTRAL OPERACIONAL</b><span>Controle rápido da carteira sem remover nenhuma função anterior.</span></div>
-      <button class="a59-btn" type="button" onclick="a59OpenAll()">▣ ABRIR CENTRAL</button>
-      <button class="a59-btn" type="button" onclick="a59ResetFilters()">↺ TODOS</button>
-      <button class="a59-btn active" data-a59-view="normal" type="button" onclick="a59SetView('normal')">◫ NORMAL</button>
-      <button class="a59-btn" data-a59-view="compact" type="button" onclick="a59SetView('compact')">≡ COMPACTO</button>
-      <button class="a59-btn" data-a59-view="focus" type="button" onclick="a59SetView('focus')">◎ FOCO</button>`;
-    toggle.parentNode.insertBefore(bar,toggle);
-    const quick=document.createElement('div'); quick.id='a59QuickFilters'; quick.className='a59-quick';
-    quick.innerHTML=`
-      <button type="button" onclick="a59Quick('Todos',this)" class="active">TODOS</button>
-      <button type="button" onclick="a59Quick('Novo',this)">NOVOS</button>
-      <button type="button" onclick="a59Quick('Em análise',this)">EM ANÁLISE</button>
-      <button type="button" onclick="a59Quick('Entrevista',this)">ENTREVISTAS</button>
-      <button type="button" onclick="a59Quick('Aprovado',this)">APROVADOS</button>
-      <button type="button" onclick="a59Quick('Sem contato',this)">SEM CONTATO</button>`;
-    shell.parentNode.insertBefore(quick,shell);
+  const root=()=>document.getElementById('a58CandidatesShell');
+  const buttons=()=>document.querySelectorAll('[data-a5901-mode]');
+  function modeClass(mode){
+    const r=root(); if(!r)return;
+    r.classList.remove('a5901-mode-compact','a5901-mode-focus');
+    if(mode==='compact')r.classList.add('a5901-mode-compact');
+    if(mode==='focus')r.classList.add('a5901-mode-focus');
+    buttons().forEach(b=>b.classList.toggle('active',b.dataset.a5901Mode===mode));
+    try{localStorage.setItem('a5901_mode',mode)}catch(e){}
   }
-
-  function setView(mode){
-    view=mode;
-    const list=$('candidatesList'); if(!list)return;
-    list.classList.remove('a59-compact','a59-focus');
-    if(mode==='compact')list.classList.add('a59-compact');
-    if(mode==='focus')list.classList.add('a59-focus');
-    document.querySelectorAll('[data-a59-view]').forEach(b=>b.classList.toggle('active',b.dataset.a59View===mode));
-    try{localStorage.setItem('a59_view',mode)}catch(e){}
-  }
-  window.a59SetView=setView;
-
-  window.a59OpenAll=function(){
-    const shell=$('a58CandidatesShell'); if(!shell)return;
-    shell.classList.remove('collapsed');
-    const box=$('a58CandidatesToggle'); const btn=box?.querySelector('button');
-    if(box)box.setAttribute('aria-expanded','true'); if(btn)btn.textContent='⌃ RECOLHER';
-    try{localStorage.setItem('a58_candidates_collapsed','0')}catch(e){}
-    shell.scrollIntoView({behavior:'smooth',block:'start'});
-  };
-  window.a59ResetFilters=function(){
-    window.a59NoContactMode=false;
-    const s=$('searchInput'),st=$('statusFilter'),o=$('originFilter');
-    if(s)s.value=''; if(st)st.value='Todos'; if(o)o.value='Todos';
-    const all=document.querySelectorAll('#a59QuickFilters button');all.forEach((b,i)=>b.classList.toggle('active',i===0));
-    if(typeof applyFilters==='function')applyFilters();
-    a59OpenAll();
-  };
-  window.a59Quick=function(value,btn){
-    window.a59NoContactMode = value==='Sem contato';
-    if(value==='Sem contato'){
-      const s=$('searchInput'),st=$('statusFilter'),o=$('originFilter');
+  window.alpha0591SetMode=modeClass;
+  window.alpha0591ShowAll=function(){
+    try{
+      const s=document.getElementById('searchInput'); const st=document.getElementById('statusFilter'); const o=document.getElementById('originFilter');
       if(s)s.value=''; if(st)st.value='Todos'; if(o)o.value='Todos';
-      if(typeof applyFilters==='function')applyFilters();
-    }else{
-      const st=$('statusFilter'); if(st)st.value=value;
-      if(typeof applyFilters==='function')applyFilters();
-    }
-    document.querySelectorAll('#a59QuickFilters button').forEach(b=>b.classList.remove('active')); if(btn)btn.classList.add('active');
+    }catch(e){}
+    document.querySelectorAll('[data-a5901-filter]').forEach(b=>b.classList.toggle('active',b.dataset.a5901Filter==='Todos'));
+    window.__a5901StatusFilter='Todos';
+    if(typeof applyFilters==='function')applyFilters();
   };
-
-  function completeness(c){
-    const fields=[c.nome_completo,c.telefone,c.email,c.idade,c.experiencia_vendas,c.inicio,c.experiencia||c.experiencia_profissional,c.apresentacao_profissional,c.motivo,(c.site||c.linkedin||c.instagram),c.entrevista_dia];
-    const ok=fields.filter(v=>String(v??'').trim()).length;
-    return {score:Math.round(ok/fields.length*100),missing:[['Telefone',c.telefone],['E-mail',c.email],['Experiência',c.experiencia||c.experiencia_profissional],['Apresentação',c.apresentacao_profissional],['Motivação',c.motivo],['Entrevista',c.entrevista_dia],['Presença digital',c.site||c.linkedin||c.instagram]].filter(x=>!String(x[1]??'').trim()).map(x=>x[0])};
-  }
-
-  function whatsapp(c){const p=phone(c.telefone);if(!p)return alert('Este candidato não possui telefone informado.');window.open('https://wa.me/'+(p.startsWith('55')?p:'55'+p),'_blank','noopener');}
-  function call(c){const p=phone(c.telefone);if(!p)return alert('Este candidato não possui telefone informado.');window.location.href='tel:'+p;}
-  function mail(c){if(!c.email)return alert('Este candidato não possui e-mail informado.');window.location.href='mailto:'+c.email;}
-  function copyProtocol(c){navigator.clipboard?.writeText(protocol(c)).then(()=>{if(typeof alphaToast==='function')alphaToast('Protocolo copiado: '+protocol(c));else alert('Protocolo copiado: '+protocol(c));}).catch(()=>alert(protocol(c)));}
-
-  function inject360(c){
-    const body=$('modalBody'); if(!body)return;
-    body.querySelectorAll('.a59-360-head,.a59-profile-grid').forEach(x=>x.remove());
-    const comp=completeness(c);
-    const missing=comp.missing.length?comp.missing.map(x=>`<span>⚠ ${esc(x)}</span>`).join(''):'<span class="a59-present">✓ PERFIL SEM PENDÊNCIAS BÁSICAS</span>';
-    const head=document.createElement('div'); head.className='a59-360-head';
-    head.innerHTML=`
-      <div class="a59-identity"><b>${esc(c.nome_completo||'Candidato')}</b><span>${esc(protocol(c))} · ${esc(c.status||'Novo')} · ${esc(c.responsavel||'ALPHA')}</span></div>
-      <button class="a59-360-action gold" type="button" onclick="a59WhatsApp('${esc(c.id)}')">💬 WhatsApp</button>
-      <button class="a59-360-action" type="button" onclick="a59Call('${esc(c.id)}')">📞 Ligar</button>
-      <button class="a59-360-action" type="button" onclick="a59Mail('${esc(c.id)}')">✉ E-mail</button>
-      <button class="a59-360-action" type="button" onclick="crm042QuickTask('${esc(c.id)}')">＋ Tarefa</button>
-      <button class="a59-360-action" type="button" onclick="crm042QuickInterview('${esc(c.id)}')">📅 Agenda</button>
-      <button class="a59-360-action" type="button" onclick="a59CopyProtocol('${esc(c.id)}')">🆔 Copiar</button>`;
-    body.prepend(head);
-    const grid=document.createElement('div');grid.className='a59-profile-grid';
-    grid.innerHTML=`
-      <div class="a59-profile-card"><h4>🧠 LEITURA DO PERFIL</h4><div class="a59-score"><div class="a59-score-ring" style="--score:${comp.score}"><b>${comp.score}%</b></div><div class="a59-score-copy"><b>${comp.score>=85?'Perfil muito completo':comp.score>=65?'Perfil operacional':'Perfil precisa de complementação'}</b><span>Completude calculada somente com os dados já cadastrados.</span></div></div><div class="a59-missing">${missing}</div></div>
-      <div class="a59-profile-card"><h4>⚡ IR PARA</h4><div class="a59-nav"><button onclick="a59Jump('crm042-interview')">AGENDA</button><button onclick="a59Jump('crm042-tasks')">TAREFAS</button><button onclick="a59Jump('crm042-history')">HISTÓRICO</button><button onclick="a59Jump('crm042-notes')">NOTAS</button><button onclick="a59Jump('crm052-identity-section')">360°</button><button onclick="a59Jump('crm042-notes');setTimeout(()=>document.getElementById('candidateNote')?.focus(),200)">ESCREVER NOTA</button></div></div>`;
-    body.insertBefore(grid,head.nextSibling);
-  }
-
-  window.a59WhatsApp=id=>{const c=getCandidates().find(x=>String(x.id)===String(id));if(c)whatsapp(c)};
-  window.a59Call=id=>{const c=getCandidates().find(x=>String(x.id)===String(id));if(c)call(c)};
-  window.a59Mail=id=>{const c=getCandidates().find(x=>String(x.id)===String(id));if(c)mail(c)};
-  window.a59CopyProtocol=id=>{const c=getCandidates().find(x=>String(x.id)===String(id));if(c)copyProtocol(c)};
-  window.a59Jump=id=>document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
-
+  window.alpha0591Filter=function(filter){
+    document.querySelectorAll('[data-a5901-filter]').forEach(b=>b.classList.toggle('active',b.dataset.a5901Filter===filter));
+    window.__a5901StatusFilter=filter;
+    if(filter==='Todos'){ if(typeof applyFilters==='function')applyFilters(); return; }
+    const s=document.getElementById('searchInput'); if(s)s.value='';
+    const st=document.getElementById('statusFilter');
+    if(filter==='Sem contato'){
+      if(st)st.value='Todos';
+      if(typeof candidates!=='undefined' && typeof filteredCandidates!=='undefined'){
+        filteredCandidates=candidates.filter(c=>!c.deleted_at && !String(c.telefone||c.whatsapp||c.email||'').trim());
+        if(typeof renderCandidates==='function')renderCandidates();
+      }
+      return;
+    }
+    if(st){
+      const opts=[...st.options].map(o=>o.value);
+      const found=opts.find(v=>v.toLowerCase().includes(filter.toLowerCase()));
+      st.value=found||filter;
+    }
+    if(typeof applyFilters==='function')applyFilters();
+  };
   document.addEventListener('DOMContentLoaded',()=>{
-    installWorkbar();
-    try{setView(localStorage.getItem('a59_view')||'normal')}catch(e){setView('normal')}
+    try{modeClass(localStorage.getItem('a5901_mode')||'normal')}catch(e){modeClass('normal')}
   });
-
-  const originalOpen=window.openDetails;
-  if(typeof originalOpen==='function'){
-    window.openDetails=function(id){
-      originalOpen(id);
-      setTimeout(()=>{const c=getCandidates().find(x=>String(x.id)===String(id));if(c)inject360(c)},40);
-    };
-  }
 })();
 </script>
+<style id="alpha05901-mode-css">
+.a5901-mode-compact .candidate,.a5901-mode-compact .candidate-card{padding:10px!important;min-height:0!important}
+.a5901-mode-compact .candidate .summary,.a5901-mode-compact .candidate .divider{display:none!important}
+.a5901-mode-compact .candidate .candidate-date{font-size:8px!important}
+.a5901-mode-focus .candidate .summary{display:none!important}
+.a5901-mode-focus .candidate{border-radius:11px!important}
+.a5901-mode-focus .candidate{padding:11px!important}.a5901-mode-focus .candidate .summary{display:none!important}
+</style>
+
 </body>
 </html>
 <style id="alpha058-background-final">
