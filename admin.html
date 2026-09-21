@@ -1008,6 +1008,16 @@ button:disabled{
 }
 
 
+/* ALPHA 060.1 — CENTRAL DE CANDIDATOS ULTRA */
+.a5901-candidates-shell{position:relative;}
+.a5901-candidates-shell::before{content:"SELECIONE UM CANDIDATO PARA ABRIR A FICHA 360°";display:block;margin:0 0 10px;padding:9px 12px;border:1px solid rgba(232,185,79,.14);border-radius:12px;background:linear-gradient(90deg,rgba(232,185,79,.06),rgba(255,255,255,.018));color:#8f9aaa;font-size:9px;font-weight:900;letter-spacing:.12em;text-align:center;}
+.a5901-candidates-shell.ultra-focus .candidate{cursor:pointer;}
+.a5901-candidates-shell.ultra-focus .candidate:hover{transform:translateY(-5px) scale(1.005)!important;border-color:rgba(232,185,79,.55)!important;box-shadow:0 24px 65px rgba(0,0,0,.42),0 0 0 1px rgba(232,185,79,.08)!important;}
+.candidate .candidate-click-hint{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;padding:8px 10px;border-radius:10px;background:rgba(232,185,79,.045);border:1px solid rgba(232,185,79,.10);color:#b7c0cd;font-size:8px;font-weight:900;letter-spacing:.08em;}
+.candidate .candidate-click-hint b{color:#e8c96e;}
+.candidate.is-selected{border-color:rgba(232,185,79,.7)!important;box-shadow:0 0 0 2px rgba(232,185,79,.10),0 24px 65px rgba(0,0,0,.45)!important;}
+@media(max-width:700px){.a5901-candidates-shell::before{font-size:8px}.candidate .candidate-click-hint{font-size:7px}}
+
 .candidate{
 
   background:
@@ -5172,6 +5182,10 @@ function renderCandidates(){
 
             <article
               class="candidate"
+              data-candidate-id="${escapeHTML(candidate.id)}"
+              tabindex="0"
+              role="button"
+              aria-label="Abrir ficha completa de ${escapeHTML(candidate.nome_completo||"Candidato")}"
             >
 
 
@@ -5370,10 +5384,13 @@ ${viewMode === "trash" ? "" : `                  <select
               </div>
 
 
+              <div class="candidate-click-hint"><span>◉ FICHA 360° COMPLETA</span><b>CLIQUE NO CARD OU EM VER FICHA →</b></div>
+
+
               <div class="candidate-actions">
 
-                <button class="action gold" onclick="openDetails('${escapeHTML(candidate.id)}')">
-                  👁 Ver ficha
+                <button class="action gold candidate-open-btn" type="button" data-open-candidate="${escapeHTML(candidate.id)}">
+                  👁 Ver ficha completa
                 </button>
 
                 ${viewMode === "trash" ? `
@@ -5399,6 +5416,25 @@ ${viewMode === "trash" ? "" : `                  <select
         }
       )
       .join("");
+
+  candidatesList.querySelectorAll("[data-candidate-id]").forEach(card=>{
+    const id=card.getAttribute("data-candidate-id");
+    const open=()=>{
+      candidatesList.querySelectorAll(".candidate.is-selected").forEach(x=>x.classList.remove("is-selected"));
+      card.classList.add("is-selected");
+      openDetails(id);
+    };
+    card.addEventListener("click",e=>{
+      if(e.target.closest("button,select,a,input,textarea")) return;
+      open();
+    });
+    card.addEventListener("keydown",e=>{
+      if((e.key==="Enter"||e.key===" ") && !e.target.closest("button,select,input,textarea")){e.preventDefault();open();}
+    });
+  });
+  candidatesList.querySelectorAll("[data-open-candidate]").forEach(btn=>{
+    btn.addEventListener("click",e=>{e.stopPropagation();openDetails(btn.getAttribute("data-open-candidate"));});
+  });
 
 }
 
@@ -5508,7 +5544,7 @@ async function updateStatus(
   const candidate =
     candidates.find(
       item =>
-        item.id === id
+        String(item.id) === String(id)
     );
 
 
@@ -7628,3 +7664,12 @@ function crm053UltraSection(c){
 .a56-hero-bg{background-size:cover!important;background-position:center center!important;filter:saturate(.9) contrast(1.08) brightness(.62)!important;}
 .alpha-hero{background-size:cover!important;background-position:center center!important;}
 </style>
+
+<script id="alpha0601-central-ultra-init">
+(function(){
+  document.addEventListener('DOMContentLoaded',()=>{
+    const shell=document.getElementById('a58CandidatesShell');
+    if(shell) shell.classList.add('ultra-focus');
+  });
+})();
+</script>
