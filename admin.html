@@ -2154,6 +2154,31 @@ main.container > section.dashboard, main.container > section.analytics{display:n
 .crm053-description h4{margin:0 0 8px;color:#d8dde5;font-size:9px;font-weight:950}
 .crm053-description p{margin:0;color:#c8ced7;font-size:9px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
 @media(max-width:560px){.crm053-ident{grid-template-columns:64px 1fr}.crm053-ident-logo{width:64px;height:64px}}
+
+/* =====================================================
+   ALPHA 060 — KANBAN NEXUS / OPERACAO DE ALTO DESEMPENHO
+===================================================== */
+.alpha060-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 15px;border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))}
+.alpha060-search{flex:1 1 250px;min-width:210px;height:38px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(0,0,0,.22);color:#fff;padding:0 12px;font-size:11px;outline:none}
+.alpha060-search:focus{border-color:rgba(212,175,55,.5);box-shadow:0 0 0 3px rgba(212,175,55,.06)}
+.alpha060-select,.alpha060-btn{height:38px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.035);color:#dbe2ec;padding:0 11px;font-size:10px;font-weight:900;cursor:pointer}
+.alpha060-btn:hover,.alpha060-btn.active{border-color:rgba(212,175,55,.38);background:rgba(212,175,55,.08);color:#f0d77f}
+.alpha060-select option{background:#111722;color:#fff}
+.alpha060-kpis{display:grid;grid-template-columns:repeat(6,minmax(100px,1fr));gap:8px;padding:12px 15px;border-bottom:1px solid rgba(255,255,255,.055)}
+.alpha060-kpi{padding:10px 11px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:rgba(255,255,255,.018)}
+.alpha060-kpi small{display:block;font-size:7px;letter-spacing:.12em;color:#707b8b;font-weight:950;text-transform:uppercase}.alpha060-kpi b{display:block;margin-top:4px;font-size:18px;color:#fff}.alpha060-kpi em{font-style:normal;font-size:8px;color:#8490a0}
+.alpha060-alert{color:#ff7777!important}.alpha060-gold{color:#f0d77f!important}.alpha060-green{color:#62e09b!important}
+.alpha060-progress{height:3px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:7px}.alpha060-progress i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#d4af37,#f7e6a1);width:0;transition:width .35s ease}
+.alpha060-mode{margin-left:auto;display:flex;gap:5px}.alpha060-mode .alpha060-btn{height:32px;padding:0 9px;font-size:8px}
+.alpha060-board{display:grid;grid-template-columns:repeat(5,minmax(250px,1fr));gap:11px;padding:15px;overflow:auto;align-items:start}
+.alpha060-column{min-height:390px;border:1px solid rgba(255,255,255,.065);border-radius:17px;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));display:flex;flex-direction:column;overflow:hidden;transition:.2s ease}
+.alpha060-column.drag-over{border-color:rgba(212,175,55,.7);box-shadow:0 0 0 2px rgba(212,175,55,.1),0 20px 50px rgba(0,0,0,.3);transform:translateY(-3px)}
+.alpha060-colhead{padding:12px 12px 10px;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;background:rgba(13,17,24,.9);backdrop-filter:blur(12px);z-index:2}.alpha060-coltop{display:flex;align-items:center;justify-content:space-between;gap:8px}.alpha060-colname{font-size:10px;font-weight:950;letter-spacing:.1em;text-transform:uppercase;color:#fff}.alpha060-count{font-size:10px;font-weight:950;color:#f0d77f;background:rgba(212,175,55,.09);border:1px solid rgba(212,175,55,.2);border-radius:999px;padding:4px 8px}.alpha060-colmeta{display:flex;justify-content:space-between;gap:8px;margin-top:7px;color:#687485;font-size:8px;font-weight:800}.alpha060-wip{color:#9da8b7}.alpha060-cards{padding:9px;display:flex;flex-direction:column;gap:8px;min-height:330px}.alpha060-card{position:relative;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:linear-gradient(145deg,rgba(22,27,37,.98),rgba(10,14,21,.98));padding:11px;cursor:grab;box-shadow:0 10px 25px rgba(0,0,0,.2);transition:.16s ease}.alpha060-card:hover{transform:translateY(-2px);border-color:rgba(212,175,55,.35);box-shadow:0 18px 38px rgba(0,0,0,.3)}.alpha060-card.dragging{opacity:.35;transform:scale(.98)}
+.alpha060-cardhead{display:flex;align-items:center;gap:8px}.alpha060-avatar{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(212,175,55,.2),rgba(90,110,150,.18));border:1px solid rgba(212,175,55,.22);color:#f6e7ad;font-size:9px;font-weight:950;flex:0 0 auto}.alpha060-name{font-size:11px;font-weight:950;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.alpha060-sub{font-size:8px;color:#707b8a;margin-top:3px}.alpha060-badge{margin-left:auto;font-size:8px;font-weight:950;padding:4px 6px;border-radius:7px;white-space:nowrap}.alpha060-hot{color:#ff9b72;background:rgba(255,100,55,.08);border:1px solid rgba(255,100,55,.16)}.alpha060-warm{color:#f2d36c;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.16)}.alpha060-cold{color:#8eb8ff;background:rgba(80,130,255,.08);border:1px solid rgba(80,130,255,.16)}
+.alpha060-data{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:9px}.alpha060-data span{padding:5px 6px;border-radius:7px;background:rgba(255,255,255,.035);color:#aab4c2;font-size:7px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.alpha060-action{margin-top:8px;padding:7px 8px;border-radius:8px;border:1px solid rgba(212,175,55,.11);background:rgba(212,175,55,.035);font-size:8px;color:#9da8b6;line-height:1.35}.alpha060-action strong{color:#dfe5ed}.alpha060-action.overdue{border-color:rgba(255,90,90,.2);background:rgba(255,70,70,.045);color:#ff9b9b}.alpha060-footer{display:flex;gap:5px;margin-top:9px}.alpha060-footer button{flex:1;height:29px;border-radius:8px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.035);color:#aeb8c7;font-size:8px;font-weight:900;cursor:pointer}.alpha060-footer button:hover{border-color:rgba(212,175,55,.3);color:#f0d77f}.alpha060-empty{padding:30px 10px;text-align:center;color:#667181;font-size:9px;border:1px dashed rgba(255,255,255,.06);border-radius:11px}.alpha060-empty b{display:block;color:#aeb8c7;margin-bottom:5px}.alpha060-mode-compact .alpha060-card{padding:8px}.alpha060-mode-compact .alpha060-data,.alpha060-mode-compact .alpha060-action{display:none}.alpha060-mode-compact .alpha060-cards{gap:5px}.alpha060-mode-focus .alpha060-column:not(.focus-column){display:none}.alpha060-mode-focus .alpha060-board{grid-template-columns:minmax(300px,620px);justify-content:center}.alpha060-mode-focus .alpha060-kpis{grid-template-columns:repeat(3,1fr)}
+@media(max-width:1200px){.alpha060-kpis{grid-template-columns:repeat(3,1fr)}.alpha060-board{grid-template-columns:repeat(5,minmax(230px,1fr))}}
+@media(max-width:720px){.alpha060-kpis{grid-template-columns:repeat(2,1fr)}.alpha060-board{grid-template-columns:repeat(5,minmax(260px,1fr))}.alpha060-mode-focus .alpha060-kpis{grid-template-columns:repeat(2,1fr)}.alpha060-toolbar{align-items:stretch}.alpha060-mode{margin-left:0;width:100%}.alpha060-mode .alpha060-btn{flex:1}}
+
 </style>
 <style>
 
@@ -2783,13 +2808,20 @@ button:active{transform:translateY(0) scale(.985)}
   <section class="kanban-section" id="alphaKanban">
     <div class="kanban-head">
       <div>
-        <div class="kanban-kicker">CRM // PIPELINE VISUAL</div>
-        <div class="kanban-title">🐺 Kanban de Recrutamento</div>
-        <div class="kanban-sub">Arraste um candidato entre as etapas para atualizar o status diretamente no CRM.</div>
+        <div class="kanban-kicker">ALPHA NEXUS // OPERACAO EM TEMPO REAL</div>
+        <div class="kanban-title">⚡ KANBAN NEXUS</div>
+        <div class="kanban-sub">Um centro de comando para movimentar, priorizar e atacar o funil. Arraste, filtre, foque e execute.</div>
       </div>
       <div class="kanban-live"><i></i><span id="kanbanTotal">0 candidatos ativos</span></div>
     </div>
-    <div class="kanban-board" id="kanbanBoard"></div>
+    <div class="alpha060-toolbar">
+      <input id="alpha060Search" class="alpha060-search" type="text" placeholder="⌕ Buscar nome, telefone, e-mail ou protocolo..." autocomplete="off">
+      <select id="alpha060Sort" class="alpha060-select"><option value="priority">Ordenar: prioridade</option><option value="newest">Mais recentes</option><option value="oldest">Mais antigos</option><option value="action">Próxima ação</option><option value="interview">Entrevista</option></select>
+      <button type="button" class="alpha060-btn" id="alpha060Clear">↺ LIMPAR</button>
+      <div class="alpha060-mode"><button type="button" class="alpha060-btn active" data-alpha060-mode="normal">PIPELINE</button><button type="button" class="alpha060-btn" data-alpha060-mode="compact">COMPACTO</button><button type="button" class="alpha060-btn" data-alpha060-mode="focus">FOCO</button></div>
+    </div>
+    <div class="alpha060-kpis" id="alpha060Kpis"></div>
+    <div class="alpha060-board" id="kanbanBoard"></div>
   </section>
   
   <section class="crm037-section" id="alphaCRM037">
@@ -7493,6 +7525,103 @@ function crm053UltraSection(c){
 .a5901-mode-focus .candidate{padding:11px!important}.a5901-mode-focus .candidate .summary{display:none!important}
 </style>
 
+
+<script>
+/* =====================================================
+   ALPHA 060 — KANBAN NEXUS ENGINE
+===================================================== */
+(function(){
+  let alpha060Query='';
+  let alpha060Sort='priority';
+  let alpha060Mode='normal';
+  let alpha060Focus='';
+
+  function a060Text(v){ return String(v??'').trim(); }
+  function a060PriorityRank(c){ const p=crm037Priority(c); return p==='Quente'?0:p==='Morno'?1:2; }
+  function a060ActionTime(c){ const v=c?.proxima_acao_at; const t=v?new Date(v).getTime():Infinity; return Number.isFinite(t)?t:Infinity; }
+  function a060InterviewTime(c){
+    const d=a060Text(c?.entrevista_dia), h=a060Text(c?.entrevista_horario);
+    if(!d) return Infinity; const parsed=new Date(`${d} ${h||'23:59'}`).getTime(); return Number.isFinite(parsed)?parsed:Infinity;
+  }
+  function a060Matches(c){
+    if(!crm037Matches(c)) return false;
+    const q=alpha060Query.toLowerCase(); if(!q) return true;
+    return [c.nome_completo,c.telefone,c.email,c.codigo_protocolo,c.protocolo,c.codigo,c.whatsapp].some(v=>a060Text(v).toLowerCase().includes(q));
+  }
+  function a060Sort(list){
+    return list.sort((a,b)=>{
+      if(alpha060Sort==='newest') return new Date(b.created_at||0)-new Date(a.created_at||0);
+      if(alpha060Sort==='oldest') return new Date(a.created_at||0)-new Date(b.created_at||0);
+      if(alpha060Sort==='action') return a060ActionTime(a)-a060ActionTime(b);
+      if(alpha060Sort==='interview') return a060InterviewTime(a)-a060InterviewTime(b);
+      const pr=a060PriorityRank(a)-a060PriorityRank(b); if(pr) return pr;
+      const ad=a060ActionTime(a), bd=a060ActionTime(b); if(ad!==bd) return ad-bd;
+      return new Date(b.created_at||0)-new Date(a.created_at||0);
+    });
+  }
+  function a060ActionLabel(c){
+    if(!crm037HasAction(c)) return '○ Nenhuma próxima ação definida';
+    const due=crm037IsDue(c); const raw=a060Text(c.proxima_acao);
+    let when=''; if(c.proxima_acao_at){const d=new Date(c.proxima_acao_at);if(!Number.isNaN(d.getTime())) when=' · '+d.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});}
+    return (due?'⚠️ ':'➡️ ')+raw+when+(due?' · ATRASADA':'');
+  }
+  function a060PriorityBadge(c){ const p=crm037Priority(c); return p==='Quente'?'<span class="alpha060-badge alpha060-hot">🔥 QUENTE</span>':p==='Frio'?'<span class="alpha060-badge alpha060-cold">❄️ FRIO</span>':'<span class="alpha060-badge alpha060-warm">● MORNO</span>'; }
+  function a060Kpis(all,visible){
+    const active=all.length, shown=visible.length, hot=all.filter(c=>crm037Priority(c)==='Quente').length, overdue=all.filter(c=>crm037IsDue(c)).length, noAction=all.filter(c=>!crm037HasAction(c)).length, interviews=all.filter(c=>c.entrevista_dia).length;
+    const rate=active?Math.round((shown/active)*100):0;
+    const box=(label,val,sub,cls='')=>`<div class="alpha060-kpi"><small>${label}</small><b class="${cls}">${val}</b><em>${sub}</em>${label==='VISÃO' ? `<div class="alpha060-progress"><i style="width:${rate}%"></i></div>`:''}</div>`;
+    const el=document.getElementById('alpha060Kpis'); if(el) el.innerHTML=box('ATIVOS',active,'candidatos no pipeline')+box('🔥 QUENTES',hot,'prioridade máxima','alpha060-gold')+box('⚠️ ATRASADOS',overdue,'ação vencida',overdue?'alpha060-alert':'alpha060-green')+box('🎯 SEM AÇÃO',noAction,'precisam de follow-up',noAction?'alpha060-alert':'alpha060-green')+box('🎯 ENTREVISTAS',interviews,'com entrevista registrada','')+box('VISÃO',shown,`${rate}% do pipeline exibido`,'alpha060-gold');
+  }
+  function a060Card(c){
+    const overdue=crm037IsDue(c); const age=alphaAgeHours(c); const ageLabel=age<1?'agora':age<24?`${Math.max(1,Math.floor(age))}h atrás`:`${Math.floor(age/24)}d atrás`;
+    const interview=c.entrevista_dia&&c.entrevista_horario?`${a060Text(c.entrevista_dia).replace('-feira','')} · ${a060Text(c.entrevista_horario)}`:'Sem entrevista';
+    const protocol=a060Text(c.codigo_protocolo||c.protocolo||c.codigo);
+    return `<article class="alpha060-card" draggable="true" data-alpha060-id="${escapeHTML(c.id)}">
+      <div class="alpha060-cardhead"><div class="alpha060-avatar">${crmInitials(c.nome_completo)}</div><div style="min-width:0;flex:1"><div class="alpha060-name" title="${escapeHTML(c.nome_completo||'Candidato')}">${escapeHTML(c.nome_completo||'Candidato')}</div><div class="alpha060-sub">${escapeHTML(protocol?protocol+' · ':'')}${escapeHTML(ageLabel)}</div></div>${a060PriorityBadge(c)}</div>
+      <div class="alpha060-data"><span>📱 ${escapeHTML(c.telefone||'Sem telefone')}</span><span>👤 ${escapeHTML(c.responsavel||'ALPHA')}</span><span>📍 ${escapeHTML(c.como_soube||'Origem n/i')}</span><span>🎯 ${escapeHTML(interview)}</span></div>
+      <div class="alpha060-action ${overdue?'overdue':''}"><strong>${overdue?'AÇÃO CRÍTICA':'PRÓXIMA AÇÃO'}</strong><br>${escapeHTML(a060ActionLabel(c))}</div>
+      <div class="alpha060-footer"><button type="button" data-a060-open="${escapeHTML(c.id)}">360°</button><button type="button" data-a060-whats="${escapeHTML(c.id)}">WHATS</button></div>
+    </article>`;
+  }
+  function a060Bind(){
+    const board=document.getElementById('kanbanBoard'); if(!board) return;
+    board.querySelectorAll('.alpha060-card').forEach(card=>{
+      card.addEventListener('dragstart',e=>{card.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',card.dataset.alpha060Id);});
+      card.addEventListener('dragend',()=>card.classList.remove('dragging'));
+    });
+    board.querySelectorAll('[data-alpha060-drop]').forEach(zone=>{
+      zone.addEventListener('dragover',e=>{e.preventDefault();zone.closest('.alpha060-column')?.classList.add('drag-over');});
+      zone.addEventListener('dragleave',e=>{if(!zone.contains(e.relatedTarget))zone.closest('.alpha060-column')?.classList.remove('drag-over');});
+      zone.addEventListener('drop',async e=>{e.preventDefault();zone.closest('.alpha060-column')?.classList.remove('drag-over');const id=e.dataTransfer.getData('text/plain');const status=zone.dataset.alpha060Drop;if(id&&status)await updateStatus(id,status);renderKanban();});
+    });
+    board.querySelectorAll('[data-a060-open]').forEach(b=>b.addEventListener('click',()=>openDetails(b.dataset.a060Open)));
+    board.querySelectorAll('[data-a060-whats]').forEach(b=>b.addEventListener('click',()=>{const c=candidates.find(x=>String(x.id)===String(b.dataset.a060Whats));if(c?.telefone){const n=String(c.telefone).replace(/\D/g,'');window.open('https://wa.me/55'+n,'_blank');}else showToast('Candidato sem telefone.');}));
+  }
+  window.renderKanban=function(){
+    renderCRM037();
+    const board=document.getElementById('kanbanBoard'); if(!board) return;
+    const all=activeCandidates(); const visible=a060Sort(all.filter(a060Matches));
+    const total=document.getElementById('kanbanTotal'); if(total) total.textContent=`${visible.length} de ${all.length} candidatos ativos`;
+    a060Kpis(all,visible);
+    board.className=`alpha060-board alpha060-mode-${alpha060Mode}`;
+    board.innerHTML=KANBAN_STATUSES.map(col=>{
+      const people=visible.filter(c=>(c.status||'Novo')===col.name); const focused=!alpha060Focus||alpha060Focus===col.name;
+      const hot=people.filter(c=>crm037Priority(c)==='Quente').length; const overdue=people.filter(c=>crm037IsDue(c)).length;
+      return `<div class="alpha060-column ${focused?'focus-column':''}" data-status="${escapeHTML(col.name)}"><div class="alpha060-colhead"><div class="alpha060-coltop"><div class="alpha060-colname">${col.icon} ${escapeHTML(col.label)}</div><div class="alpha060-count">${people.length}</div></div><div class="alpha060-colmeta"><span>${hot?`🔥 ${hot} quentes`: 'pipeline ativo'}</span><span class="alpha060-wip">${overdue?`⚠ ${overdue} atrasados`:'✓ sem atraso'}</span></div></div><div class="alpha060-cards" data-alpha060-drop="${escapeHTML(col.name)}">${people.length?people.map(a060Card).join(''):`<div class="alpha060-empty"><b>${col.icon} ${escapeHTML(col.label)}</b>${alpha060Query?'Nenhum candidato encontrado.':'Arraste candidatos para esta etapa.'}</div>`}</div></div>`;
+    }).join('');
+    a060Bind();
+  };
+  function a060Init(){
+    const q=document.getElementById('alpha060Search'), sort=document.getElementById('alpha060Sort'), clear=document.getElementById('alpha060Clear');
+    q?.addEventListener('input',()=>{alpha060Query=q.value.trim();renderKanban();});
+    sort?.addEventListener('change',()=>{alpha060Sort=sort.value;renderKanban();});
+    clear?.addEventListener('click',()=>{alpha060Query='';alpha060Sort='priority';alpha060Focus='';if(q)q.value='';if(sort)sort.value='priority';renderKanban();});
+    document.querySelectorAll('[data-alpha060-mode]').forEach(b=>b.addEventListener('click',()=>{alpha060Mode=b.dataset.alpha060Mode;document.querySelectorAll('[data-alpha060-mode]').forEach(x=>x.classList.toggle('active',x===b));renderKanban();}));
+    document.querySelectorAll('[data-crm037-filter]').forEach(b=>b.addEventListener('click',()=>setTimeout(renderKanban,0)));
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',a060Init);else a060Init();
+})();
+</script>
 </body>
 </html>
 <style id="alpha058-background-final">
