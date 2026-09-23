@@ -2707,6 +2707,19 @@ button:active{transform:translateY(0) scale(.985)}
     <div class="a56-ticker">
       <span>● LIVE</span><b>AFINCO</b><i></i><span>CANDIDATOS <strong id="a56TickCandidates">0</strong></span><i></i><span>ENTREVISTAS <strong id="a56TickInterviews">0</strong></span><i></i><span>APROVADOS <strong id="a56TickApproved">0</strong></span><i></i><span>TAREFAS <strong id="a56TickTasks">0</strong></span><i></i><span>CONVERSÃO <strong id="a56TickConversion">0%</strong></span><i></i><span>ÚLTIMA LEITURA <strong id="a56TickSync">--:--</strong></span>
     </div>
+    <div class="alpha-os-rail" id="alphaOsRail" aria-label="Navegação operacional">
+      <div class="alpha-os-brand"><span>ALPHA OS</span><b>OPERAÇÃO 360°</b></div>
+      <button class="alpha-os-step active" data-os="command" onclick="alphaOSStage('command')"><i>01</i><span>COMANDO</span></button>
+      <button class="alpha-os-step" data-os="candidates" onclick="alphaOSStage('candidates')"><i>02</i><span>CANDIDATOS</span></button>
+      <button class="alpha-os-step" data-os="pipeline" onclick="alphaOSStage('pipeline')"><i>03</i><span>PIPELINE</span></button>
+      <button class="alpha-os-step" data-os="agenda" onclick="alphaOSStage('agenda')"><i>04</i><span>AGENDA</span></button>
+      <button class="alpha-os-step" data-os="tasks" onclick="alphaOSStage('tasks')"><i>05</i><span>EXECUÇÃO</span></button>
+      <button class="alpha-os-step" data-os="intelligence" onclick="alphaOSStage('intelligence')"><i>06</i><span>INTELIGÊNCIA</span></button>
+      <button class="alpha-os-step" data-os="team" onclick="alphaOSStage('team')"><i>07</i><span>EQUIPE</span></button>
+      <button class="alpha-os-step" data-os="history" onclick="alphaOSStage('history')"><i>08</i><span>HISTÓRICO</span></button>
+      <button class="alpha-os-step" data-os="reports" onclick="alphaOSStage('reports')"><i>09</i><span>RELATÓRIOS</span></button>
+      <button class="alpha-os-step" data-os="trash" onclick="alphaOSStage('trash')"><i>10</i><span>LIXEIRA</span></button>
+    </div>
     <div class="a56-kpis">
       <article class="a56-kpi gold"><small>TOTAL DE CANDIDATOS</small><strong id="a56Total">0</strong><span>base ativa</span><em id="a56TotalDelta">LIVE</em><div class="a56-spark" id="a56SparkTotal"></div></article>
       <article class="a56-kpi cyan"><small>NOVOS CANDIDATOS</small><strong id="a56New">0</strong><span>aguardando análise</span><em>ENTRADAS</em><div class="a56-spark" id="a56SparkNew"></div></article>
@@ -6696,14 +6709,38 @@ function renderTeam043(){
   const total=team043Users.length, active=team043Users.filter(u=>u.ativo).length;
   document.getElementById('crm043Total').textContent=total;document.getElementById('crm043Active').textContent=active;document.getElementById('crm043Managers').textContent=team043Users.filter(u=>['Super Admin','Gestor'].includes(u.role)).length;document.getElementById('crm043Recruiters').textContent=team043Users.filter(u=>u.role==='Recrutador').length;
   if(!filtered.length){list.innerHTML='<div class="crm043-empty">Nenhum usuário neste filtro.</div>';return;}
-  list.innerHTML=filtered.map((u,i)=>{const role=u.role||'Recrutador';const cls=role==='Super Admin'?'super':role==='Gestor'?'gestor':role==='Visualização'?'viewer':'recrutador';return `<div class="crm043-row"><div class="crm043-user"><strong>${escapeHTML(u.nome||'Sem nome')}</strong><small>${escapeHTML(u.email||'')}</small></div><div class="crm043-role ${cls}">${escapeHTML(role)}</div><div><span class="crm043-pill ${u.ativo?'on':'off'}">${u.ativo?'ATIVO':'INATIVO'}</span></div><div><small>${u.auth_user_id?'🔗 AUTH VINCULADO':'⏳ AGUARDANDO AUTH'}</small></div><div class="crm043-actions"><button class="crm044-nameedit" onclick="editTeam043('${escapeHTML(u.email||'')}')">✏️ NOME</button>${u.email!==afincoAdminEmailValue?`<button onclick="toggleTeam043('${escapeHTML(u.email||'')}',${!u.ativo})">${u.ativo?'⛔':'✅'} ${u.ativo?'DESATIVAR':'ATIVAR'}</button>`:''}<div class="crm044-role-actions">${role!=='Super Admin'?`<button class="crm044-promote" onclick="promoteTeam044('${escapeHTML(u.email||'')}')">⬆️ PROMOVER</button>`:''}${role!=='Visualização'&&u.email!==afincoAdminEmailValue?`<button class="crm044-demote" onclick="demoteTeam044('${escapeHTML(u.email||'')}')">⬇️ REBAIXAR</button>`:''}</div></div></div>`}).join('');
+  list.innerHTML=filtered.map((u,i)=>{const role=u.role||'Recrutador';const cls=role==='Super Admin'?'super':role==='Gestor'?'gestor':role==='Visualização'?'viewer':'recrutador';return `<div class="crm043-row"><div class="crm043-user"><strong>${escapeHTML(u.nome||'Sem nome')}</strong><small>${escapeHTML(u.email||'')}</small></div><div class="crm043-role ${cls}">${escapeHTML(role)}</div><div><span class="crm043-pill ${u.ativo?'on':'off'}">${u.ativo?'ATIVO':'INATIVO'}</span></div><div><small>${u.auth_user_id?'🔗 AUTH VINCULADO':'⏳ AGUARDANDO AUTH'}</small></div><div class="crm043-actions"><button class="crm044-nameedit" onclick="editTeam043('${escapeHTML(u.email||'')}')">✏️ NOME</button>${u.email!==afincoAdminEmailValue?`<button onclick="toggleTeam043('${escapeHTML(u.email||'')}',${!u.ativo})">${u.ativo?'⛔':'✅'} ${u.ativo?'DESATIVAR':'ATIVAR'}</button>`:''}<div class="crm044-role-actions">${role!=='Super Admin'?`<button class="crm044-promote" onclick="promoteTeam044('${escapeHTML(u.email||'')}')">⬆️ SUBIR CARGO</button>`:''}${role!=='Visualização'&&u.email!==afincoAdminEmailValue?`<button class="crm044-demote" onclick="demoteTeam044('${escapeHTML(u.email||'')}')">⬇️ REBAIXAR CARGO</button>`:''}</div></div></div>`}).join('');
   const wrap=document.getElementById('crm043AddWrap');if(wrap)wrap.style.display=canManageTeam043()?'block':'none';
 }
 async function saveTeamUser043(){
   if(!canManageTeam043())return;
-  const nome=(document.getElementById('crm043Name')?.value||'').trim(),email=(document.getElementById('crm043Email')?.value||'').trim().toLowerCase(),role=document.getElementById('crm043Role')?.value||'Recrutador',auth_user_id=(document.getElementById('crm043AuthId')?.value||'').trim()||null;
+  const nome=(document.getElementById('crm043Name')?.value||'').trim();
+  const email=(document.getElementById('crm043Email')?.value||'').trim().toLowerCase();
+  const role=document.getElementById('crm043Role')?.value||'Recrutador';
+  const auth_user_id=(document.getElementById('crm043AuthId')?.value||'').trim()||null;
   if(!nome||!email){alert('Informe nome e e-mail.');return;}
-  try{const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users`,{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({nome,email,ativo:true,role,auth_user_id})});const raw=await r.text();if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);document.getElementById('crm043Name').value='';document.getElementById('crm043Email').value='';document.getElementById('crm043AuthId').value='';await loadTeam043();alert('Usuário autorizado com sucesso.');}catch(e){alert('Não foi possível autorizar: '+(e.message||'Erro'));}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Informe um e-mail válido.');return;}
+  if(team043Users.some(u=>String(u.email||'').trim().toLowerCase()===email)){alert('Este e-mail já possui um perfil na equipe. Use PROMOVER/REBAIXAR ou edite o cadastro existente.');return;}
+  if(role==='Super Admin' && !confirm(`CRIAR SUPER ADMIN?\n\n${nome} será cadastrado como Super Admin e terá acesso à gestão da equipe e permissões.\n\nConfirma?`))return;
+  try{
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users`,{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({nome,email,ativo:true,role,auth_user_id})});
+    const raw=await r.text();
+    if(!r.ok)throw new Error(raw||`SUPABASE ${r.status}`);
+    document.getElementById('crm043Name').value='';
+    document.getElementById('crm043Email').value='';
+    document.getElementById('crm043AuthId').value='';
+    document.getElementById('crm043Role').value='Recrutador';
+    await loadTeam043();
+    alert(`Perfil criado com sucesso.\n\n${nome} • ${role}\n${email}\n\nAgora vincule o mesmo e-mail a uma conta do Supabase Auth para permitir o login.`);
+  }catch(e){alert('Não foi possível criar o perfil: '+(e.message||'Erro'));}
+}
+function toggleCreateAdmin043(){
+  const wrap=document.getElementById('crm043AddWrap');
+  if(!wrap)return;
+  const open=wrap.classList.toggle('open');
+  const btn=document.getElementById('crm043CreateBtn');
+  if(btn)btn.textContent=open?'✕ FECHAR NOVO ADMIN':'＋ NOVO ADMINISTRADOR';
+  if(open)setTimeout(()=>document.getElementById('crm043Name')?.focus(),50);
 }
 async function editTeam043(email){
   if(!canManageTeam043())return;
@@ -6769,17 +6806,19 @@ async function toggleTeam043(email,ativo){
         <div class="crm043-kpi"><b id="crm043Managers">0</b><span>Gestão</span></div>
         <div class="crm043-kpi"><b id="crm043Recruiters">0</b><span>Recrutadores</span></div>
       </div>
-      <div id="crm043AddWrap" style="display:none">
+      <div id="crm043AddWrap" class="crm043-add-wrap" style="display:none">
+        <div class="crm043-create-head"><div><b>CRIAR PERFIL DE ADMINISTRADOR</b><span>Cadastre o acesso operacional e escolha o cargo inicial.</span></div><button type="button" onclick="saveTeamUser043()">CRIAR PERFIL →</button></div>
         <div class="crm043-form">
-          <input id="crm043Name" placeholder="Nome do usuário">
+          <input id="crm043Name" placeholder="Nome do administrador">
           <input id="crm043Email" type="email" placeholder="E-mail usado no login">
-          <select id="crm043Role"><option>Recrutador</option><option>Gestor</option><option>Visualização</option><option>Super Admin</option></select>
+          <select id="crm043Role"><option value="Recrutador">Recrutador</option><option value="Gestor">Gestor</option><option value="Visualização">Visualização</option><option value="Super Admin">Super Admin</option></select>
           <input id="crm043AuthId" placeholder="Auth User ID (opcional)">
-          <button type="button" onclick="saveTeamUser043()">＋ AUTORIZAR</button>
         </div>
-        <div class="crm043-note">Primeiro crie a conta de login em Supabase Auth. Depois autorize o mesmo e-mail aqui. Nunca coloque senha neste painel.</div>
+        <div class="crm043-role-guide"><span>VISUALIZAÇÃO</span><b>→</b><span>RECRUTADOR</span><b>→</b><span>GESTOR</span><b>→</b><strong>SUPER ADMIN</strong></div>
+        <div class="crm043-note">Este painel cria o perfil em <b>admin_users</b>. Por segurança, senhas não são armazenadas aqui: crie/convide a conta no Supabase Auth usando o mesmo e-mail e depois vincule o Auth User ID, se necessário.</div>
       </div>
       <div class="crm043-toolbar">
+        <button id="crm043CreateBtn" class="crm043-create-btn" type="button" onclick="toggleCreateAdmin043()">＋ NOVO ADMINISTRADOR</button>
         <button class="active" type="button" onclick="filterTeam043('Todos',this)">TODOS</button>
         <button type="button" onclick="filterTeam043('Ativos',this)">ATIVOS</button>
         <button type="button" onclick="filterTeam043('Super Admin',this)">SUPER ADMIN</button>
@@ -7844,6 +7883,16 @@ function crm053UltraSection(c){
   .alpha-hero{min-height:300px!important;height:300px!important}
 }
 </style>
+
+<style id="crm0604-team-upgrade">
+.crm043-add-wrap{display:none!important}.crm043-add-wrap.open{display:block!important}
+.crm043-create-btn{margin-left:auto!important;border-color:rgba(245,196,66,.55)!important;background:linear-gradient(135deg,rgba(245,196,66,.18),rgba(20,28,38,.96))!important;color:#f8d978!important;box-shadow:0 0 28px rgba(245,196,66,.07)}
+.crm043-create-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 10px;padding:15px 16px;border:1px solid rgba(245,196,66,.18);border-radius:16px;background:linear-gradient(135deg,rgba(245,196,66,.07),rgba(255,255,255,.018))}
+.crm043-create-head b{display:block;font-size:12px;letter-spacing:.08em;color:#f3d27b}.crm043-create-head span{display:block;margin-top:4px;font-size:10px;color:#8792a0}.crm043-create-head button{border:1px solid rgba(245,196,66,.35);background:rgba(245,196,66,.10);color:#f4d57e;border-radius:10px;padding:10px 13px;font-weight:950;cursor:pointer}
+.crm043-role-guide{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:-6px 0 13px;padding:10px 12px;border:1px solid rgba(255,255,255,.06);border-radius:12px;background:rgba(255,255,255,.02);font-size:9px;font-weight:950;letter-spacing:.08em;color:#7f8996}.crm043-role-guide b{color:#d7b56d}.crm043-role-guide strong{color:#f3d27b}
+.crm043-actions{flex-wrap:wrap}.crm044-role-actions{display:flex;gap:6px;flex-wrap:wrap}.crm044-promote,.crm044-demote{font-size:9px!important;font-weight:950!important}.crm044-promote{border-color:rgba(119,224,161,.22)!important;color:#8ce9b0!important}.crm044-demote{border-color:rgba(255,136,136,.22)!important;color:#ff9a9a!important}
+@media(max-width:900px){.crm043-create-btn{margin-left:0!important}.crm043-create-head{align-items:flex-start;flex-direction:column}.crm043-create-head button{width:100%}}
+</style>
 </body>
 </html>
 <style id="alpha058-background-final">
@@ -7856,6 +7905,104 @@ function crm053UltraSection(c){
   document.addEventListener('DOMContentLoaded',()=>{
     const shell=document.getElementById('a58CandidatesShell');
     if(shell) shell.classList.add('ultra-focus');
+  });
+})();
+</script>
+
+
+<style id="alpha-os-061-ultimate">
+/* =====================================================
+   ALPHA OS 061 — ULTIMATE CRM EXPERIENCE
+   Visual layer only: preserves existing data/functions.
+===================================================== */
+:root{--os-bg:#030609;--os-panel:rgba(7,13,19,.88);--os-panel2:rgba(10,18,26,.96);--os-gold:#f5c44a;--os-gold2:#ffe18a;--os-cyan:#55dfff;--os-green:#55e39a;--os-red:#ff6e78;--os-muted:#8190a0;--os-line:rgba(255,255,255,.075)}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(circle at 70% 0%,rgba(245,196,66,.055),transparent 25%),radial-gradient(circle at 15% 40%,rgba(73,216,255,.035),transparent 25%),#020508!important;color:#edf3f8!important}
+#adminScreen{background:linear-gradient(180deg,#020508 0%,#050a10 45%,#020508 100%)!important}
+.page-head{display:none!important}
+.a56-command{border:0!important;background:transparent!important;box-shadow:none!important;margin-top:8px!important}
+.a56-hero{min-height:455px!important;height:auto!important;border-radius:26px!important;border:1px solid rgba(245,196,66,.26)!important;box-shadow:0 35px 110px rgba(0,0,0,.72),inset 0 1px rgba(255,255,255,.06)!important}
+.a56-hero-bg{filter:saturate(.82) contrast(1.14) brightness(.52)!important}
+.a56-hero-scrim{background:linear-gradient(90deg,rgba(2,6,10,.98) 0%,rgba(2,6,10,.91) 24%,rgba(2,6,10,.48) 62%,rgba(2,6,10,.74) 100%)!important}
+.a56-hero-content{padding:54px 54px 42px 225px!important;max-width:none!important}
+.a56-topline{font-size:9px!important;letter-spacing:.19em!important;color:#aeb9c5!important}.a56-topline b{color:var(--os-green)!important}
+.a56-hero-title{font-size:74px!important;letter-spacing:-.07em!important;line-height:.86!important;text-shadow:0 18px 55px #000!important}.a56-hero-title strong{color:var(--os-gold2)!important}
+.a56-hero-sub{max-width:760px!important;font-size:13px!important;line-height:1.7!important;color:#aab5c1!important}
+.a56-hero-actions{gap:8px!important}.a56-hero-actions button{border-radius:11px!important;padding:12px 14px!important;background:rgba(4,10,15,.78)!important;border:1px solid rgba(245,196,66,.22)!important;backdrop-filter:blur(12px)!important}
+.a56-hero-actions button:hover{transform:translateY(-2px)!important;border-color:rgba(245,196,66,.62)!important;box-shadow:0 14px 35px rgba(0,0,0,.35)!important}
+.a56-navrail{width:168px!important;top:18px!important;left:18px!important;bottom:18px!important;border-radius:20px!important;padding:13px!important;background:linear-gradient(180deg,rgba(3,9,14,.95),rgba(3,7,11,.78))!important;border:1px solid rgba(245,196,66,.24)!important}
+.a56-navbrand{padding:8px 6px 13px!important;margin-bottom:5px!important;border-bottom:1px solid rgba(245,196,66,.12)!important}.a56-navbrand b{background:linear-gradient(135deg,#111c27,#03070b)!important;border-color:var(--os-gold)!important;color:var(--os-gold2)!important}.a56-navbrand span{font-size:8px!important;letter-spacing:.14em!important}
+.a56-navrail button{border-radius:10px!important;margin:2px 0!important;min-height:38px!important;font-size:8px!important;color:#aab5c0!important}.a56-navrail button.active,.a56-navrail button:hover{background:linear-gradient(90deg,rgba(245,196,66,.17),rgba(73,216,255,.035))!important;border-color:rgba(245,196,66,.45)!important;color:#fff!important}
+.a56-view-controls{top:18px!important;right:18px!important}.a56-view-controls button{border-radius:10px!important;background:rgba(3,8,13,.7)!important;border-color:rgba(245,196,66,.18)!important}
+.a56-hero-quote{right:32px!important;bottom:30px!important;color:rgba(255,255,255,.42)!important;font-size:10px!important}
+.a56-ticker{margin:0!important;border:1px solid rgba(245,196,66,.16)!important;border-top:0!important;background:rgba(3,8,12,.92)!important;backdrop-filter:blur(14px)!important;border-radius:0 0 16px 16px!important;padding:12px 16px!important;overflow:auto!important;white-space:nowrap!important}
+.a56-ticker span,.a56-ticker b{font-size:8px!important;letter-spacing:.12em!important}.a56-ticker strong{color:var(--os-gold2)!important}
+/* New operating-system rail */
+.alpha-os-rail{position:sticky;top:8px;z-index:80;display:flex;align-items:center;gap:6px;margin:12px 0 16px;padding:8px;border:1px solid rgba(245,196,66,.18);border-radius:18px;background:linear-gradient(180deg,rgba(8,15,22,.96),rgba(3,8,13,.92));box-shadow:0 18px 50px rgba(0,0,0,.42);backdrop-filter:blur(18px);overflow-x:auto;scrollbar-width:thin}
+.alpha-os-brand{min-width:145px;padding:6px 12px;border-right:1px solid rgba(255,255,255,.07)}.alpha-os-brand span{display:block;font-size:9px;font-weight:1000;letter-spacing:.16em;color:var(--os-gold2)}.alpha-os-brand b{display:block;margin-top:3px;font-size:7px;letter-spacing:.13em;color:#667482}
+.alpha-os-step{min-width:82px;border:1px solid transparent;background:transparent;color:#71808f;border-radius:12px;padding:9px 7px;cursor:pointer;text-align:left;transition:.18s}.alpha-os-step i{display:block;font-style:normal;font-size:7px;color:#4f5c68;letter-spacing:.08em}.alpha-os-step span{display:block;margin-top:3px;font-size:8px;font-weight:1000;letter-spacing:.07em}.alpha-os-step:hover{background:rgba(255,255,255,.035);color:#e9eef3;border-color:rgba(255,255,255,.09)}.alpha-os-step.active{background:linear-gradient(145deg,rgba(245,196,66,.14),rgba(73,216,255,.035));border-color:rgba(245,196,66,.38);color:#fff;box-shadow:inset 0 1px rgba(255,255,255,.06)}.alpha-os-step.active i{color:var(--os-gold)}
+.a56-kpis{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:10px!important;margin:14px 0!important}.a56-kpi{min-height:105px!important;border-radius:17px!important;background:linear-gradient(145deg,rgba(10,18,26,.96),rgba(3,8,13,.95))!important;border-color:rgba(245,196,66,.14)!important;box-shadow:0 16px 45px rgba(0,0,0,.24)!important}.a56-kpi:hover{transform:translateY(-3px)!important;border-color:rgba(245,196,66,.38)!important}.a56-kpi strong{font-size:31px!important}.a56-kpi small{letter-spacing:.1em!important;color:#7e8b98!important}.a56-kpi em{color:#71808d!important}
+.a58-control-deck{grid-template-columns:1.4fr .6fr!important;gap:12px!important}.a58-command-panel,.a56-panel,.crm037-section,.crm039-launcher,.dashboard,.analytics .panel,.toolbar,.content-grid .panel{border-color:rgba(245,196,66,.14)!important;background:linear-gradient(145deg,rgba(8,15,22,.94),rgba(3,7,11,.96))!important;box-shadow:0 20px 65px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.03)!important}.a58-command-panel{border-radius:20px!important}.a58-action{border-color:rgba(255,255,255,.065)!important;background:linear-gradient(145deg,rgba(16,26,36,.7),rgba(4,9,14,.8))!important}.a58-action:hover{transform:translateY(-2px)!important;border-color:rgba(245,196,66,.38)!important;background:linear-gradient(145deg,rgba(245,196,66,.10),rgba(4,9,14,.9))!important}
+.a56-grid-main,.a56-grid-second,.a56-grid-wide,.a56-grid-bottom{gap:12px!important;margin-top:12px!important}.a56-panel{border-radius:20px!important}.a56-head{padding:15px 17px!important}.a56-head h3{letter-spacing:.05em!important}.a56-panel:hover{border-color:rgba(245,196,66,.24)!important}
+/* Pipeline */
+.kanban-section{margin:24px 0!important;padding:20px!important;border-radius:24px!important;border:1px solid rgba(245,196,66,.17)!important;background:linear-gradient(145deg,rgba(8,15,22,.97),rgba(2,7,11,.98))!important;box-shadow:0 25px 80px rgba(0,0,0,.34)!important}.kanban-head{padding-bottom:15px!important;border-bottom:1px solid rgba(255,255,255,.06)!important}.kanban-title{font-size:29px!important;letter-spacing:-.03em!important;color:#fff!important}.kanban-title::first-letter{color:var(--os-gold)}.alpha060-toolbar{margin:14px 0!important;padding:10px!important;border-radius:14px!important;background:rgba(0,0,0,.25)!important;border-color:rgba(255,255,255,.06)!important}.alpha060-search,.alpha060-select{background:#070d13!important;border-color:rgba(245,196,66,.14)!important;color:#eef3f7!important}.alpha060-btn{border-radius:10px!important}.alpha060-kpis{gap:9px!important}.alpha060-kpi,.kanban-card{border-color:rgba(255,255,255,.075)!important;background:linear-gradient(145deg,rgba(12,21,30,.96),rgba(4,9,14,.96))!important;border-radius:15px!important}.kanban-card:hover{transform:translateY(-2px)!important;border-color:rgba(245,196,66,.4)!important}
+/* Intelligence / task / old metrics become one visual language */
+.crm037-section{border-radius:22px!important}.crm037-kpi{background:rgba(255,255,255,.025)!important;border-color:rgba(255,255,255,.07)!important}.crm037-action{background:#071018!important;border-color:rgba(255,255,255,.08)!important}.crm037-action.active{background:rgba(245,196,66,.1)!important;color:var(--os-gold2)!important;border-color:rgba(245,196,66,.45)!important}
+.crm039-launcher{border-radius:22px!important;padding:20px!important}.crm039-new{border-radius:11px!important}.dashboard{grid-template-columns:repeat(6,minmax(0,1fr))!important;padding:12px!important;border-radius:20px!important}.metric{border:1px solid rgba(255,255,255,.07)!important;background:rgba(255,255,255,.025)!important;border-radius:15px!important}.metric-number{font-size:28px!important}
+.analytics{gap:12px!important}.analytics .panel{border-radius:20px!important}.panel-head{border-bottom-color:rgba(255,255,255,.06)!important}.toolbar{border-radius:20px!important}.toolbar-row{gap:8px!important}.input,.select{background:#060c12!important;border-color:rgba(245,196,66,.14)!important;color:#eef3f7!important;border-radius:11px!important}.toolbar-button{border-radius:11px!important}
+.content-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}.side-stack{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}.candidate{border-radius:18px!important;background:linear-gradient(145deg,rgba(11,20,29,.97),rgba(3,8,13,.98))!important;border-color:rgba(255,255,255,.07)!important;box-shadow:0 15px 45px rgba(0,0,0,.2)!important}.candidate:hover{border-color:rgba(245,196,66,.38)!important;transform:translateY(-2px)!important}.results-head{padding:14px 2px!important}.results-title{font-size:18px!important;font-weight:1000!important}.a58-candidates-toggle{border-radius:18px!important;background:linear-gradient(145deg,rgba(10,18,26,.97),rgba(3,8,13,.97))!important}.a5901-centerbar{border-radius:17px!important;background:linear-gradient(145deg,rgba(12,21,30,.96),rgba(4,9,14,.96))!important}.a5901-filter{border-radius:10px!important}.a5901-filter.active{background:rgba(245,196,66,.13)!important;color:#fff!important;border-color:rgba(245,196,66,.4)!important}
+/* Remove the duplicated second command-center hero. Its live data remains available to the original modules. */
+#alphaCommandCenter{display:none!important}
+/* Modals */
+.crm038-modal,.crm039-center,.crm040-modal,.crm041-modal,.crm043-overlay{backdrop-filter:blur(16px)!important;background:rgba(1,4,7,.84)!important}.crm038-modal-shell,.crm039-center-shell,.crm040-shell,.crm041-shell,.crm043-modal{border-color:rgba(245,196,66,.24)!important;box-shadow:0 45px 150px rgba(0,0,0,.82)!important;background:linear-gradient(145deg,#080f16,#0a1119 60%,#03070b)!important}
+/* Clean typography */
+.alpha-kicker,.a58-kicker,.kanban-kicker,.crm037-kicker,.crm039-kicker,.crm041-kicker{letter-spacing:.15em!important}.alpha-title,.a56-hero-title,.crm041-head-title,.crm043-title{font-weight:1000!important}
+@media(max-width:1100px){.a56-hero-content{padding-left:205px!important}.a56-kpis{grid-template-columns:repeat(3,minmax(0,1fr))!important}.a58-control-deck{grid-template-columns:1fr!important}.dashboard{grid-template-columns:repeat(3,1fr)!important}.side-stack{grid-template-columns:1fr!important}}
+@media(max-width:760px){.a56-hero{min-height:365px!important}.a56-hero-content{padding:30px 18px 22px 18px!important}.a56-hero-title{font-size:39px!important}.a56-navrail{position:absolute!important;width:calc(100% - 28px)!important;height:54px!important;top:12px!important;left:14px!important;bottom:auto!important;display:flex!important;overflow-x:auto!important;align-items:center!important;gap:4px!important}.a56-navbrand{display:none!important}.a56-navrail button{min-width:74px!important;height:38px!important}.a56-view-controls{display:none!important}.a56-hero-content{padding-top:84px!important}.a56-hero-actions button{font-size:8px!important;flex:1 1 calc(50% - 5px)!important}.alpha-os-rail{top:4px!important}.alpha-os-brand{min-width:115px!important}.alpha-os-step{min-width:74px!important}.a56-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}.dashboard{grid-template-columns:repeat(2,1fr)!important}.side-stack{grid-template-columns:1fr!important}.kanban-section{padding:13px!important}.kanban-title{font-size:23px!important}}
+@media(max-width:420px){.a56-hero{min-height:330px!important}.a56-hero-title{font-size:33px!important}.a56-kpis{gap:7px!important}.a56-kpi{min-height:92px!important}.a56-kpi strong{font-size:25px!important}.dashboard{gap:7px!important;padding:8px!important}.metric-number{font-size:23px!important}}
+</style>
+
+<script id="alpha-os-061-navigation">
+(function(){
+  const map={
+    command:()=>document.getElementById('alpha056NeuralCommand'),
+    candidates:()=>document.getElementById('candidatesList'),
+    pipeline:()=>document.getElementById('alphaKanban'),
+    agenda:()=>typeof openAgenda040==='function'&&openAgenda040(),
+    tasks:()=>typeof openTasks039Center==='function'&&openTasks039Center(),
+    intelligence:()=>document.getElementById('alphaCRM037'),
+    team:()=>typeof openTeam043==='function'&&openTeam043(),
+    history:()=>typeof openHistory038Modal==='function'&&openHistory038Modal(),
+    reports:()=>typeof openDashboard041==='function'&&openDashboard041(),
+    trash:()=>document.getElementById('trashButton')?.click()
+  };
+  window.alphaOSStage=function(stage){
+    document.querySelectorAll('.alpha-os-step').forEach(b=>b.classList.toggle('active',b.dataset.os===stage));
+    const action=map[stage];
+    if(!action)return;
+    const result=action();
+    if(result && result.scrollIntoView) result.scrollIntoView({behavior:'smooth',block:'start'});
+    else if(['command','candidates','pipeline','intelligence'].includes(stage)){
+      const el=action(); if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  };
+  window.addEventListener('scroll',()=>{
+    const ids=[['command','alpha056NeuralCommand'],['pipeline','alphaKanban'],['intelligence','alphaCRM037'],['candidates','candidatesList']];
+    let active='command',best=Infinity;
+    ids.forEach(([key,id])=>{const el=document.getElementById(id);if(!el)return;const d=Math.abs(el.getBoundingClientRect().top-170);if(d<best){best=d;active=key;}});
+    document.querySelectorAll('.alpha-os-step').forEach(b=>b.classList.toggle('active',b.dataset.os===active));
+  },{passive:true});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='1'&&e.altKey)alphaOSStage('command');
+    if(e.key==='2'&&e.altKey)alphaOSStage('candidates');
+    if(e.key==='3'&&e.altKey)alphaOSStage('pipeline');
+    if(e.key==='4'&&e.altKey)alphaOSStage('agenda');
+    if(e.key==='5'&&e.altKey)alphaOSStage('tasks');
+    if(e.key==='6'&&e.altKey)alphaOSStage('intelligence');
+    if(e.key==='7'&&e.altKey)alphaOSStage('team');
+    if(e.key==='8'&&e.altKey)alphaOSStage('history');
+    if(e.key==='9'&&e.altKey)alphaOSStage('reports');
+    if(e.key==='0'&&e.altKey)alphaOSStage('trash');
   });
 })();
 </script>
