@@ -3204,60 +3204,47 @@ button:active{transform:translateY(0) scale(.985)}
   </section>
   
   <section class="content-grid">
-    
-    <div>
+    <div class="candidate-main-column">
       <div class="results-head">
         <div class="results-title">
           Candidaturas
         </div>
-        <div
-          id="resultsCount"
-          class="results-count"
-        >
-          0 candidatos
-        </div>
+        <div id="resultsCount" class="results-count">0 candidatos</div>
       </div>
       <div id="trashWarning" class="trash-warning hidden">
         <strong>🗑️ LIXEIRA</strong> — candidatos enviados para cá ficam fora da operação principal.
         Você pode <strong>restaurar</strong> ou <strong>apagar definitivamente</strong>.
       </div>
-      
-    <div class="a58-candidates-toggle" id="a58CandidatesToggle" role="button" tabindex="0" aria-expanded="true" onclick="a58ToggleCandidates(event)">
-      <div><strong>♙ CENTRAL DE CANDIDATOS</strong><br><span>Área completa preservada · use para pesquisa e administração individual.</span></div>
-      <button type="button" onclick="a58ToggleCandidates(event)">⌃ RECOLHER</button>
-    </div>
-    </div>
-    <div class="a5901-centerbar">
-      <div class="a5901-centerbar-main">
-        <div class="a5901-centerbar-icon">♙</div>
-        <div><h3>CENTRAL 360° · OPERAÇÃO DE CANDIDATOS</h3><p>Pesquisa, filtros, modos de visualização e acesso imediato à ficha completa.</p></div>
+
+      <div class="a58-candidates-toggle" id="a58CandidatesToggle" role="button" tabindex="0" aria-expanded="true" onclick="a58ToggleCandidates(event)">
+        <div><strong>♙ CENTRAL DE CANDIDATOS</strong><br><span>Central operacional completa · pesquise, filtre e abra qualquer candidato em 360°.</span></div>
+        <button type="button" onclick="a58ToggleCandidates(event)">⌃ RECOLHER</button>
       </div>
-      <div class="a5901-controls">
-        <button class="a5901-btn active" type="button" data-a5901-mode="normal" onclick="alpha0591SetMode('normal')">▦ FULL</button>
-        <button class="a5901-btn" type="button" data-a5901-mode="compact" onclick="alpha0591SetMode('compact')">▤ COMPACTO</button>
-        <button class="a5901-btn" type="button" data-a5901-mode="focus" onclick="alpha0591SetMode('focus')">◉ FOCO</button>
-        <button class="a5901-btn" type="button" onclick="alpha0591ShowAll()">↻ TODOS</button>
+
+      <div class="a5901-centerbar">
+        <div class="a5901-centerbar-main">
+          <div class="a5901-centerbar-icon">♙</div>
+          <div><h3>CENTRAL 360° · OPERAÇÃO DE CANDIDATOS</h3><p>Visão FULL em tela cheia · todas as informações principais na mesma tela.</p></div>
+        </div>
+        <div class="a5901-controls">
+          <button class="a5901-btn active" type="button" data-a5901-mode="normal" onclick="alpha0591SetMode('normal')">▦ FULL</button>
+          <button class="a5901-btn" type="button" data-a5901-mode="compact" onclick="alpha0591SetMode('compact')">▤ COMPACTO</button>
+          <button class="a5901-btn" type="button" data-a5901-mode="focus" onclick="alpha0591SetMode('focus')">◉ FOCO</button>
+          <button class="a5901-btn" type="button" onclick="alpha0591ShowAll()">↻ TODOS</button>
+        </div>
       </div>
-    </div>
-    <div class="a5901-microfilters">
-      <button class="a5901-filter active" data-a5901-filter="Todos" onclick="alpha0591Filter('Todos')">TODOS</button>
-      <button class="a5901-filter" data-a5901-filter="Novo" onclick="alpha0591Filter('Novo')">NOVOS</button>
-      <button class="a5901-filter" data-a5901-filter="Entrevista" onclick="alpha0591Filter('Entrevista')">ENTREVISTAS</button>
-      <button class="a5901-filter" data-a5901-filter="Aprovado" onclick="alpha0591Filter('Aprovado')">APROVADOS</button>
-      <button class="a5901-filter" data-a5901-filter="Sem contato" onclick="alpha0591Filter('Sem contato')">SEM CONTATO</button>
-    </div>
-    <div class="a5901-candidates-shell" id="a58CandidatesShell">
-<div
-        id="candidatesList"
-        class="candidates"
-      >
-        <div class="empty">
-          <strong>
-            Carregando...
-          </strong>
-          <span>
-            Buscando candidaturas.
-          </span>
+
+      <div class="a5901-microfilters">
+        <button class="a5901-filter active" data-a5901-filter="Todos" onclick="alpha0591Filter('Todos')">TODOS</button>
+        <button class="a5901-filter" data-a5901-filter="Novo" onclick="alpha0591Filter('Novo')">NOVOS</button>
+        <button class="a5901-filter" data-a5901-filter="Entrevista" onclick="alpha0591Filter('Entrevista')">ENTREVISTAS</button>
+        <button class="a5901-filter" data-a5901-filter="Aprovado" onclick="alpha0591Filter('Aprovado')">APROVADOS</button>
+        <button class="a5901-filter" data-a5901-filter="Sem contato" onclick="alpha0591Filter('Sem contato')">SEM CONTATO</button>
+      </div>
+
+      <div class="a5901-candidates-shell" id="a58CandidatesShell">
+        <div id="candidatesList" class="candidates">
+          <div class="empty"><strong>Carregando...</strong><span>Buscando candidaturas.</span></div>
         </div>
       </div>
     </div>
@@ -7807,6 +7794,56 @@ function crm053UltraSection(c){
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',a060Init);else a060Init();
 })();
 </script>
+
+<style id="alpha0602-final-correction">
+/* ALPHA 060.2 FINAL — CENTRAL FULL + RESPONSIVIDADE */
+.content-grid{grid-template-columns:minmax(0,1fr)!important;gap:18px!important;align-items:start!important}
+.candidate-main-column{min-width:0!important;width:100%!important}
+.a5901-centerbar{width:100%!important}
+.a5901-candidates-shell{width:100%!important}
+.candidates{grid-template-columns:1fr!important;width:100%!important}
+.candidate{width:100%!important;min-width:0!important}
+.side-stack{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;min-width:0}
+.side-stack .panel{min-width:0}
+.a5901-centerbar-main{min-width:0}
+.a5901-centerbar-main>div:last-child{min-width:0}
+.a5901-centerbar h3{letter-spacing:.04em}
+.a5901-filter{white-space:nowrap}
+@media(max-width:760px){
+  .content-grid{grid-template-columns:1fr!important;gap:12px!important}
+  .side-stack{grid-template-columns:1fr!important}
+  .a5901-centerbar{padding:11px!important;border-radius:14px!important}
+  .a5901-centerbar-main{align-items:flex-start!important}
+  .a5901-centerbar-icon{width:34px;height:34px;font-size:15px;flex:0 0 34px}
+  .a5901-centerbar h3{font-size:11px!important}
+  .a5901-centerbar p{font-size:8px!important}
+  .a5901-controls{width:100%!important}
+  .a5901-btn{flex:1!important;min-width:0!important;padding:8px 6px!important;font-size:8px!important}
+  .a5901-microfilters{overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
+  .a5901-filter{flex:0 0 auto}
+  .candidate{border-radius:14px!important}
+}
+/* Hero: manter impacto sem transformar o celular numa tela infinita */
+@media(max-width:800px){
+  .a56-hero{min-height:355px!important;height:355px!important}
+  .a56-hero-bg{background-size:cover!important;background-position:center 34%!important;transform:none!important}
+  .a56-hero-content{padding:22px 16px 18px!important;max-width:560px!important}
+  .a56-hero-title{font-size:36px!important;line-height:.9!important;margin-top:12px!important}
+  .a56-hero-sub{font-size:10px!important;line-height:1.45!important;margin-top:12px!important;max-width:430px!important}
+  .a56-hero-actions{gap:6px!important;margin-top:14px!important}
+  .a56-hero-actions button{padding:8px 9px!important;font-size:8px!important}
+  .a56-hero-quote{display:none!important}
+  .alpha-hero{min-height:340px!important;height:340px!important;background-position:center center!important}
+  .alpha-title{font-size:34px!important}
+}
+@media(max-width:420px){
+  .a56-hero{min-height:320px!important;height:320px!important}
+  .a56-hero-title{font-size:31px!important}
+  .a56-hero-sub{font-size:9px!important}
+  .a56-hero-actions button{flex:1 1 calc(50% - 6px)!important}
+  .alpha-hero{min-height:300px!important;height:300px!important}
+}
+</style>
 </body>
 </html>
 <style id="alpha058-background-final">
