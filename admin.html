@@ -2579,6 +2579,181 @@ button:active{transform:translateY(0) scale(.985)}
 }
 </style>
 
+
+<style id="alpha064-plus-max-overhaul">
+/* =========================================================
+   ALPHA CRM 064 — PLUS PRO MAX / MASTER WORKSPACE
+   Objetivo: menu aberto por padrão, workspace amplo e módulos em tela cheia.
+========================================================= */
+:root{
+  --ap64-sidebar:268px;
+  --ap64-gold:#f4c84f;
+  --ap64-gold2:#ffe69a;
+  --ap64-cyan:#58dcff;
+  --ap64-green:#59e5a0;
+  --ap64-bg:#020508;
+}
+html,body{min-height:100%;background:#020508!important}
+body{overflow-x:hidden!important}
+
+/* MENU MASTER: sempre aberto no desktop. Só recolhe quando o usuário pedir. */
+#adminScreen>.container{
+  margin-left:calc(var(--ap64-sidebar) + 18px)!important;
+  max-width:none!important;
+  width:auto!important;
+  padding-left:22px!important;
+  padding-right:22px!important;
+  padding-bottom:90px!important;
+}
+#alphaPlusShell{z-index:100000!important}
+.alpha-plus-shell{width:var(--ap64-sidebar)!important;pointer-events:none}
+.alpha-plus-sidebar{
+  width:var(--ap64-sidebar)!important;
+  min-height:100vh!important;
+  padding:16px 12px 14px!important;
+  pointer-events:auto!important;
+  background:linear-gradient(180deg,rgba(5,10,15,.995),rgba(2,6,10,.995))!important;
+  border-right:1px solid rgba(244,200,79,.20)!important;
+  box-shadow:18px 0 80px rgba(0,0,0,.55),inset -1px 0 rgba(255,255,255,.025)!important;
+}
+.alpha-plus-brand{padding:7px 8px 15px!important;margin-bottom:6px!important}
+.alpha-plus-logo{width:42px!important;height:42px!important;border-radius:13px!important}
+.alpha-plus-brandtext b{font-size:14px!important;letter-spacing:.08em!important}
+.alpha-plus-brandtext span{font-size:7px!important;letter-spacing:.24em!important}
+.alpha-plus-collapse{
+  width:100%!important;
+  justify-content:flex-start!important;
+  min-height:38px!important;
+  border:1px solid rgba(255,255,255,.055)!important;
+  border-radius:10px!important;
+  background:rgba(255,255,255,.018)!important;
+}
+.alpha-plus-collapse:hover{border-color:rgba(244,200,79,.25)!important;background:rgba(244,200,79,.05)!important}
+.alpha-plus-section{
+  padding:15px 10px 6px!important;
+  color:#65727e!important;
+  font-size:7px!important;
+  letter-spacing:.24em!important;
+}
+.alpha-plus-nav{
+  height:46px!important;
+  grid-template-columns:32px 1fr auto!important;
+  gap:8px!important;
+  padding:0 11px!important;
+  border-radius:11px!important;
+  font-size:10px!important;
+  letter-spacing:.01em!important;
+}
+.alpha-plus-nav i{font-size:15px!important}
+.alpha-plus-nav span{display:block!important;opacity:1!important;visibility:visible!important}
+.alpha-plus-nav b{display:block!important}
+.alpha-plus-nav.active{background:linear-gradient(90deg,rgba(244,200,79,.17),rgba(244,200,79,.035))!important;box-shadow:inset 3px 0 var(--ap64-gold),0 8px 25px rgba(244,200,79,.035)!important}
+.alpha-plus-nav.active span{font-weight:1000!important;color:#fff!important}
+.alpha-plus-nav.active:after{content:"ABERTO";font-size:6px;color:var(--ap64-gold);letter-spacing:.12em;margin-left:auto;opacity:.7}
+.alpha-plus-nav b{display:none!important}
+.alpha-plus-sidefoot{margin-top:auto!important}
+
+/* Quando o usuário realmente recolher: compacto, mas não some com o conteúdo. */
+.alpha-plus-sidebar.collapsed{width:78px!important;padding-left:9px!important;padding-right:9px!important}
+.alpha-plus-sidebar.collapsed .alpha-plus-brandtext,
+.alpha-plus-sidebar.collapsed .alpha-plus-collapse em,
+.alpha-plus-sidebar.collapsed .alpha-plus-section,
+.alpha-plus-sidebar.collapsed .alpha-plus-nav span,
+.alpha-plus-sidebar.collapsed .alpha-plus-nav b,
+.alpha-plus-sidebar.collapsed .alpha-plus-sidefoot div{display:none!important}
+.alpha-plus-sidebar.collapsed .alpha-plus-brand{justify-content:center!important}
+.alpha-plus-sidebar.collapsed .alpha-plus-collapse{justify-content:center!important}
+.alpha-plus-sidebar.collapsed .alpha-plus-nav{grid-template-columns:1fr!important;justify-items:center!important}
+.alpha-plus-sidebar.collapsed .alpha-plus-nav:after{display:none!important}
+.alpha-plus-main{left:var(--ap64-sidebar)!important;z-index:100001!important}
+.alpha-plus-main.collapsed-main{left:78px!important}
+body.alpha-plus-sidebar-collapsed #adminScreen>.container{margin-left:96px!important}
+
+/* CABEÇALHO DE MÓDULO: sempre deixa claro onde estamos. */
+.alpha-plus-modulebar{
+  position:sticky;
+  top:98px;
+  z-index:900;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  min-height:58px;
+  margin:12px 0 16px;
+  padding:10px 15px;
+  border:1px solid rgba(244,200,79,.14);
+  border-radius:15px;
+  background:linear-gradient(90deg,rgba(8,14,20,.96),rgba(4,8,12,.91));
+  backdrop-filter:blur(18px);
+  box-shadow:0 14px 40px rgba(0,0,0,.25);
+}
+.alpha-plus-module-index{color:var(--ap64-gold);font-size:8px;font-weight:1000;letter-spacing:.18em;white-space:nowrap}
+.alpha-plus-module-name{font-size:15px;font-weight:1000;letter-spacing:.03em;color:#fff;white-space:nowrap}
+.alpha-plus-module-desc{font-size:9px;color:#778593;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alpha-plus-module-progress{margin-left:auto;width:180px;height:4px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;flex:none}
+.alpha-plus-module-progress i{display:block;height:100%;width:10%;border-radius:99px;background:linear-gradient(90deg,var(--ap64-gold),var(--ap64-cyan));box-shadow:0 0 14px rgba(244,200,79,.35);transition:width .25s ease}
+.alpha-plus-module-count{font-size:7px;color:#687683;letter-spacing:.13em;white-space:nowrap}
+
+/* WORKSPACE: usar toda a largura disponível. */
+#alphaPlusMain~*{}
+.alpha-command,.alpha-command>*,.a58-control-deck,.content-grid,.a56-kpis,.a58-actions-grid,.alpha-grid,.analytics,.dashboard,.toolbar,.kanban-section{max-width:none!important;width:100%!important}
+.a56-hero{width:100%!important}
+.a56-kpis{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+.a58-actions-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.content-grid{grid-template-columns:minmax(0,1fr)!important}
+.side-stack{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+
+/* TODOS OS MÓDULOS MODAIS: workspace quase tela inteira. */
+.crm038-modal-shell{width:96vw!important;max-width:1800px!important;height:92vh!important;max-height:92vh!important}
+.crm039-center-shell{width:96vw!important;max-width:1800px!important;height:92vh!important;max-height:92vh!important}
+.crm040-shell{width:96vw!important;max-width:1800px!important;height:92vh!important;max-height:92vh!important}
+.crm041-shell{width:96vw!important;max-width:1800px!important;height:92vh!important;max-height:92vh!important}
+.crm043-modal{width:96vw!important;max-width:1800px!important;min-height:88vh!important;margin:0!important}
+#detailsOverlay .modal{width:96vw!important;max-width:1800px!important;height:92vh!important;max-height:92vh!important;margin:0!important}
+#detailsOverlay{padding:4vh 2vw!important}
+.crm038-modal,.crm039-center,.crm040-modal,.crm041-modal,.crm043-overlay{padding:2vh 2vw!important}
+.crm038-modal .crm038-feed,.crm039-center .crm039-list,.crm040-slots{padding-left:20px!important;padding-right:20px!important}
+
+/* Dentro de Agenda e Equipe, usar a tela inteira sem esmagar colunas. */
+.crm040-slots{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.crm043-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.crm043-list{width:100%!important}
+
+/* Modo compacto: reduz o espaço, mas nunca esconde módulos críticos. */
+body.alpha-plus-compact #adminScreen>.container{margin-left:calc(var(--ap64-sidebar) + 8px)!important;padding-left:12px!important;padding-right:12px!important}
+body.alpha-plus-compact .a56-hero{min-height:310px!important}
+body.alpha-plus-compact .a56-hero-sub,body.alpha-plus-compact .a56-hero-quote{display:none!important}
+body.alpha-plus-compact .a56-kpi{min-height:82px!important;padding:12px!important}
+body.alpha-plus-compact .a58-action{min-height:70px!important}
+body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
+
+/* MOBILE: menu vira drawer; desktop nunca recolhe sozinho. */
+@media(max-width:900px){
+  #adminScreen>.container{margin-left:0!important;padding:0 14px 70px!important}
+  .alpha-plus-shell{width:0!important}
+  .alpha-plus-sidebar{width:276px!important;transform:translateX(-105%);transition:transform .25s ease!important}
+  .alpha-plus-sidebar.mobile-open{transform:translateX(0)!important;box-shadow:25px 0 90px rgba(0,0,0,.7)!important}
+  .alpha-plus-main{left:0!important;width:100%!important}
+  .alpha-plus-topbar{padding:0 12px!important}
+  .alpha-plus-mobilemenu{display:block!important}
+  .alpha-plus-modulebar{position:relative;top:auto;margin-top:10px}
+  .alpha-plus-module-progress{width:90px}
+  .a56-kpis{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .a58-actions-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .side-stack{grid-template-columns:1fr!important}
+}
+@media(max-width:600px){
+  .alpha-plus-modulebar{min-height:52px;padding:8px 10px;gap:9px}
+  .alpha-plus-module-desc{display:none}
+  .alpha-plus-module-progress{width:70px}
+  .a56-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .a58-actions-grid{grid-template-columns:1fr!important}
+  .crm040-slots{grid-template-columns:1fr!important}
+  .crm043-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #detailsOverlay .modal,.crm038-modal-shell,.crm039-center-shell,.crm040-shell,.crm041-shell,.crm043-modal{width:100%!important;height:94vh!important;max-height:94vh!important}
+  #detailsOverlay{padding:3vh 1vw!important}
+}
+</style>
+
 </head>
 <body>
 <section id="loginScreen">
@@ -2629,6 +2804,45 @@ button:active{transform:translateY(0) scale(.985)}
   </div>
 </section>
 <section id="adminScreen">
+
+<div id="alphaPlusShell" class="alpha-plus-shell" aria-label="ALPHA CRM Plus Pro Max">
+  <aside id="alphaPlusSidebar" class="alpha-plus-sidebar">
+    <div class="alpha-plus-brand">
+      <div class="alpha-plus-logo">A</div>
+      <div class="alpha-plus-brandtext"><b>ALPHA CRM</b><span>PLUS PRO MAX</span></div>
+    </div>
+    <button class="alpha-plus-collapse" type="button" onclick="alphaPlusToggleSidebar()" title="Recolher menu"><span>‹</span><em>RECOLHER MENU</em></button>
+    <div class="alpha-plus-section">OPERAÇÃO</div>
+    <button class="alpha-plus-nav active" data-plus-target="command" onclick="alphaPlusGo('command')"><i>⌂</i><span>Comando</span><b>01</b></button>
+    <button class="alpha-plus-nav" data-plus-target="candidates" onclick="alphaPlusGo('candidates')"><i>♙</i><span>Candidatos</span><b>02</b></button>
+    <button class="alpha-plus-nav" data-plus-target="pipeline" onclick="alphaPlusGo('pipeline')"><i>▦</i><span>Pipeline</span><b>03</b></button>
+    <button class="alpha-plus-nav" data-plus-target="agenda" onclick="alphaPlusGo('agenda')"><i>◫</i><span>Agenda</span><b>04</b></button>
+    <button class="alpha-plus-nav" data-plus-target="tasks" onclick="alphaPlusGo('tasks')"><i>✓</i><span>Execução</span><b>05</b></button>
+    <div class="alpha-plus-section">GESTÃO</div>
+    <button class="alpha-plus-nav" data-plus-target="intelligence" onclick="alphaPlusGo('intelligence')"><i>◈</i><span>Inteligência</span><b>06</b></button>
+    <button class="alpha-plus-nav" data-plus-target="team" onclick="alphaPlusGo('team')"><i>♛</i><span>Equipe</span><b>07</b></button>
+    <button class="alpha-plus-nav" data-plus-target="history" onclick="alphaPlusGo('history')"><i>◷</i><span>Histórico</span><b>08</b></button>
+    <button class="alpha-plus-nav" data-plus-target="reports" onclick="alphaPlusGo('reports')"><i>▣</i><span>Relatórios</span><b>09</b></button>
+    <button class="alpha-plus-nav danger" data-plus-target="trash" onclick="alphaPlusGo('trash')"><i>♜</i><span>Lixeira</span><b>10</b></button>
+    <div class="alpha-plus-sidefoot"><span class="alpha-plus-status-dot"></span><div><b>SISTEMA ATIVO</b><small>SUPABASE • LIVE</small></div></div>
+  </aside>
+  <div id="alphaPlusMain" class="alpha-plus-main">
+    <div class="alpha-plus-topbar">
+      <div class="alpha-plus-breadcrumb"><span>ALPHA CRM</span><i>/</i><b id="alphaPlusCurrent">COMANDO</b></div>
+      <div class="alpha-plus-topactions">
+        <button type="button" onclick="a56OpenSearch()">⌘ <span>BUSCA</span></button>
+        <button type="button" onclick="a56Refresh()">↻ <span>SINCRONIZAR</span></button>
+        <button type="button" class="alpha-plus-density" onclick="alphaPlusToggleCompact()">▤ <span>COMPACTO</span></button>
+        <button type="button" class="alpha-plus-mobilemenu" onclick="alphaPlusToggleMobile()">☰</button>
+      </div>
+    </div>
+    <div class="alpha-plus-modebar">
+      <div><span>PLUS PRO MAX</span><b>CONTROLE TOTAL DA OPERAÇÃO</b></div>
+      <div class="alpha-plus-modechips"><button type="button" class="active" onclick="alphaPlusSetDensity('full',this)">COMPLETO</button><button type="button" onclick="alphaPlusSetDensity('compact',this)">COMPACTO</button><button type="button" onclick="alphaPlusSetDensity('focus',this)">FOCO</button></div>
+    </div>
+  </div>
+</div>
+
 <header>
   <div class="topbar-inner">
     <div class="brand">
@@ -2719,6 +2933,13 @@ button:active{transform:translateY(0) scale(.985)}
       <button class="alpha-os-step" data-os="history" onclick="alphaOSStage('history')"><i>08</i><span>HISTÓRICO</span></button>
       <button class="alpha-os-step" data-os="reports" onclick="alphaOSStage('reports')"><i>09</i><span>RELATÓRIOS</span></button>
       <button class="alpha-os-step" data-os="trash" onclick="alphaOSStage('trash')"><i>10</i><span>LIXEIRA</span></button>
+    </div>
+    <div class="alpha-blacklabel-strip" id="alphaBlackLabelStrip">
+      <div><span>ALPHA OS</span><b>BLACK LABEL / OPERAÇÃO EM TEMPO REAL</b></div>
+      <div class="alpha-bl-item"><i>●</i> SISTEMA <strong>ATIVO</strong></div>
+      <div class="alpha-bl-item">REGISTROS <strong id="alphaBLRecords">0</strong></div>
+      <div class="alpha-bl-item">CÓDIGOS <strong>ÚNICOS</strong></div>
+      <div class="alpha-bl-item">ÚLTIMA LEITURA <strong id="alphaBLClock">--:--</strong></div>
     </div>
     <div class="a56-kpis">
       <article class="a56-kpi gold"><small>TOTAL DE CANDIDATOS</small><strong id="a56Total">0</strong><span>base ativa</span><em id="a56TotalDelta">LIVE</em><div class="a56-spark" id="a56SparkTotal"></div></article>
@@ -5342,7 +5563,7 @@ function renderCandidates(){
                   </div>
 
                   <div class="crm052-card-meta">
-                    <span>🆔 ${escapeHTML(candidate.protocolo || candidate.protocol || candidate.codigo_protocolo || candidate.codigo || "Sem protocolo")}</span>
+                    <span class="alpha-code-badge">🆔 <b>${escapeHTML(candidate.protocolo || candidate.protocol || candidate.codigo_protocolo || candidate.codigo || "Sem protocolo")}</b></span>
                     <span>${candidate.site || candidate.linkedin || candidate.instagram ? "🌐 PRESENÇA DIGITAL" : "○ SEM LINKS INFORMADOS"}</span>
                   </div>
 
@@ -5518,7 +5739,7 @@ ${viewMode === "trash" ? "" : `                  <select
                 <div class="a5901-full-box">
                   <label>CONTATO & IDENTIFICAÇÃO</label>
                   <strong>${escapeHTML(candidate.email || "E-mail não informado")}</strong>
-                  <span>Protocolo: ${escapeHTML(candidate.protocolo || candidate.protocol || candidate.codigo_protocolo || candidate.codigo || "Não informado")}</span>
+                  <span class="alpha-code-line">Código: <b>${escapeHTML(candidate.protocolo || candidate.protocol || candidate.codigo_protocolo || candidate.codigo || "Não informado")}</b> <button type="button" class="alpha-code-copy" onclick="alphaCopyCandidateCode('${escapeHTML(candidate.id)}')">COPIAR</button></span>
                   <span>Responsável: ${escapeHTML(candidate.responsavel || "ALPHA")}</span>
                 </div>
                 <div class="a5901-full-box">
@@ -7893,7 +8114,182 @@ function crm053UltraSection(c){
 .crm043-actions{flex-wrap:wrap}.crm044-role-actions{display:flex;gap:6px;flex-wrap:wrap}.crm044-promote,.crm044-demote{font-size:9px!important;font-weight:950!important}.crm044-promote{border-color:rgba(119,224,161,.22)!important;color:#8ce9b0!important}.crm044-demote{border-color:rgba(255,136,136,.22)!important;color:#ff9a9a!important}
 @media(max-width:900px){.crm043-create-btn{margin-left:0!important}.crm043-create-head{align-items:flex-start;flex-direction:column}.crm043-create-head button{width:100%}}
 </style>
+
+<script id="alpha-blacklabel-062">
+(function(){
+  function codeOf(c){return c?.codigo_protocolo||c?.protocolo||c?.protocol||c?.codigo||"";}
+  window.alphaCopyCandidateCode=function(id){
+    const list=window.candidates||((typeof candidates!=='undefined')?candidates:[]);
+    const c=list.find(x=>String(x.id)===String(id));
+    const code=codeOf(c);
+    if(!code)return;
+    const done=()=>{if(typeof showToast==='function')showToast('Código '+code+' copiado');};
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(code).then(done).catch(()=>fallback());}
+    else fallback();
+    function fallback(){const a=document.createElement('textarea');a.value=code;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}a.remove();done();}
+  };
+  function tick(){
+    const now=new Date();
+    const el=document.getElementById('alphaBLClock');
+    if(el)el.textContent=now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const count=document.getElementById('alphaBLRecords');
+    const list=window.candidates||((typeof candidates!=='undefined')?candidates:[]);
+    if(count)count.textContent=Array.isArray(list)?list.length:0;
+  }
+  document.addEventListener('DOMContentLoaded',()=>{tick();setInterval(tick,1000);});
+})();
+</script>
+
+
+<script id="alpha064-master-navigation">
+(function(){
+  const modules={
+    command:['01','COMANDO','Centro de comando e visão geral'],
+    candidates:['02','CANDIDATOS','Central 360° de candidatos e busca'],
+    pipeline:['03','PIPELINE','Funil operacional e movimentação'],
+    agenda:['04','AGENDA','Entrevistas, presença e reagendamentos'],
+    tasks:['05','EXECUÇÃO','Tarefas, follow-up e prazos'],
+    intelligence:['06','INTELIGÊNCIA','Pendências, prioridades e sinais'],
+    team:['07','EQUIPE','Administradores, cargos e permissões'],
+    history:['08','HISTÓRICO','Rastreabilidade completa da operação'],
+    reports:['09','RELATÓRIOS','Indicadores e visão executiva'],
+    trash:['10','LIXEIRA','Itens removidos e recuperação']
+  };
+  function ensureModuleBar(){
+    if(document.getElementById('alphaPlusModulebar')) return;
+    const bar=document.createElement('div');
+    bar.id='alphaPlusModulebar';
+    bar.className='alpha-plus-modulebar';
+    bar.innerHTML='<span class="alpha-plus-module-index" id="alphaPlusModuleIndex">01 / 10</span><strong class="alpha-plus-module-name" id="alphaPlusModuleName">COMANDO</strong><span class="alpha-plus-module-desc" id="alphaPlusModuleDesc">Centro de comando e visão geral</span><div class="alpha-plus-module-progress"><i id="alphaPlusModuleProgress"></i></div><span class="alpha-plus-module-count" id="alphaPlusModuleCount">MÓDULO 01</span>';
+    const mode=document.querySelector('.alpha-plus-modebar');
+    if(mode) mode.insertAdjacentElement('afterend',bar);
+  }
+  function setModule(key){
+    ensureModuleBar();
+    const m=modules[key]||modules.command, n=Number(m[0]);
+    const el=id=>document.getElementById(id);
+    if(el('alphaPlusCurrent')) el('alphaPlusCurrent').textContent=m[1];
+    if(el('alphaPlusModuleIndex')) el('alphaPlusModuleIndex').textContent=m[0]+' / 10';
+    if(el('alphaPlusModuleName')) el('alphaPlusModuleName').textContent=m[1];
+    if(el('alphaPlusModuleDesc')) el('alphaPlusModuleDesc').textContent=m[2];
+    if(el('alphaPlusModuleCount')) el('alphaPlusModuleCount').textContent='MÓDULO '+m[0];
+    if(el('alphaPlusModuleProgress')) el('alphaPlusModuleProgress').style.width=(n*10)+'%';
+    document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget===key));
+  }
+  window.alphaPlusGo=function(target){
+    setModule(target);
+    try{
+      if(target==='command'){document.getElementById('alpha056NeuralCommand')?.scrollIntoView({behavior:'smooth',block:'start'});}
+      if(target==='candidates'){window.alphaJump?.('candidatesList');}
+      if(target==='pipeline'){window.alphaJump?.('alphaKanban');}
+      if(target==='agenda'){window.openAgenda040?.();}
+      if(target==='tasks'){window.openTasks039Center?.();}
+      if(target==='intelligence'){window.crm053OpenTasks?.();}
+      if(target==='team'){window.openTeam043?.();}
+      if(target==='history'){window.openHistory038Modal?.();}
+      if(target==='reports'){window.openDashboard041?.();}
+      if(target==='trash'){document.getElementById('trashButton')?.click();}
+    }catch(err){console.error('ALPHA064 NAV',err);}
+    if(window.innerWidth<=900) document.getElementById('alphaPlusSidebar')?.classList.remove('mobile-open');
+  };
+  window.alphaPlusToggleSidebar=function(){
+    const side=document.getElementById('alphaPlusSidebar'),main=document.getElementById('alphaPlusMain');
+    if(!side)return;
+    const collapsed=side.classList.toggle('collapsed');
+    main?.classList.toggle('collapsed-main',collapsed);
+    document.body.classList.toggle('alpha-plus-sidebar-collapsed',collapsed);
+    const b=side.querySelector('.alpha-plus-collapse');
+    if(b){b.title=collapsed?'Expandir menu':'Recolher menu';const em=b.querySelector('em');if(em)em.textContent=collapsed?'EXPANDIR MENU':'RECOLHER MENU';const sp=b.querySelector('span');if(sp)sp.textContent=collapsed?'›':'‹';}
+  };
+  window.alphaPlusToggleMobile=function(){document.getElementById('alphaPlusSidebar')?.classList.toggle('mobile-open');};
+  window.alphaPlusSetDensity=function(mode,btn){
+    document.body.classList.remove('alpha-plus-compact','alpha-plus-focus');
+    if(mode==='compact')document.body.classList.add('alpha-plus-compact');
+    if(mode==='focus')document.body.classList.add('alpha-plus-focus');
+    document.querySelectorAll('.alpha-plus-modechips button').forEach(b=>b.classList.remove('active'));
+    btn?.classList.add('active');
+  };
+  window.alphaPlusToggleCompact=function(){
+    const on=document.body.classList.toggle('alpha-plus-compact');
+    document.body.classList.remove('alpha-plus-focus');
+    document.querySelectorAll('.alpha-plus-modechips button').forEach(b=>b.classList.toggle('active',b.textContent.includes(on?'COMPACTO':'COMPLETO')));
+  };
+  function observeModules(){
+    const map=[['alpha056NeuralCommand','command'],['candidatesList','candidates'],['alphaKanban','pipeline'],['alphaCRM037','intelligence']];
+    if(!('IntersectionObserver' in window))return;
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{if(entry.isIntersecting)setModule(entry.target.dataset.alpha64Module);});
+    },{rootMargin:'-18% 0px -68% 0px',threshold:.01});
+    map.forEach(([id,key])=>{const el=document.getElementById(id);if(el){el.dataset.alpha64Module=key;obs.observe(el);}});
+  }
+  document.addEventListener('DOMContentLoaded',()=>{ensureModuleBar();setModule('command');observeModules();});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='m'&&e.altKey){e.preventDefault();window.alphaPlusToggleSidebar();return;}
+    if(e.key==='Escape'&&window.innerWidth<=900)document.getElementById('alphaPlusSidebar')?.classList.remove('mobile-open');
+    if(e.altKey&&/^\d$/.test(e.key)){const map=['trash','command','candidates','pipeline','agenda','tasks','intelligence','team','history','reports'];e.preventDefault();window.alphaPlusGo(map[Number(e.key)]);}
+  });
+  window.addEventListener('load',()=>{ensureModuleBar();setModule('command');});
+})();
+</script>
+
 </body>
+
+<style id="alpha-plus-pro-max-css">
+/* ALPHA CRM PLUS PRO MAX — 063 / layout master */
+:root{--ap-bg:#030609;--ap-panel:#080d13;--ap-panel2:#0b121a;--ap-line:rgba(255,255,255,.075);--ap-gold:#f4c84f;--ap-gold2:#ffe69a;--ap-text:#eaf0f4;--ap-muted:#7f8b96;--ap-cyan:#58dcff;--ap-green:#59e5a0}
+body{background:radial-gradient(circle at 72% -8%,rgba(244,200,79,.07),transparent 24%),linear-gradient(180deg,#020407,#030609 38%,#020406)!important;color:var(--ap-text)!important}
+#adminScreen>header{position:sticky!important;top:0!important;z-index:100!important;background:rgba(2,5,8,.88)!important;border-bottom:1px solid rgba(244,200,79,.12)!important;backdrop-filter:blur(20px)!important}
+#adminScreen>.container{max-width:none!important;width:auto!important;margin-left:274px!important;padding:0 24px 70px!important;transition:margin-left .25s ease,padding .25s ease!important}
+#alphaPlusShell{display:block}.alpha-plus-shell{position:fixed;inset:0 auto 0 0;width:258px;z-index:500;pointer-events:none}.alpha-plus-sidebar{pointer-events:auto;position:absolute;inset:0;width:258px;padding:18px 12px 14px;background:linear-gradient(180deg,rgba(7,12,17,.985),rgba(2,6,10,.99));border-right:1px solid rgba(244,200,79,.13);box-shadow:20px 0 70px rgba(0,0,0,.42);transition:width .25s ease,padding .25s ease;display:flex;flex-direction:column;gap:5px;overflow:hidden}.alpha-plus-brand{display:flex;align-items:center;gap:11px;padding:4px 8px 17px;border-bottom:1px solid var(--ap-line);margin-bottom:6px}.alpha-plus-logo{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;border:1px solid rgba(244,200,79,.55);background:linear-gradient(145deg,rgba(244,200,79,.14),rgba(244,200,79,.025));color:var(--ap-gold2);font-weight:1000;font-size:18px}.alpha-plus-brandtext b{display:block;font-size:13px;letter-spacing:.06em}.alpha-plus-brandtext span{display:block;margin-top:3px;color:var(--ap-gold);font-size:7px;font-weight:900;letter-spacing:.2em}.alpha-plus-collapse{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:#8c98a3;padding:8px 10px;cursor:pointer;text-transform:uppercase;font-size:8px;font-weight:900;letter-spacing:.12em}.alpha-plus-collapse span{font-size:20px;line-height:10px;color:var(--ap-gold)}.alpha-plus-section{padding:12px 10px 5px;color:#55616c;font-size:7px;font-weight:1000;letter-spacing:.2em}.alpha-plus-nav{position:relative;display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:7px;width:100%;height:43px;padding:0 10px;border:1px solid transparent;border-radius:12px;background:transparent;color:#aeb8c1;text-align:left;cursor:pointer;font-weight:850;font-size:10px;transition:.18s}.alpha-plus-nav i{font-style:normal;text-align:center;font-size:14px;color:#71808c}.alpha-plus-nav b{font-size:7px;color:#46535e}.alpha-plus-nav:hover{background:rgba(255,255,255,.035);color:#fff;border-color:rgba(244,200,79,.12)}.alpha-plus-nav.active{background:linear-gradient(90deg,rgba(244,200,79,.13),rgba(244,200,79,.025));border-color:rgba(244,200,79,.23);color:#fff;box-shadow:inset 3px 0 var(--ap-gold)}.alpha-plus-nav.active i,.alpha-plus-nav.active b{color:var(--ap-gold)}.alpha-plus-nav.danger{margin-top:2px}.alpha-plus-nav.danger.active{box-shadow:inset 3px 0 #ff7373}.alpha-plus-sidefoot{margin-top:auto;border:1px solid rgba(89,229,160,.12);background:rgba(89,229,160,.035);border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px}.alpha-plus-status-dot{width:7px;height:7px;border-radius:50%;background:var(--ap-green);box-shadow:0 0 13px var(--ap-green)}.alpha-plus-sidefoot b{display:block;font-size:8px;letter-spacing:.08em}.alpha-plus-sidefoot small{display:block;margin-top:3px;color:#61707b;font-size:7px}.alpha-plus-main{pointer-events:none;position:fixed;left:258px;right:0;top:0;z-index:501;transition:left .25s ease}.alpha-plus-topbar{pointer-events:auto;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid rgba(255,255,255,.055);background:rgba(2,5,8,.76);backdrop-filter:blur(20px)}.alpha-plus-breadcrumb{display:flex;gap:9px;align-items:center;font-size:9px;letter-spacing:.13em}.alpha-plus-breadcrumb span{color:#65727d}.alpha-plus-breadcrumb i{color:#303b44;font-style:normal}.alpha-plus-breadcrumb b{color:var(--ap-gold2)}.alpha-plus-topactions{display:flex;gap:7px}.alpha-plus-topactions button,.alpha-plus-modechips button{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#aeb8c0;border-radius:9px;padding:8px 10px;font-size:8px;font-weight:900;letter-spacing:.06em;cursor:pointer}.alpha-plus-topactions button:hover,.alpha-plus-modechips button:hover{border-color:rgba(244,200,79,.35);color:var(--ap-gold2)}.alpha-plus-mobilemenu{display:none!important}.alpha-plus-modebar{pointer-events:auto;height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid rgba(255,255,255,.045);background:rgba(5,9,14,.72);backdrop-filter:blur(16px)}.alpha-plus-modebar>div:first-child{display:flex;gap:9px;align-items:center}.alpha-plus-modebar span{font-size:7px;color:var(--ap-gold);font-weight:1000;letter-spacing:.2em}.alpha-plus-modebar b{font-size:8px;color:#6d7984;letter-spacing:.08em}.alpha-plus-modechips{display:flex;gap:5px}.alpha-plus-modechips button{padding:5px 9px;font-size:7px}.alpha-plus-modechips button.active{background:rgba(244,200,79,.12);border-color:rgba(244,200,79,.35);color:var(--ap-gold2)}
+/* remove redundant navigation layers: the new master menu owns navigation */
+.a56-navrail,.alpha-os-rail{display:none!important}.alpha-blacklabel-strip{margin-top:12px!important}.a56-hero{min-height:390px!important;border-radius:22px!important}.a56-hero-title{font-size:clamp(44px,5vw,68px)!important}.a56-hero-content{padding-top:54px!important}.a56-view-controls{top:18px!important;bottom:auto!important}.a56-kpis{grid-template-columns:repeat(6,minmax(0,1fr))!important}.a56-kpi{min-height:104px!important}.a58-control-deck{margin-top:14px!important}.a58-actions-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}.a58-action{min-height:86px!important}.content-grid,.dashboard,.analytics{gap:14px!important}.a56-panel,.a58-command-panel,.crm037-section,.crm039-launcher,.dashboard .panel,.analytics .panel,.toolbar,.content-grid .panel,.kanban-section{box-shadow:0 18px 60px rgba(0,0,0,.26)!important}
+/* compact mode */
+body.alpha-plus-compact #adminScreen>.container{padding-left:15px;padding-right:15px}.alpha-plus-sidebar.collapsed{width:74px;padding-left:9px;padding-right:9px}.alpha-plus-sidebar.collapsed .alpha-plus-brandtext,.alpha-plus-sidebar.collapsed .alpha-plus-collapse em,.alpha-plus-sidebar.collapsed .alpha-plus-section,.alpha-plus-sidebar.collapsed .alpha-plus-nav span,.alpha-plus-sidebar.collapsed .alpha-plus-nav b,.alpha-plus-sidebar.collapsed .alpha-plus-sidefoot div{display:none}.alpha-plus-sidebar.collapsed .alpha-plus-brand{justify-content:center;padding-inline:0}.alpha-plus-sidebar.collapsed .alpha-plus-collapse{justify-content:center}.alpha-plus-sidebar.collapsed .alpha-plus-nav{grid-template-columns:1fr;justify-items:center;padding:0}.alpha-plus-sidebar.collapsed .alpha-plus-nav i{font-size:16px}.alpha-plus-main.collapsed-main{left:74px}body.alpha-plus-sidebar-collapsed #adminScreen>.container{margin-left:90px}.alpha-plus-density{display:inline-flex!important}
+body.alpha-plus-compact .a56-hero{min-height:300px!important}.alpha-plus-compact .a56-hero-content{padding-top:42px!important}.alpha-plus-compact .a56-hero-sub,.alpha-plus-compact .a56-hero-quote{display:none!important}.alpha-plus-compact .a56-kpi{min-height:78px!important;padding:12px!important}.alpha-plus-compact .a56-kpi strong{font-size:27px!important}.alpha-plus-compact .a58-action{min-height:66px!important;padding:11px!important}.alpha-plus-compact .a58-action span{display:none}.alpha-plus-compact .a58-actions-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}.alpha-plus-compact .alpha-blacklabel-strip{display:none!important}
+/* focus mode */
+body.alpha-plus-focus .a56-kpis,body.alpha-plus-focus .a58-control-deck>.a58-command-panel~*,body.alpha-plus-focus .alpha-blacklabel-strip{display:none!important}.alpha-plus-focus .a56-hero{min-height:300px!important}.alpha-plus-focus .a56-hero-sub{max-width:650px}.alpha-plus-focus .a58-control-deck{margin-top:10px}
+@media(max-width:1150px){#adminScreen>.container{margin-left:90px}.alpha-plus-sidebar{width:74px;padding-left:9px;padding-right:9px}.alpha-plus-brandtext,.alpha-plus-collapse em,.alpha-plus-section,.alpha-plus-nav span,.alpha-plus-nav b,.alpha-plus-sidefoot div{display:none}.alpha-plus-brand{justify-content:center;padding-inline:0}.alpha-plus-collapse{justify-content:center}.alpha-plus-nav{grid-template-columns:1fr;justify-items:center;padding:0}.alpha-plus-main{left:74px}.alpha-plus-nav i{font-size:16px}.a56-kpis{grid-template-columns:repeat(3,minmax(0,1fr))!important}.a58-actions-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:760px){#adminScreen>.container{margin-left:0!important;padding:0 12px 50px!important}.alpha-plus-shell{position:fixed;width:0}.alpha-plus-sidebar{width:250px;transform:translateX(-102%);transition:transform .25s ease;width:250px;padding:16px 12px}.alpha-plus-sidebar.mobile-open{transform:translateX(0);box-shadow:20px 0 80px rgba(0,0,0,.65)}.alpha-plus-sidebar .alpha-plus-brandtext,.alpha-plus-sidebar .alpha-plus-collapse em,.alpha-plus-sidebar .alpha-plus-section,.alpha-plus-sidebar .alpha-plus-nav span,.alpha-plus-sidebar .alpha-plus-nav b,.alpha-plus-sidebar .alpha-plus-sidefoot div{display:block}.alpha-plus-sidebar .alpha-plus-nav{grid-template-columns:28px 1fr auto;justify-items:initial;padding:0 10px}.alpha-plus-sidebar .alpha-plus-brand{justify-content:flex-start}.alpha-plus-main{left:0;width:100%}.alpha-plus-topbar{padding:0 12px}.alpha-plus-topactions button span{display:none}.alpha-plus-topactions button{padding:8px 9px}.alpha-plus-mobilemenu{display:block!important}.alpha-plus-modebar{padding:0 12px}.alpha-plus-modebar>div:first-child b{display:none}.alpha-plus-modechips button{padding:5px 6px}.a56-hero{min-height:315px!important;border-radius:18px!important}.a56-hero-content{padding:88px 18px 22px!important}.a56-hero-title{font-size:37px!important}.a56-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}.a58-actions-grid{grid-template-columns:1fr 1fr!important}.alpha-plus-density{display:none!important}}
+@media(max-width:480px){.alpha-plus-modebar{height:34px}.alpha-plus-topbar{height:52px}.a56-hero-title{font-size:31px!important}.a56-hero-actions button{flex:1 1 calc(50% - 5px)!important}.a56-kpi{min-height:88px!important}.a58-actions-grid{grid-template-columns:1fr!important}.alpha-plus-modechips button{font-size:6px}}
+</style>
+
+<script id="alpha-plus-pro-max-js">
+(function(){
+  const names={command:'COMANDO',candidates:'CANDIDATOS',pipeline:'PIPELINE',agenda:'AGENDA',tasks:'EXECUÇÃO',intelligence:'INTELIGÊNCIA',team:'EQUIPE',history:'HISTÓRICO',reports:'RELATÓRIOS',trash:'LIXEIRA'};
+  window.alphaPlusGo=function(target){
+    document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget===target));
+    const label=document.getElementById('alphaPlusCurrent'); if(label) label.textContent=names[target]||'COMANDO';
+    if(target==='command'){document.getElementById('alpha056NeuralCommand')?.scrollIntoView({behavior:'smooth',block:'start'});}
+    if(target==='candidates'){window.alphaJump?.('candidatesList');}
+    if(target==='pipeline'){window.alphaJump?.('alphaKanban');}
+    if(target==='agenda'){window.openAgenda040?.();}
+    if(target==='tasks'){window.openTasks039Center?.();}
+    if(target==='intelligence'){window.crm053OpenTasks?.();}
+    if(target==='team'){window.openTeam043?.();}
+    if(target==='history'){window.openHistory038Modal?.();}
+    if(target==='reports'){window.openDashboard041?.();}
+    if(target==='trash'){document.getElementById('trashButton')?.click();}
+    document.getElementById('alphaPlusSidebar')?.classList.remove('mobile-open');
+  };
+  window.alphaPlusToggleSidebar=function(){
+    const side=document.getElementById('alphaPlusSidebar'); const main=document.getElementById('alphaPlusMain'); if(!side)return;
+    side.classList.toggle('collapsed'); main?.classList.toggle('collapsed-main',side.classList.contains('collapsed')); document.body.classList.toggle('alpha-plus-sidebar-collapsed',side.classList.contains('collapsed'));
+  };
+  window.alphaPlusToggleMobile=function(){document.getElementById('alphaPlusSidebar')?.classList.toggle('mobile-open');};
+  window.alphaPlusSetDensity=function(mode,btn){
+    document.body.classList.remove('alpha-plus-compact','alpha-plus-focus');
+    if(mode==='compact')document.body.classList.add('alpha-plus-compact');
+    if(mode==='focus')document.body.classList.add('alpha-plus-focus');
+    document.querySelectorAll('.alpha-plus-modechips button').forEach(b=>b.classList.remove('active')); btn?.classList.add('active');
+  };
+  window.alphaPlusToggleCompact=function(){const active=document.body.classList.toggle('alpha-plus-compact');document.body.classList.remove('alpha-plus-focus');document.querySelectorAll('.alpha-plus-modechips button').forEach(b=>b.classList.toggle('active',b.textContent.includes(active?'COMPACTO':'COMPLETO')));};
+  document.addEventListener('keydown',e=>{if(e.key==='m'&&e.altKey){e.preventDefault();alphaPlusToggleSidebar();} if(e.key==='Escape')document.getElementById('alphaPlusSidebar')?.classList.remove('mobile-open');});
+  const map=[['alpha056NeuralCommand','command'],['candidatesList','candidates'],['alphaKanban','pipeline']];
+  const obs=new IntersectionObserver(es=>{es.forEach(x=>{if(x.isIntersecting){const found=map.find(([id])=>x.target.id===id);if(found){document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget===found[1]));const l=document.getElementById('alphaPlusCurrent');if(l)l.textContent=names[found[1]];}}});},{rootMargin:'-25% 0px -65% 0px'});
+  map.forEach(([id])=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+})();
+</script>
+
 </html>
 <style id="alpha058-background-final">
 .a56-hero-bg{background-size:cover!important;background-position:center center!important;filter:saturate(.9) contrast(1.08) brightness(.62)!important;}
@@ -8006,3 +8402,25 @@ body{background:radial-gradient(circle at 70% 0%,rgba(245,196,66,.055),transpare
   });
 })();
 </script>
+
+<style id="alpha-blacklabel-062-css">
+/* =====================================================
+   ALPHA OS 062 — BLACK LABEL EXPERIENCE
+   Camada visual e UX. Mantém os módulos e dados existentes.
+===================================================== */
+:root{--bl-gold:#f6c84a;--bl-gold2:#ffe38b;--bl-cyan:#5fe7ff;--bl-green:#57e6a0;--bl-panel:rgba(7,13,19,.94);--bl-line:rgba(255,255,255,.075)}
+body{background:radial-gradient(circle at 80% 0%,rgba(246,200,74,.075),transparent 28%),radial-gradient(circle at 10% 55%,rgba(95,231,255,.035),transparent 30%),#010305!important}
+.a56-command{max-width:1500px!important;margin-inline:auto!important}.a56-hero{border-radius:30px!important;overflow:hidden!important;box-shadow:0 45px 140px rgba(0,0,0,.8),0 0 80px rgba(246,200,74,.035)!important}.a56-hero-bg{filter:saturate(.72) contrast(1.2) brightness(.46)!important}.a56-hero-scrim{background:linear-gradient(90deg,rgba(1,4,7,.99),rgba(1,4,7,.93) 25%,rgba(1,4,7,.42) 63%,rgba(1,4,7,.78))!important}.a56-hero-title{font-size:clamp(52px,6vw,82px)!important;letter-spacing:-.075em!important}.a56-hero-sub{max-width:820px!important;color:#b5c0ca!important}.a56-hero-actions button{border-radius:13px!important;min-height:43px!important;box-shadow:inset 0 1px rgba(255,255,255,.04)!important}.a56-ticker{border-radius:0 0 20px 20px!important;background:rgba(2,7,11,.95)!important}
+.alpha-blacklabel-strip{display:flex;align-items:center;gap:18px;min-height:54px;margin:10px 0 14px;padding:8px 14px;border:1px solid rgba(246,200,74,.18);border-radius:16px;background:linear-gradient(100deg,rgba(11,18,26,.98),rgba(3,8,13,.95));box-shadow:0 16px 45px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035);overflow:auto;white-space:nowrap}.alpha-blacklabel-strip>div:first-child{min-width:255px}.alpha-blacklabel-strip>div:first-child span{display:block;font-size:8px;letter-spacing:.18em;color:var(--bl-gold)}.alpha-blacklabel-strip>div:first-child b{display:block;margin-top:3px;font-size:9px;letter-spacing:.08em;color:#d8e0e7}.alpha-bl-item{padding-left:18px;border-left:1px solid rgba(255,255,255,.07);font-size:8px;font-weight:900;letter-spacing:.12em;color:#657380}.alpha-bl-item strong{color:#e9eff4;margin-left:5px}.alpha-bl-item i{color:var(--bl-green);font-style:normal;margin-right:4px}
+.a56-kpis{gap:11px!important}.a56-kpi{position:relative;overflow:hidden!important;min-height:116px!important;border-radius:19px!important;background:linear-gradient(145deg,rgba(11,20,29,.98),rgba(2,7,11,.98))!important;border-color:rgba(246,200,74,.14)!important}.a56-kpi:after{content:"";position:absolute;inset:auto -30% 0 -30%;height:1px;background:linear-gradient(90deg,transparent,rgba(246,200,74,.32),transparent)}.a56-kpi strong{font-size:34px!important}.a56-kpi small{font-size:8px!important;letter-spacing:.13em!important}
+.a58-control-deck{gap:14px!important}.a58-command-panel,.a56-panel,.crm037-section,.crm039-launcher,.dashboard,.analytics .panel,.toolbar,.content-grid .panel,.kanban-section{border-radius:22px!important;background:linear-gradient(145deg,rgba(9,17,25,.97),rgba(2,7,11,.98))!important;border-color:rgba(246,200,74,.13)!important;box-shadow:0 25px 80px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.025)!important}.a58-action{border-radius:16px!important;min-height:94px!important}.a58-action strong{letter-spacing:.03em}.a58-action:hover{border-color:rgba(246,200,74,.48)!important;transform:translateY(-3px)!important;box-shadow:0 18px 40px rgba(0,0,0,.3)!important}
+.kanban-section{padding:22px!important}.kanban-card{border-radius:17px!important;box-shadow:0 12px 35px rgba(0,0,0,.24)!important}.kanban-card:hover{box-shadow:0 18px 45px rgba(0,0,0,.38)!important}
+.content-grid{grid-template-columns:minmax(0,1fr)!important}.candidate-main-column{min-width:0!important}.candidates{gap:12px!important}.candidate{border-radius:20px!important;background:linear-gradient(145deg,rgba(11,20,29,.99),rgba(2,7,11,.99))!important;border-color:rgba(255,255,255,.075)!important;box-shadow:0 15px 50px rgba(0,0,0,.26)!important}.candidate:hover{border-color:rgba(246,200,74,.45)!important;box-shadow:0 20px 60px rgba(0,0,0,.4)!important}.crm052-card-meta{gap:7px!important}.crm052-card-meta span{border-radius:999px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.06)!important}.alpha-code-badge{background:linear-gradient(90deg,rgba(246,200,74,.13),rgba(246,200,74,.035))!important;border-color:rgba(246,200,74,.25)!important;color:#f5d47b!important}.alpha-code-badge b{color:#ffe49a!important;letter-spacing:.06em}.alpha-code-line{display:flex!important;align-items:center;gap:7px!important;flex-wrap:wrap}.alpha-code-line b{color:#ffe08a}.alpha-code-copy{border:1px solid rgba(246,200,74,.25);background:rgba(246,200,74,.06);color:#f4d47d;border-radius:7px;padding:4px 7px;font-size:8px;font-weight:1000;cursor:pointer}.alpha-code-copy:hover{background:rgba(246,200,74,.15);border-color:rgba(246,200,74,.5)}
+.a5901-full-extra{gap:11px!important}.a5901-full-box{border-radius:16px!important;background:linear-gradient(145deg,rgba(12,21,30,.8),rgba(3,8,13,.86))!important;border-color:rgba(255,255,255,.065)!important}.a5901-full-box:hover{border-color:rgba(246,200,74,.24)!important}
+.crm043-modal{border-radius:28px!important}.crm043-kpi{border-radius:17px!important;background:linear-gradient(145deg,rgba(15,25,35,.9),rgba(4,9,14,.96))!important}.crm043-row{border-radius:17px!important;background:linear-gradient(145deg,rgba(13,22,31,.8),rgba(4,9,14,.94))!important}.crm043-row:hover{border-color:rgba(246,200,74,.28)!important}.crm043-create-head{border-radius:18px!important}.crm043-form{border-radius:18px!important}
+.crm038-modal-shell,.crm039-center-shell,.crm040-shell,.crm041-shell,.crm043-modal{backdrop-filter:blur(22px)!important}
+button,input,select,textarea{outline-color:rgba(246,200,74,.5)!important}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{box-shadow:0 0 0 2px rgba(246,200,74,.14),0 0 22px rgba(246,200,74,.07)!important}
+@media(max-width:900px){.alpha-blacklabel-strip>div:first-child{min-width:210px}.a56-kpis{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){.alpha-blacklabel-strip{gap:10px;padding:7px 9px}.alpha-blacklabel-strip>div:first-child{min-width:190px}.alpha-bl-item{padding-left:10px}.a56-hero{min-height:350px!important}.a56-hero-title{font-size:39px!important}.a58-action{min-height:82px!important}.candidate{border-radius:17px!important}}
+@media(max-width:520px){.alpha-blacklabel-strip{margin-top:7px}.alpha-blacklabel-strip>div:first-child{min-width:165px}.alpha-blacklabel-strip>div:first-child b{font-size:8px}.a56-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}.a56-kpi{min-height:96px!important}.a56-kpi strong{font-size:27px!important}.a56-hero{min-height:325px!important}.a56-hero-title{font-size:33px!important}}
+</style>
