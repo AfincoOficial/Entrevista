@@ -2756,227 +2756,17 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
 
 
 <!-- ALPHA 064.2 — ADMIN HERO ONLY: M4 AZUL / ALPHA01 / GERENTE LUCAS NASCIMENTO -->
-
-<style id="alpha-066-m4-command-visual">
-/* ============================================================
-   ALPHA 066 — M4 COMMAND VISUAL
-   A mesma M4 do Admin agora é a identidade da entrada e do
-   Command Center. A interface passa a trabalhar SOBRE a cena,
-   sem esconder o carro.
-============================================================ */
-#loginScreen{
-  position:relative!important;
-  min-height:100vh!important;
-  overflow:hidden!important;
-  isolation:isolate!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  padding:clamp(18px,4vw,54px)!important;
-  background:#02070d!important;
-}
-#loginScreen::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-4;
-  background-image:url('https://afincooficial.github.io/Entrevista/alpha-hero-m4-alpha01.webp');
-  background-size:cover;
-  background-position:center center;
-  filter:saturate(1.08) contrast(1.08) brightness(.86);
-  transform:scale(1.025);
-}
-#loginScreen::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-3;
-  pointer-events:none;
-  background:
-    linear-gradient(90deg,rgba(1,5,10,.94) 0%,rgba(1,5,10,.80) 20%,rgba(1,5,10,.38) 43%,rgba(1,5,10,.06) 69%,rgba(1,5,10,.22) 100%),
-    linear-gradient(180deg,rgba(0,0,0,.26),rgba(0,0,0,.04) 45%,rgba(0,0,0,.50) 100%);
-}
-.alpha-login-atmosphere{
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 72% 48%,rgba(0,140,255,.12),transparent 27%),
-    radial-gradient(circle at 20% 72%,rgba(246,200,74,.09),transparent 24%);
-  mix-blend-mode:screen;
-}
-.alpha-login-topline{
-  position:absolute;
-  top:20px;
-  left:clamp(20px,4vw,58px);
-  right:clamp(20px,4vw,58px);
-  z-index:4;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  color:#dce5ed;
-  font-size:9px;
-  letter-spacing:.20em;
-  text-transform:uppercase;
-  pointer-events:none;
-}
-.alpha-login-topline span{font-weight:1000;color:#fff}.alpha-login-topline b{color:#f6c84a;font-weight:1000}.alpha-login-topline em{font-style:normal;color:#7e8b98}
-.alpha-login-topline:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(246,200,74,.30),rgba(255,255,255,.04),transparent)}
-.alpha-login-hero-copy{
-  position:absolute;
-  z-index:2;
-  right:clamp(24px,6vw,100px);
-  bottom:clamp(100px,13vh,150px);
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  text-align:right;
-  pointer-events:none;
-  text-shadow:0 8px 30px rgba(0,0,0,.72);
-}
-.alpha-login-hero-copy strong{font-size:clamp(34px,6vw,82px);line-height:.8;color:#f6c84a;letter-spacing:-.06em}.alpha-login-hero-copy span{margin-top:13px;color:#fff;font-size:clamp(12px,1.4vw,18px);font-weight:1000;letter-spacing:.28em}.alpha-login-hero-copy small{margin-top:8px;color:#aebdca;font-size:8px;letter-spacing:.22em}
-.login-box{
-  position:relative!important;
-  z-index:5!important;
-  width:min(430px,calc(100vw - 40px))!important;
-  max-width:430px!important;
-  margin-left:clamp(0px,2vw,30px)!important;
-  padding:30px!important;
-  border:1px solid rgba(246,200,74,.25)!important;
-  border-radius:24px!important;
-  background:linear-gradient(145deg,rgba(4,12,20,.86),rgba(1,6,11,.72))!important;
-  backdrop-filter:blur(20px) saturate(1.2)!important;
-  -webkit-backdrop-filter:blur(20px) saturate(1.2)!important;
-  box-shadow:0 35px 100px rgba(0,0,0,.62),0 0 50px rgba(0,128,255,.10),inset 0 1px rgba(255,255,255,.08)!important;
-}
-.login-box:before{
-  content:"";position:absolute;left:0;top:22px;bottom:22px;width:2px;border-radius:99px;
-  background:linear-gradient(180deg,transparent,#168cff,#f6c84a,transparent);
-  box-shadow:0 0 20px rgba(22,140,255,.45);
-}
-.login-brand{text-align:left!important;margin-bottom:22px!important;padding-left:6px!important}.login-brand h1{font-size:34px!important;letter-spacing:-1.5px!important}.login-brand p{font-size:10px!important;color:#94a4b2!important;letter-spacing:.04em!important}.alpha-login-version{margin-top:12px;color:#6f7e8c;font-size:7px;letter-spacing:.18em;font-weight:900}.alpha-login-version b{color:#f6c84a}
-.login-field label{color:#9aa9b7!important;font-size:9px!important;letter-spacing:.10em!important;text-transform:uppercase!important}.login-field input{height:54px!important;border-radius:12px!important;background:rgba(2,9,15,.70)!important;border-color:rgba(120,170,210,.20)!important;box-shadow:inset 0 1px rgba(255,255,255,.025)!important}.login-field input:focus{border-color:#2d9bff!important;box-shadow:0 0 0 2px rgba(45,155,255,.08),0 0 24px rgba(45,155,255,.10)!important}.login-button{height:54px!important;border-radius:12px!important;background:linear-gradient(135deg,#f7d16b,#e9ad35 62%,#a76a16)!important;box-shadow:0 12px 30px rgba(231,171,48,.22)!important;letter-spacing:.08em!important;text-transform:uppercase!important;transition:.2s ease!important}.login-button:hover{transform:translateY(-2px)!important;box-shadow:0 16px 38px rgba(231,171,48,.32)!important}.login-error{background:rgba(90,10,16,.50)!important;backdrop-filter:blur(10px)!important}
-/* Command Center: transparência controlada para a M4 continuar protagonista. */
-.a56-command{background:rgba(2,5,8,.78)!important;backdrop-filter:blur(4px)!important}.a56-hero{background:rgba(2,5,8,.48)!important;box-shadow:0 40px 120px rgba(0,0,0,.48),0 0 90px rgba(243,199,95,.06)!important}.a56-hero-bg{background-position:center 48%!important;filter:saturate(1.06) contrast(1.08) brightness(.90)!important;transform:scale(1.012)!important}.a56-hero-scrim{background:linear-gradient(90deg,rgba(1,4,7,.72) 0%,rgba(1,4,7,.48) 25%,rgba(1,4,7,.10) 58%,rgba(1,4,7,.28) 100%),linear-gradient(0deg,rgba(2,5,8,.42),transparent 50%,rgba(0,0,0,.08))!important}.a56-navrail{background:linear-gradient(180deg,rgba(2,7,12,.76),rgba(3,8,13,.55))!important;backdrop-filter:blur(14px)!important}.a56-kpi,.a58-action,.a56-view-controls button{background:rgba(3,9,15,.62)!important;backdrop-filter:blur(12px)!important}.a56-kpis{gap:10px!important}.alpha-plus-modulebar{background:linear-gradient(90deg,rgba(5,12,18,.84),rgba(4,9,14,.66))!important;backdrop-filter:blur(18px)!important}.alpha-plus-sidebar{background:linear-gradient(180deg,rgba(5,10,15,.92),rgba(2,6,10,.90))!important;backdrop-filter:blur(18px)!important}.alpha-maxpro-deck{background:linear-gradient(145deg,rgba(6,13,20,.82),rgba(2,7,11,.76))!important;backdrop-filter:blur(16px)!important}
-@media(max-width:900px){#loginScreen{justify-content:center!important;padding:18px!important}#loginScreen::before{background-position:62% center}.alpha-login-hero-copy{right:22px;bottom:42px;opacity:.52}.alpha-login-topline{font-size:7px;gap:9px}.login-box{margin-left:0!important;background:linear-gradient(145deg,rgba(3,10,17,.90),rgba(1,6,11,.82))!important}.a56-hero-bg{background-position:57% 48%!important}.a56-hero-scrim{background:linear-gradient(90deg,rgba(1,4,7,.64),rgba(1,4,7,.18) 62%,rgba(1,4,7,.34))!important}}
-@media(max-width:520px){.alpha-login-topline span,.alpha-login-topline em{display:none}.alpha-login-topline{top:14px}.alpha-login-hero-copy{right:16px;bottom:28px;opacity:.28}.alpha-login-hero-copy strong{font-size:36px}.alpha-login-hero-copy span{font-size:9px}.login-box{width:calc(100vw - 28px)!important;padding:25px!important}.login-brand h1{font-size:31px!important}}
-</style>
-
-<style id="alpha-066-login-surround-v2">
-/* ALPHA 066.1 — LOGIN: imagem ao redor do acesso, não atrás de um painel escuro */
-#loginScreen{
-  position:relative!important; min-height:100vh!important; min-height:100dvh!important;
-  width:100%!important; box-sizing:border-box!important; overflow:hidden!important; isolation:isolate!important;
-  display:flex!important; align-items:center!important; justify-content:flex-start!important;
-  padding:clamp(28px,5vw,72px)!important; background:#02070d!important;
-}
-#loginScreen::before{
-  z-index:-4!important;
-  background-image:url('https://afincooficial.github.io/Entrevista/alpha-hero-m4-alpha01.webp')!important;
-  background-size:cover!important; background-position:center center!important;
-  filter:saturate(1.12) contrast(1.04) brightness(.98)!important; transform:none!important;
-}
-#loginScreen::after{
-  z-index:-3!important;
-  background:
-    radial-gradient(circle at 58% 52%,rgba(0,0,0,.02) 0%,rgba(0,0,0,.08) 38%,rgba(0,0,0,.28) 100%),
-    linear-gradient(90deg,rgba(1,5,10,.46) 0%,rgba(1,5,10,.22) 24%,rgba(1,5,10,.04) 52%,rgba(1,5,10,.12) 100%),
-    linear-gradient(180deg,rgba(0,0,0,.10),transparent 38%,rgba(0,0,0,.24) 100%)!important;
-}
-.alpha-login-atmosphere{z-index:-2!important;background:radial-gradient(circle at 22% 48%,rgba(0,130,255,.12),transparent 25%),radial-gradient(circle at 75% 45%,rgba(246,200,74,.08),transparent 24%)!important}
-.login-box{
-  width:min(390px,calc(100vw - 48px))!important; max-width:390px!important; margin-left:clamp(0px,1vw,16px)!important;
-  padding:28px!important; border:1px solid rgba(246,200,74,.30)!important; border-radius:22px!important;
-  background:linear-gradient(145deg,rgba(2,8,14,.72),rgba(1,5,10,.54))!important;
-  backdrop-filter:blur(13px) saturate(1.15)!important; -webkit-backdrop-filter:blur(13px) saturate(1.15)!important;
-  box-shadow:0 30px 90px rgba(0,0,0,.48),0 0 42px rgba(0,128,255,.09),inset 0 1px rgba(255,255,255,.10)!important;
-}
-.login-box:after{content:"";position:absolute;inset:-1px;border-radius:22px;pointer-events:none;background:linear-gradient(135deg,rgba(246,200,74,.22),transparent 24%,transparent 70%,rgba(22,140,255,.18));mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;-webkit-mask-composite:xor;padding:1px}
-.login-field input{background:rgba(1,7,13,.48)!important}
-@media(max-width:900px){
- #loginScreen{justify-content:center!important;padding:22px!important}
- #loginScreen::before{background-position:center center!important}
- #loginScreen::after{background:radial-gradient(circle at 50% 50%,rgba(0,0,0,.05),rgba(0,0,0,.30) 100%),linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.20))!important}
- .login-box{width:min(390px,calc(100vw - 44px))!important;margin:0!important;background:linear-gradient(145deg,rgba(2,8,14,.68),rgba(1,5,10,.50))!important}
-}
-@media(max-width:520px){#loginScreen{padding:16px!important}.login-box{width:calc(100vw - 32px)!important;padding:24px!important}}
-</style>
-
-<style id="alpha-0663-auth-isolation">
-/* ============================================================
-   ALPHA 066.3 — ISOLAMENTO REAL DE EXPERIÊNCIAS
-   Login é uma tela independente. Ao autenticar, ele é retirado
-   do fluxo visual e de layout antes do Command Center aparecer.
-============================================================ */
-html,body{min-height:100%;}
-body:not(.alpha-authenticated) #adminScreen{display:none!important;}
-body.alpha-authenticated #loginScreen{display:none!important;visibility:hidden!important;pointer-events:none!important;}
-#loginScreen{
-  position:fixed!important;
-  inset:0!important;
-  width:100vw!important;
-  height:100dvh!important;
-  min-height:100vh!important;
-  z-index:99999!important;
-  box-sizing:border-box!important;
-}
-#adminScreen{
-  position:relative!important;
-  width:100%!important;
-  min-height:100vh!important;
-  box-sizing:border-box!important;
-}
-body.alpha-authenticated{overflow:auto!important;}
-body:not(.alpha-authenticated){overflow:hidden!important;}
-/* O admin não herda nenhum bloco visual da tela de acesso. */
-body.alpha-authenticated .alpha-login-atmosphere,
-body.alpha-authenticated .alpha-login-topline,
-body.alpha-authenticated .alpha-login-hero-copy{display:none!important;}
-/* Command Center: cockpit executivo independente do login. */
-.alpha-command-cockpit{
-  display:grid;grid-template-columns:1.25fr .85fr .85fr;gap:12px;margin:14px 0;
-}
-.alpha-cockpit-card{
-  position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:18px;
-  padding:18px;background:linear-gradient(145deg,rgba(8,18,28,.92),rgba(3,8,13,.82));
-  box-shadow:0 22px 60px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.06);
-}
-.alpha-cockpit-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(22,140,255,.12),transparent 34%);pointer-events:none}
-.alpha-cockpit-kicker{font-size:8px;letter-spacing:.18em;color:#7f93a5;font-weight:1000;text-transform:uppercase}
-.alpha-cockpit-title{margin-top:7px;font-size:15px;font-weight:1000;letter-spacing:.02em;color:#f3f6f9}
-.alpha-cockpit-main{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:14px}
-.alpha-cockpit-value{font-size:34px;line-height:1;font-weight:1000;color:#f6c84a;letter-spacing:-.04em}
-.alpha-cockpit-meta{font-size:10px;color:#93a4b4;line-height:1.45;text-align:right}
-.alpha-cockpit-list{display:grid;gap:7px;margin-top:12px}
-.alpha-cockpit-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 9px;border:1px solid rgba(255,255,255,.06);border-radius:10px;background:rgba(255,255,255,.025)}
-.alpha-cockpit-row span{font-size:9px;color:#aebbc7}.alpha-cockpit-row b{font-size:11px;color:#fff}.alpha-cockpit-row.hot b{color:#ff737c}.alpha-cockpit-row.blue b{color:#54b9ff}
-@media(max-width:1050px){.alpha-command-cockpit{grid-template-columns:1fr 1fr}.alpha-cockpit-card:first-child{grid-column:1/-1}}
-@media(max-width:650px){.alpha-command-cockpit{grid-template-columns:1fr}.alpha-cockpit-card:first-child{grid-column:auto}.alpha-cockpit-value{font-size:30px}}
-</style>
-
 </head>
 <body>
 <section id="loginScreen">
-  <div class="alpha-login-atmosphere" aria-hidden="true"></div>
-  <div class="alpha-login-topline" aria-hidden="true">
-    <span>AFINCO IMÓVEIS</span>
-    <b>ALPHA CRM MAX PRO</b>
-    <em>OPERAÇÃO 360°</em>
-  </div>
-  <div class="alpha-login-hero-copy" aria-hidden="true">
-    <strong>ALPHA</strong>
-    <span>COMMAND CENTER</span>
-    <small>INTELIGÊNCIA • GESTÃO • RESULTADOS</small>
-  </div>
   <div class="login-box">
     <div class="login-brand">
       <h1>
         Afinco<span>.</span>
       </h1>
       <p>
-        Central de Recrutamento • Gestão Inteligente
+        Central de Recrutamento
       </p>
-      <div class="alpha-login-version">MAX PRO <b>066</b> • AMBIENTE ADMINISTRATIVO</div>
     </div>
     <div
       id="loginError"
@@ -3014,6 +2804,7 @@ body.alpha-authenticated .alpha-login-hero-copy{display:none!important;}
       </button>
     </form>
   </div>
+  <div class="alpha-login-signature"><strong>ALPHA</strong><br><span>COMMAND CENTER · AFINCO</span></div>
 </section>
 <section id="adminScreen">
 
@@ -3213,42 +3004,6 @@ body.alpha-authenticated .alpha-login-hero-copy{display:none!important;}
           <div id="maxProNextActions" class="alpha-maxpro-actions"></div>
         </div>
       </div>
-    </section>
-
-    <section class="alpha-command-cockpit" id="alphaCommandCockpit" aria-label="Cockpit executivo">
-      <article class="alpha-cockpit-card">
-        <div class="alpha-cockpit-kicker">ALPHA COMMAND // NOW</div>
-        <div class="alpha-cockpit-title">O QUE EXIGE ATENÇÃO AGORA</div>
-        <div class="alpha-cockpit-main">
-          <div class="alpha-cockpit-value" id="cockpitNowValue">0</div>
-          <div class="alpha-cockpit-meta" id="cockpitNowMeta">Sem fila crítica detectada.</div>
-        </div>
-        <div class="alpha-cockpit-list">
-          <div class="alpha-cockpit-row hot"><span>Sem contato &gt; 24h</span><b id="cockpitStale">0</b></div>
-          <div class="alpha-cockpit-row hot"><span>SLA &gt; 48h</span><b id="cockpitSla">0</b></div>
-          <div class="alpha-cockpit-row"><span>Tarefas atrasadas</span><b id="cockpitOverdue">0</b></div>
-        </div>
-      </article>
-      <article class="alpha-cockpit-card">
-        <div class="alpha-cockpit-kicker">NEXT BEST ACTION</div>
-        <div class="alpha-cockpit-title">PRÓXIMO MOVIMENTO</div>
-        <div class="alpha-cockpit-main"><div class="alpha-cockpit-value" id="cockpitNextValue">0</div><div class="alpha-cockpit-meta" id="cockpitNextMeta">Aguardando leitura.</div></div>
-        <div class="alpha-cockpit-list">
-          <div class="alpha-cockpit-row blue"><span>Novos / triagem</span><b id="cockpitNew">0</b></div>
-          <div class="alpha-cockpit-row"><span>Entrevistas</span><b id="cockpitInterviews">0</b></div>
-          <div class="alpha-cockpit-row"><span>Sem próxima ação</span><b id="cockpitNoAction">0</b></div>
-        </div>
-      </article>
-      <article class="alpha-cockpit-card">
-        <div class="alpha-cockpit-kicker">FLOW HEALTH</div>
-        <div class="alpha-cockpit-title">SAÚDE DO FLUXO</div>
-        <div class="alpha-cockpit-main"><div class="alpha-cockpit-value" id="cockpitFlowValue">0%</div><div class="alpha-cockpit-meta" id="cockpitFlowMeta">Fluxo ainda sem dados.</div></div>
-        <div class="alpha-cockpit-list">
-          <div class="alpha-cockpit-row"><span>WIP envelhecido &gt; 72h</span><b id="cockpitAgedWip">0</b></div>
-          <div class="alpha-cockpit-row"><span>Protocolos</span><b id="cockpitProtocols">0%</b></div>
-          <div class="alpha-cockpit-row"><span>Gargalo</span><b id="cockpitBottleneck">—</b></div>
-        </div>
-      </article>
     </section>
 
     <section class="a58-control-deck" id="a58MasterDeck">
@@ -4146,8 +3901,6 @@ function renderAlphaMaxPro(){
   const protocols=active.length?active.filter(c=>c.codigo_protocolo||c.protocolo||c.protocol||c.codigo).length/active.length:0;
   const ages=active.map(c=>alphaAgeHours(c)).filter(Number.isFinite).sort((a,b)=>a-b);
   const median=ages.length?ages[Math.floor(ages.length/2)]:0;
-  const agedWip=active.filter(c=>!['Aprovado','Reprovado'].includes(c.status||'Novo') && alphaAgeHours(c)>=72).length;
-  const noAction=active.filter(c=>!String(c.proxima_acao||'').trim()).length;
   const flowStage=stages.reduce((best,st)=>counts[st]>(counts[best]||-1)?st:best,stages[0]);
   set("maxProPriority",priority); set("maxProBottleneck",counts[flowStage] ? flowStage : "—");
   set("maxProBottleneckMeta",counts[flowStage] ? `${counts[flowStage]} registro(s) nesta etapa` : "sem registros ativos");
@@ -4169,32 +3922,6 @@ function renderAlphaMaxPro(){
   }
 }
 
-function renderAlphaCommandCockpit(){
-  const active=activeCandidates();
-  const stale=alphaStaleCandidates();
-  const hot=alphaHotCandidates();
-  const ts=(typeof crm041TaskStats==='function')?crm041TaskStats():{overdue:0};
-  const sla=active.filter(c=>(c.status||"Novo")==="Novo" && alphaAgeHours(c)>=48).length;
-  const agedWip=active.filter(c=>!["Aprovado","Reprovado"].includes(c.status||"Novo") && alphaAgeHours(c)>=72).length;
-  const noAction=active.filter(c=>!String(c.proxima_acao||"").trim()).length;
-  const newCount=active.filter(c=>(c.status||"Novo")==="Novo").length;
-  const interviews=active.filter(c=>(c.status||"")==="Entrevista").length;
-  const approved=active.filter(c=>(c.status||"")==="Aprovado").length;
-  const protocols=active.length?active.filter(c=>c.codigo_protocolo||c.protocolo||c.protocol||c.codigo).length/active.length:0;
-  const stages=["Novo","Em análise","Entrevista","Aprovado","Reprovado"];
-  const counts=Object.fromEntries(stages.map(st=>[st,active.filter(c=>(c.status||"Novo")===st).length]));
-  const bottleneck=stages.reduce((best,st)=>counts[st]>(counts[best]||-1)?st:best,stages[0]);
-  const actionable=stale.length+sla+ts.overdue;
-  const flowHealth=active.length?Math.max(0,Math.round(100-Math.min(85,(agedWip/active.length)*100)-Math.min(35,(noAction/active.length)*35))):0;
-  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-  set("cockpitNowValue",actionable); set("cockpitNowMeta",actionable?"Filas que merecem ataque imediato.":"Sem fila crítica detectada.");
-  set("cockpitStale",stale.length); set("cockpitSla",sla); set("cockpitOverdue",ts.overdue||0);
-  const next=newCount+interviews+noAction; set("cockpitNextValue",next); set("cockpitNextMeta",newCount?"Comece pela triagem e avance o funil.":"Mantenha o próximo passo definido.");
-  set("cockpitNew",newCount); set("cockpitInterviews",interviews); set("cockpitNoAction",noAction);
-  set("cockpitFlowValue",`${flowHealth}%`); set("cockpitFlowMeta",active.length?`Gargalo atual: ${bottleneck} · WIP envelhecido ${agedWip}`:"Fluxo ainda sem dados.");
-  set("cockpitAgedWip",agedWip); set("cockpitProtocols",`${Math.round(protocols*100)}%`); set("cockpitBottleneck",counts[bottleneck]?bottleneck:"—");
-}
-
 function renderAlphaCommand(){
   const active=activeCandidates(), stale=alphaStaleCandidates(), hot=alphaHotCandidates();
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
@@ -4202,7 +3929,7 @@ function renderAlphaCommand(){
   const taskOverdue=(typeof crm041TaskStats==="function") ? crm041TaskStats().overdue : 0; set("alphaTaskOverdue",taskOverdue);
   const n=document.getElementById("alphaLoggedName"); if(n)n.textContent=window.afincoAdminName||afincoAdminName||"ALPHA";
   const r=document.getElementById("alphaLoggedRole"); if(r)r.textContent=(window.afincoAdminRole||"Super Admin").toUpperCase();
-  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro(); renderAlphaCommandCockpit();
+  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro();
 }
 function alphaJump(id){
   const el=document.getElementById(id);
@@ -4857,26 +4584,8 @@ const originFilter =
   document.getElementById("originFilter");
 
 
-
 const refreshButton =
   document.getElementById("refreshButton");
-
-/* =====================================================
-   SESSÃO VISUAL — LOGIN E ADMIN NUNCA COMPARTILHAM O FLUXO
-===================================================== */
-function enterAdminExperience(){
-  document.body.classList.add("alpha-authenticated");
-  if(loginScreen) loginScreen.setAttribute("aria-hidden","true");
-  if(adminScreen) adminScreen.setAttribute("aria-hidden","false");
-  window.scrollTo(0,0);
-}
-function enterLoginExperience(){
-  document.body.classList.remove("alpha-authenticated");
-  if(adminScreen) adminScreen.setAttribute("aria-hidden","true");
-  if(loginScreen) loginScreen.setAttribute("aria-hidden","false");
-  window.scrollTo(0,0);
-}
-
 
 
 const clearButton =
@@ -7201,7 +6910,6 @@ async function initialize(){
 
 
   if(!accessToken){
-    enterLoginExperience();
     return;
   }
 
@@ -8812,3 +8520,156 @@ button,input,select,textarea{outline-color:rgba(246,200,74,.5)!important}button:
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
 </script>
+
+<style id="alpha-0665-065-base-final-fix">
+/* ============================================================
+   ALPHA 066.5 — BASE 065 RESTORED / LOGIN ISOLADO
+   Regra: o 065 é a fonte visual e estrutural. Esta camada apenas
+   corrige a transição login -> painel e garante que o painel 065
+   continue sendo a tela principal.
+============================================================ */
+
+html,body{min-height:100%!important;background:#020508!important}
+
+/* LOGIN — tela inteira com a imagem original do ALPHA01 */
+#loginScreen{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  height:100dvh!important;
+  min-height:100vh!important;
+  z-index:99999!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  isolation:isolate!important;
+  background:#020508!important;
+  background-image:url('https://afincooficial.github.io/Entrevista/alpha-hero-m4-alpha01.webp')!important;
+  background-repeat:no-repeat!important;
+  background-position:center center!important;
+  background-size:cover!important;
+}
+#loginScreen::before{
+  content:"";
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(90deg,
+      rgba(1,4,7,.985) 0%,
+      rgba(1,4,7,.96) 18%,
+      rgba(1,4,7,.82) 31%,
+      rgba(1,4,7,.46) 49%,
+      rgba(1,4,7,.10) 69%,
+      rgba(1,4,7,.24) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.18),transparent 48%,rgba(0,0,0,.34));
+}
+#loginScreen::after{
+  content:"";
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(circle at 78% 42%,rgba(43,156,255,.12),transparent 28%),
+    radial-gradient(circle at 25% 82%,rgba(246,200,74,.08),transparent 25%);
+}
+#loginScreen .login-box{
+  position:relative!important;
+  z-index:5!important;
+  width:min(420px,calc(100vw - 42px))!important;
+  max-width:420px!important;
+  margin-left:clamp(22px,5vw,78px)!important;
+  padding:32px!important;
+  border:1px solid rgba(246,200,74,.30)!important;
+  border-radius:24px!important;
+  background:linear-gradient(145deg,rgba(4,9,14,.94),rgba(2,5,9,.82))!important;
+  box-shadow:0 35px 110px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.06)!important;
+  backdrop-filter:blur(18px)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+}
+#loginScreen .login-brand{text-align:left!important;margin-bottom:25px!important}
+#loginScreen .login-brand h1{font-size:44px!important;letter-spacing:-2px!important;color:#f4f7fa!important}
+#loginScreen .login-brand h1 span{color:#f6c84a!important}
+#loginScreen .login-brand p{color:#8d9aa7!important;letter-spacing:.08em!important;text-transform:uppercase!important;font-size:9px!important}
+#loginScreen .login-field label{color:#b9c4cf!important}
+#loginScreen .login-field input{background:rgba(1,5,9,.82)!important;border-color:rgba(255,255,255,.10)!important}
+#loginScreen .login-field input:focus{border-color:#f6c84a!important;box-shadow:0 0 0 2px rgba(246,200,74,.10)!important}
+#loginScreen .login-button{background:linear-gradient(135deg,#ffe49a,#f6c84a)!important;box-shadow:0 10px 30px rgba(246,200,74,.16)!important}
+#loginScreen .login-error{background:rgba(226,109,118,.10)!important}
+
+/* A imagem inteira continua sendo a identidade do login; texto discreto no lado direito. */
+#loginScreen .alpha-login-signature{
+  position:absolute!important;
+  right:clamp(24px,5vw,80px)!important;
+  bottom:clamp(24px,5vw,62px)!important;
+  z-index:4!important;
+  text-align:right!important;
+  pointer-events:none!important;
+  color:rgba(255,255,255,.90)!important;
+  text-shadow:0 8px 35px rgba(0,0,0,.85)!important;
+}
+
+/* ADMIN — só existe depois da autenticação */
+#adminScreen{display:none!important;position:relative!important;width:100%!important;min-height:100vh!important;box-sizing:border-box!important}
+body.alpha-authenticated #loginScreen{display:none!important;visibility:hidden!important;pointer-events:none!important}
+body.alpha-authenticated #adminScreen{display:block!important;visibility:visible!important;pointer-events:auto!important}
+body.alpha-authenticated{overflow:auto!important}
+body:not(.alpha-authenticated){overflow:hidden!important}
+
+/* O 065 usa o alpha056NeuralCommand como Command Center REAL.
+   Nunca esconder esse módulo na versão base. */
+#alpha056NeuralCommand{display:block!important;visibility:visible!important;opacity:1!important}
+body.alpha-authenticated #adminScreen>.container>#alpha056NeuralCommand{display:block!important;visibility:visible!important;opacity:1!important}
+
+/* O alphaCommandCenter antigo é deliberadamente mantido oculto, exatamente como no 065,
+   porque o Command Center principal do 065 é o alpha056NeuralCommand. */
+#alphaCommandCenter{display:none!important}
+
+/* Depois do login, não deixar a barra de instalação/histórico ocupar a entrada do painel. */
+body.alpha-authenticated #adminScreen>.container>.alpha-install-wrap{display:none!important}
+body.alpha-authenticated #adminScreen>.container>#alphaGlobalHistory{display:none!important}
+
+@media(max-width:900px){
+  #loginScreen{background-position:center center!important}
+  #loginScreen .login-box{margin:0 20px!important;width:min(420px,calc(100vw - 40px))!important}
+  #loginScreen .alpha-login-signature{display:none!important}
+}
+</style>
+
+<script id="alpha-0665-auth-experience">
+(function(){
+  function enterAdminExperience(){
+    document.body.classList.add('alpha-authenticated');
+    const login=document.getElementById('loginScreen');
+    const admin=document.getElementById('adminScreen');
+    if(login){login.setAttribute('aria-hidden','true');login.style.removeProperty('display');}
+    if(admin){admin.setAttribute('aria-hidden','false');admin.style.removeProperty('display');}
+    window.scrollTo(0,0);
+    setTimeout(()=>{
+      try{if(typeof renderAlphaCommand==='function')renderAlphaCommand();}catch(e){console.warn('ALPHA 066.5 command boot',e)}
+      try{if(typeof loadCandidates==='function' && Array.isArray(window.candidates) && window.candidates.length)renderAlphaCommand();}catch(e){}
+    },60);
+  }
+  function enterLoginExperience(){
+    document.body.classList.remove('alpha-authenticated');
+    const login=document.getElementById('loginScreen');
+    const admin=document.getElementById('adminScreen');
+    if(login){login.setAttribute('aria-hidden','false');login.style.removeProperty('display');}
+    if(admin){admin.setAttribute('aria-hidden','true');admin.style.removeProperty('display');}
+    window.scrollTo(0,0);
+  }
+  window.enterAdminExperience=enterAdminExperience;
+  window.enterLoginExperience=enterLoginExperience;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enterLoginExperience,{once:true});
+  else enterLoginExperience();
+})();
+</script>
+
+
