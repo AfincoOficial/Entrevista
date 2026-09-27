@@ -2901,6 +2901,59 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
 }
 @media(max-width:520px){#loginScreen{padding:16px!important}.login-box{width:calc(100vw - 32px)!important;padding:24px!important}}
 </style>
+
+<style id="alpha-0663-auth-isolation">
+/* ============================================================
+   ALPHA 066.3 — ISOLAMENTO REAL DE EXPERIÊNCIAS
+   Login é uma tela independente. Ao autenticar, ele é retirado
+   do fluxo visual e de layout antes do Command Center aparecer.
+============================================================ */
+html,body{min-height:100%;}
+body:not(.alpha-authenticated) #adminScreen{display:none!important;}
+body.alpha-authenticated #loginScreen{display:none!important;visibility:hidden!important;pointer-events:none!important;}
+#loginScreen{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100dvh!important;
+  min-height:100vh!important;
+  z-index:99999!important;
+  box-sizing:border-box!important;
+}
+#adminScreen{
+  position:relative!important;
+  width:100%!important;
+  min-height:100vh!important;
+  box-sizing:border-box!important;
+}
+body.alpha-authenticated{overflow:auto!important;}
+body:not(.alpha-authenticated){overflow:hidden!important;}
+/* O admin não herda nenhum bloco visual da tela de acesso. */
+body.alpha-authenticated .alpha-login-atmosphere,
+body.alpha-authenticated .alpha-login-topline,
+body.alpha-authenticated .alpha-login-hero-copy{display:none!important;}
+/* Command Center: cockpit executivo independente do login. */
+.alpha-command-cockpit{
+  display:grid;grid-template-columns:1.25fr .85fr .85fr;gap:12px;margin:14px 0;
+}
+.alpha-cockpit-card{
+  position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:18px;
+  padding:18px;background:linear-gradient(145deg,rgba(8,18,28,.92),rgba(3,8,13,.82));
+  box-shadow:0 22px 60px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.06);
+}
+.alpha-cockpit-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(22,140,255,.12),transparent 34%);pointer-events:none}
+.alpha-cockpit-kicker{font-size:8px;letter-spacing:.18em;color:#7f93a5;font-weight:1000;text-transform:uppercase}
+.alpha-cockpit-title{margin-top:7px;font-size:15px;font-weight:1000;letter-spacing:.02em;color:#f3f6f9}
+.alpha-cockpit-main{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:14px}
+.alpha-cockpit-value{font-size:34px;line-height:1;font-weight:1000;color:#f6c84a;letter-spacing:-.04em}
+.alpha-cockpit-meta{font-size:10px;color:#93a4b4;line-height:1.45;text-align:right}
+.alpha-cockpit-list{display:grid;gap:7px;margin-top:12px}
+.alpha-cockpit-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 9px;border:1px solid rgba(255,255,255,.06);border-radius:10px;background:rgba(255,255,255,.025)}
+.alpha-cockpit-row span{font-size:9px;color:#aebbc7}.alpha-cockpit-row b{font-size:11px;color:#fff}.alpha-cockpit-row.hot b{color:#ff737c}.alpha-cockpit-row.blue b{color:#54b9ff}
+@media(max-width:1050px){.alpha-command-cockpit{grid-template-columns:1fr 1fr}.alpha-cockpit-card:first-child{grid-column:1/-1}}
+@media(max-width:650px){.alpha-command-cockpit{grid-template-columns:1fr}.alpha-cockpit-card:first-child{grid-column:auto}.alpha-cockpit-value{font-size:30px}}
+</style>
+
 </head>
 <body>
 <section id="loginScreen">
@@ -3160,6 +3213,42 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
           <div id="maxProNextActions" class="alpha-maxpro-actions"></div>
         </div>
       </div>
+    </section>
+
+    <section class="alpha-command-cockpit" id="alphaCommandCockpit" aria-label="Cockpit executivo">
+      <article class="alpha-cockpit-card">
+        <div class="alpha-cockpit-kicker">ALPHA COMMAND // NOW</div>
+        <div class="alpha-cockpit-title">O QUE EXIGE ATENÇÃO AGORA</div>
+        <div class="alpha-cockpit-main">
+          <div class="alpha-cockpit-value" id="cockpitNowValue">0</div>
+          <div class="alpha-cockpit-meta" id="cockpitNowMeta">Sem fila crítica detectada.</div>
+        </div>
+        <div class="alpha-cockpit-list">
+          <div class="alpha-cockpit-row hot"><span>Sem contato &gt; 24h</span><b id="cockpitStale">0</b></div>
+          <div class="alpha-cockpit-row hot"><span>SLA &gt; 48h</span><b id="cockpitSla">0</b></div>
+          <div class="alpha-cockpit-row"><span>Tarefas atrasadas</span><b id="cockpitOverdue">0</b></div>
+        </div>
+      </article>
+      <article class="alpha-cockpit-card">
+        <div class="alpha-cockpit-kicker">NEXT BEST ACTION</div>
+        <div class="alpha-cockpit-title">PRÓXIMO MOVIMENTO</div>
+        <div class="alpha-cockpit-main"><div class="alpha-cockpit-value" id="cockpitNextValue">0</div><div class="alpha-cockpit-meta" id="cockpitNextMeta">Aguardando leitura.</div></div>
+        <div class="alpha-cockpit-list">
+          <div class="alpha-cockpit-row blue"><span>Novos / triagem</span><b id="cockpitNew">0</b></div>
+          <div class="alpha-cockpit-row"><span>Entrevistas</span><b id="cockpitInterviews">0</b></div>
+          <div class="alpha-cockpit-row"><span>Sem próxima ação</span><b id="cockpitNoAction">0</b></div>
+        </div>
+      </article>
+      <article class="alpha-cockpit-card">
+        <div class="alpha-cockpit-kicker">FLOW HEALTH</div>
+        <div class="alpha-cockpit-title">SAÚDE DO FLUXO</div>
+        <div class="alpha-cockpit-main"><div class="alpha-cockpit-value" id="cockpitFlowValue">0%</div><div class="alpha-cockpit-meta" id="cockpitFlowMeta">Fluxo ainda sem dados.</div></div>
+        <div class="alpha-cockpit-list">
+          <div class="alpha-cockpit-row"><span>WIP envelhecido &gt; 72h</span><b id="cockpitAgedWip">0</b></div>
+          <div class="alpha-cockpit-row"><span>Protocolos</span><b id="cockpitProtocols">0%</b></div>
+          <div class="alpha-cockpit-row"><span>Gargalo</span><b id="cockpitBottleneck">—</b></div>
+        </div>
+      </article>
     </section>
 
     <section class="a58-control-deck" id="a58MasterDeck">
@@ -4057,6 +4146,8 @@ function renderAlphaMaxPro(){
   const protocols=active.length?active.filter(c=>c.codigo_protocolo||c.protocolo||c.protocol||c.codigo).length/active.length:0;
   const ages=active.map(c=>alphaAgeHours(c)).filter(Number.isFinite).sort((a,b)=>a-b);
   const median=ages.length?ages[Math.floor(ages.length/2)]:0;
+  const agedWip=active.filter(c=>!['Aprovado','Reprovado'].includes(c.status||'Novo') && alphaAgeHours(c)>=72).length;
+  const noAction=active.filter(c=>!String(c.proxima_acao||'').trim()).length;
   const flowStage=stages.reduce((best,st)=>counts[st]>(counts[best]||-1)?st:best,stages[0]);
   set("maxProPriority",priority); set("maxProBottleneck",counts[flowStage] ? flowStage : "—");
   set("maxProBottleneckMeta",counts[flowStage] ? `${counts[flowStage]} registro(s) nesta etapa` : "sem registros ativos");
@@ -4078,6 +4169,32 @@ function renderAlphaMaxPro(){
   }
 }
 
+function renderAlphaCommandCockpit(){
+  const active=activeCandidates();
+  const stale=alphaStaleCandidates();
+  const hot=alphaHotCandidates();
+  const ts=(typeof crm041TaskStats==='function')?crm041TaskStats():{overdue:0};
+  const sla=active.filter(c=>(c.status||"Novo")==="Novo" && alphaAgeHours(c)>=48).length;
+  const agedWip=active.filter(c=>!["Aprovado","Reprovado"].includes(c.status||"Novo") && alphaAgeHours(c)>=72).length;
+  const noAction=active.filter(c=>!String(c.proxima_acao||"").trim()).length;
+  const newCount=active.filter(c=>(c.status||"Novo")==="Novo").length;
+  const interviews=active.filter(c=>(c.status||"")==="Entrevista").length;
+  const approved=active.filter(c=>(c.status||"")==="Aprovado").length;
+  const protocols=active.length?active.filter(c=>c.codigo_protocolo||c.protocolo||c.protocol||c.codigo).length/active.length:0;
+  const stages=["Novo","Em análise","Entrevista","Aprovado","Reprovado"];
+  const counts=Object.fromEntries(stages.map(st=>[st,active.filter(c=>(c.status||"Novo")===st).length]));
+  const bottleneck=stages.reduce((best,st)=>counts[st]>(counts[best]||-1)?st:best,stages[0]);
+  const actionable=stale.length+sla+ts.overdue;
+  const flowHealth=active.length?Math.max(0,Math.round(100-Math.min(85,(agedWip/active.length)*100)-Math.min(35,(noAction/active.length)*35))):0;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  set("cockpitNowValue",actionable); set("cockpitNowMeta",actionable?"Filas que merecem ataque imediato.":"Sem fila crítica detectada.");
+  set("cockpitStale",stale.length); set("cockpitSla",sla); set("cockpitOverdue",ts.overdue||0);
+  const next=newCount+interviews+noAction; set("cockpitNextValue",next); set("cockpitNextMeta",newCount?"Comece pela triagem e avance o funil.":"Mantenha o próximo passo definido.");
+  set("cockpitNew",newCount); set("cockpitInterviews",interviews); set("cockpitNoAction",noAction);
+  set("cockpitFlowValue",`${flowHealth}%`); set("cockpitFlowMeta",active.length?`Gargalo atual: ${bottleneck} · WIP envelhecido ${agedWip}`:"Fluxo ainda sem dados.");
+  set("cockpitAgedWip",agedWip); set("cockpitProtocols",`${Math.round(protocols*100)}%`); set("cockpitBottleneck",counts[bottleneck]?bottleneck:"—");
+}
+
 function renderAlphaCommand(){
   const active=activeCandidates(), stale=alphaStaleCandidates(), hot=alphaHotCandidates();
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
@@ -4085,7 +4202,7 @@ function renderAlphaCommand(){
   const taskOverdue=(typeof crm041TaskStats==="function") ? crm041TaskStats().overdue : 0; set("alphaTaskOverdue",taskOverdue);
   const n=document.getElementById("alphaLoggedName"); if(n)n.textContent=window.afincoAdminName||afincoAdminName||"ALPHA";
   const r=document.getElementById("alphaLoggedRole"); if(r)r.textContent=(window.afincoAdminRole||"Super Admin").toUpperCase();
-  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro();
+  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro(); renderAlphaCommandCockpit();
 }
 function alphaJump(id){
   const el=document.getElementById(id);
@@ -4740,8 +4857,26 @@ const originFilter =
   document.getElementById("originFilter");
 
 
+
 const refreshButton =
   document.getElementById("refreshButton");
+
+/* =====================================================
+   SESSÃO VISUAL — LOGIN E ADMIN NUNCA COMPARTILHAM O FLUXO
+===================================================== */
+function enterAdminExperience(){
+  document.body.classList.add("alpha-authenticated");
+  if(loginScreen) loginScreen.setAttribute("aria-hidden","true");
+  if(adminScreen) adminScreen.setAttribute("aria-hidden","false");
+  window.scrollTo(0,0);
+}
+function enterLoginExperience(){
+  document.body.classList.remove("alpha-authenticated");
+  if(adminScreen) adminScreen.setAttribute("aria-hidden","true");
+  if(loginScreen) loginScreen.setAttribute("aria-hidden","false");
+  window.scrollTo(0,0);
+}
+
 
 
 const clearButton =
@@ -5022,12 +5157,7 @@ loginForm.addEventListener(
 
       await loadAdminProfile();
 
-      loginScreen.style.display =
-        "none";
-
-
-      adminScreen.style.display =
-        "block";
+      enterAdminExperience();
 
 
       await loadCandidates();
@@ -7037,12 +7167,7 @@ function logout(){
   filteredCandidates = [];
 
 
-  adminScreen.style.display =
-    "none";
-
-
-  loginScreen.style.display =
-    "flex";
+  enterLoginExperience();
 
 
   loginForm.reset();
@@ -7076,6 +7201,7 @@ async function initialize(){
 
 
   if(!accessToken){
+    enterLoginExperience();
     return;
   }
 
@@ -7114,12 +7240,7 @@ async function initialize(){
       afincoAdminEmailValue || "";
 
 
-    loginScreen.style.display =
-      "none";
-
-
-    adminScreen.style.display =
-      "block";
+    enterAdminExperience();
 
 
     await loadCandidates();
