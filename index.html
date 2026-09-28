@@ -886,6 +886,8 @@
 
 
 
+    .optional-professional-link .optional-badge{display:inline-flex;align-items:center;margin-left:6px;padding:3px 7px;border:1px solid rgba(88,230,255,.22);border-radius:999px;color:#8deeff;background:rgba(88,230,255,.06);font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle;}
+
     /* =========================
        VISUAL SYSTEM 2.0 — PREMIUM
     ========================= */
@@ -2210,6 +2212,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
                   id="experiencia"
                   name="experiencia"
                   placeholder="Conte um pouco sobre sua experiência profissional..."
+                  required
                 ></textarea>
 
               </div>
@@ -2221,25 +2224,25 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
                 <p>Essas informações ajudam nossa equipe a conhecer melhor sua trajetória e sua presença profissional.</p>
               </div>
 
-              <div class="field">
-                <label for="site">Site profissional</label>
+              <div class="field optional-professional-link">
+                <label for="site">Site profissional <span class="optional-badge">Opcional</span></label>
                 <input id="site" name="site" type="url" inputmode="url" autocomplete="url" placeholder="https://seusite.com">
               </div>
-              <div class="field">
-                <label for="linkedin">LinkedIn</label>
+              <div class="field optional-professional-link">
+                <label for="linkedin">LinkedIn <span class="optional-badge">Opcional</span></label>
                 <input id="linkedin" name="linkedin" type="url" inputmode="url" autocomplete="url" placeholder="https://linkedin.com/in/seuperfil">
               </div>
-              <div class="field">
-                <label for="instagram">Instagram</label>
+              <div class="field optional-professional-link">
+                <label for="instagram">Instagram <span class="optional-badge">Opcional</span></label>
                 <input id="instagram" name="instagram" type="url" inputmode="url" autocomplete="url" placeholder="https://instagram.com/seuperfil">
               </div>
               <div class="field full">
                 <label for="apresentacao_profissional">Apresentação profissional</label>
-                <textarea id="apresentacao_profissional" name="apresentacao_profissional" placeholder="Conte um pouco sobre você, seus objetivos e sua trajetória profissional..."></textarea>
+                <textarea id="apresentacao_profissional" name="apresentacao_profissional" placeholder="Conte um pouco sobre você, seus objetivos e sua trajetória profissional..." required></textarea>
               </div>
               <div class="field full">
                 <label for="experiencia_profissional">Experiência profissional</label>
-                <textarea id="experiencia_profissional" name="experiencia_profissional" placeholder="Descreva suas principais experiências, funções, resultados ou áreas em que já atuou..."></textarea>
+                <textarea id="experiencia_profissional" name="experiencia_profissional" placeholder="Descreva suas principais experiências, funções, resultados ou áreas em que já atuou..." required></textarea>
               </div>
 
               <div class="field full">
@@ -2296,7 +2299,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
         <div class="success-protocol alpha-final-code">
           <small>Código único da candidatura</small>
           <strong id="successProtocol">AFN-2026-XXXXXXXX</strong>
-          <span>Guarde este código. Ele identifica exclusivamente este cadastro e também aparece no painel administrativo.</span>
+          <span>Guarde este código. Ele identifica exclusivamente este cadastro e também fica disponível no painel administrativo.</span>
         </div>
         <button type="button" class="alpha-copy-code" id="copyProtocolBtn">⧉ COPIAR CÓDIGO</button>
       </div>
@@ -2306,7 +2309,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
         <div><small>STATUS</small><strong id="successStatus">RECEBIDO</strong></div>
       </div>
       <div class="alpha-final-status"><span>●</span><b>RECEBIDO • EM ANÁLISE</b><i>Seu cadastro foi enviado com sucesso. A aprovação não é automática: caso avance, a Afinco entrará em contato.</i></div>
-      <div class="alpha-final-note">O código exibido aqui é o mesmo código que ficará disponível para a equipe no painel administrativo.</div>
+      <div class="alpha-final-note">O código exibido aqui é o mesmo código salvo no cadastro e disponível para a equipe no painel administrativo.</div>
       <div class="success-actions">
         <button type="button" class="success-dismiss" id="successDismiss">Fechar</button>
       </div>
@@ -2522,6 +2525,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
         nome_completo: nome,
         telefone: telefone,
         email: email,
+        // O protocolo será salvo no campo codigo_protocolo após a atualização do schema.
         codigo_protocolo: protocolo,
         idade: idade,
         sexo: sexo,
@@ -2549,6 +2553,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
         nome_completo: nome,
         telefone: telefone,
         email: email,
+        // O protocolo será salvo no campo codigo_protocolo após a atualização do schema.
         codigo_protocolo: protocolo,
         idade: idade,
         sexo: sexo,
