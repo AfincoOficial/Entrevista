@@ -1940,7 +1940,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
               <div class="schedule-summary">📅 Sua seleção: <b id="scheduleSelectionSummary">selecione o dia e o horário</b></div>
             </div>
 
-          <form id="candidaturaForm">
+          <form id="candidaturaForm" novalidate>
 
             <div class="form-grid">
 
@@ -2360,6 +2360,9 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
     const SUPABASE_URL = "https://suxumbvzokoezwxouyeg.supabase.co";
     const SUPABASE_KEY = "sb_publishable_1N3VgWZFmYC6UKTYdW_xYw_dwsa91AZ";
 
+    // ALPHA 068.1 — envio público resiliente
+    // O navegador usa a Publishable Key no cabeçalho apikey + RLS; nunca usar service_role aqui.
+
     const form = document.getElementById("candidaturaForm");
 
     const scheduleSummary = document.getElementById("scheduleSelectionSummary");
@@ -2374,23 +2377,138 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
     }
     scheduleRadios.forEach(radio => radio.addEventListener("change", updateScheduleSummary));
 
-    form.addEventListener("submit", async function(event) {
+    const candidaturaFeedback = document.createElement("div");
+    candidaturaFeedback.id = "candidaturaFeedback";
+    candidaturaFeedback.setAttribute("role", "alert");
+    candidaturaFeedback.style.cssText = "display:none;margin:14px 0 0;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,110,110,.35);background:rgba(120,18,18,.18);color:#ffd1d1;font-size:13px;line-height:1.45;";
+    form.appendChild(candidaturaFeedback);
 
+    function showCandidaturaFeedback(message, ok=false){
+      candidaturaFeedback.textContent = message;
+      candidaturaFeedback.style.display = "block";
+      candidaturaFeedback.style.borderColor = ok ? "rgba(84,227,154,.34)" : "rgba(255,110,110,.35)";
+      candidaturaFeedback.style.background = ok ? "rgba(23,120,78,.16)" : "rgba(120,18,18,.18)";
+      candidaturaFeedback.style.color = ok ? "#caffdf" : "#ffd1d1";
+    }
+    function hideCandidaturaFeedback(){
+      candidaturaFeedback.style.display = "none";
+      candidaturaFeedback.textContent = "";
+    }
+
+    function parseSupabaseError(rawText, status){
+      let data = null;
+      try { data = rawText ? JSON.parse(rawText) : null; } catch (_) {}
+      const message = String(
+        data?.message || data?.error_description || data?.details || data?.hint || data?.error || rawText || ""
+      ).trim();
+      return { status, message, data };
+    }
+
+    function isSchemaColumnError(errorInfo){
+      const hay = `${errorInfo?.message||""} ${JSON.stringify(errorInfo?.data||{})}`.toLowerCase();
+      return errorInfo?.status === 400 && (
+        hay.includes("could not find the") ||
+        hay.includes("schema cache") ||
+        hay.includes("column") && hay.includes("does not exist") ||
+        hay.includes("pgrst204")
+      );
+    }
+
+    function isPublicInsertBlocked(errorInfo){
+      const hay = `${errorInfo?.message||""} ${JSON.stringify(errorInfo?.data||{})}`.toLowerCase();
+      return errorInfo?.status === 401 || errorInfo?.status === 403 || hay.includes("row-level security") || hay.includes("rls") || hay.includes("42501");
+    }
+
+    async function postCandidatura(payload){
+      const resposta = await fetch(
+        SUPABASE_URL + "/rest/v1/candidaturas",
+        {
+          method: "POST",
+          mode: "cors",
+          cache: "no-store",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(payload)
+        }
+      );
+      const raw = await resposta.text();
+      return { resposta, raw, errorInfo: resposta.ok ? null : parseSupabaseError(raw, resposta.status) };
+    }
+
+    form.addEventListener("submit", async function(event) {
       event.preventDefault();
+      hideCandidaturaFeedback();
 
       const botao = form.querySelector('button[type="submit"]');
-
+      if (botao.disabled) return;
       botao.disabled = true;
-      botao.textContent = "Enviando...";
+      botao.textContent = "Enviando candidatura...";
 
-      const idade = parseInt(document.getElementById("idade").value, 10);
-      const telefone = document.getElementById("telefone").value.trim();
-      const email = document.getElementById("email").value.trim();
+      const get = (id) => document.getElementById(id);
+      const nome = String(get("nome")?.value || "").trim();
+      const telefone = String(get("telefone")?.value || "").trim();
+      const email = String(get("email")?.value || "").trim();
+      const idade = parseInt(get("idade")?.value || "", 10);
+      const sexo = String(get("sexo")?.value || "").trim();
+      const trabalhando = String(get("trabalhando")?.value || "").trim();
+      const origem = String(get("origem")?.value || "").trim();
+      const inicio = String(form.elements["inicio"]?.value || "").trim();
+      const experienciaVendas = String(get("vendas")?.value || "").trim();
+      const experiencia = String(get("experiencia")?.value || "").trim();
+      const motivo = String(get("motivo")?.value || "").trim();
+      const site = String(get("site")?.value || "").trim();
+      const linkedin = String(get("linkedin")?.value || "").trim();
+      const instagram = String(get("instagram")?.value || "").trim();
+      const apresentacao = String(get("apresentacao_profissional")?.value || "").trim();
+      const experienciaProfissional = String(get("experiencia_profissional")?.value || "").trim();
 
       const entrevistaDiaSelecionado = document.querySelector('input[name="entrevista_dia"]:checked')?.value || "";
       const entrevistaHorarioSelecionado = document.querySelector('input[name="entrevista_horario"]:checked')?.value || "";
 
-      // Código único: gerado antes do INSERT para ficar salvo no Supabase e aparecer no admin.
+      const requiredChecks = [
+        ["nome", nome, "Informe seu nome completo."],
+        ["telefone", telefone, "Informe seu número de telefone."],
+        ["email", email, "Informe seu e-mail."],
+        ["sexo", sexo, "Selecione o sexo."],
+        ["trabalhando", trabalhando, "Informe se está trabalhando atualmente."],
+        ["origem", origem, "Informe como ficou sabendo da oportunidade."],
+        ["inicio", inicio, "Informe em quanto tempo pode começar."],
+        ["entrevista_dia", entrevistaDiaSelecionado, "Selecione o dia da entrevista."],
+        ["entrevista_horario", entrevistaHorarioSelecionado, "Selecione o horário da entrevista."]
+      ];
+      const missing = requiredChecks.find(([,value]) => !value);
+      if (missing) {
+        showCandidaturaFeedback(missing[2]);
+        const target = missing[0].startsWith("entrevista_")
+          ? document.querySelector(`input[name="${missing[0]}"]`)
+          : get(missing[0]);
+        try { target?.scrollIntoView({ behavior:"smooth", block:"center" }); } catch(_) {}
+        botao.disabled = false;
+        botao.textContent = "Enviar minha candidatura →";
+        return;
+      }
+
+      if (!Number.isInteger(idade) || idade < 18 || idade > 40) {
+        showCandidaturaFeedback("A candidatura é destinada a pessoas entre 18 e 40 anos.");
+        get("idade")?.focus();
+        botao.disabled = false;
+        botao.textContent = "Enviar minha candidatura →";
+        return;
+      }
+
+      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!emailValido) {
+        showCandidaturaFeedback("Digite um e-mail válido antes de enviar.");
+        get("email")?.focus();
+        botao.disabled = false;
+        botao.textContent = "Enviar minha candidatura →";
+        return;
+      }
+
       const gerarCodigoCandidatura = () => {
         const base = (window.crypto && typeof crypto.randomUUID === "function")
           ? crypto.randomUUID().replace(/-/g, "").slice(0, 10)
@@ -2400,62 +2518,68 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
       };
       const protocolo = gerarCodigoCandidatura();
 
-      if (!entrevistaDiaSelecionado || !entrevistaHorarioSelecionado) {
-        alert("Selecione o dia e o horário da entrevista antes de enviar a candidatura.");
-        botao.disabled = false;
-        botao.textContent = "Enviar minha candidatura →";
-        return;
-      }
-
-      if (!Number.isInteger(idade) || idade < 18 || idade > 40) {
-        alert("A candidatura é destinada a pessoas entre 18 e 40 anos.");
-        document.getElementById("idade").focus();
-        botao.disabled = false;
-        botao.textContent = "Enviar minha candidatura →";
-        return;
-      }
-
-      const dados = {
-        nome_completo: document.getElementById("nome").value.trim(),
+      const payloadCompleto = {
+        nome_completo: nome,
         telefone: telefone,
         email: email,
         codigo_protocolo: protocolo,
         idade: idade,
-        sexo: document.getElementById("sexo").value,
-        trabalhando_atualmente: document.getElementById("trabalhando").value,
-        como_soube: document.getElementById("origem").value,
-        inicio: form.elements["inicio"].value,
-        entrevista_dia: document.querySelector('input[name="entrevista_dia"]:checked')?.value || "",
-        entrevista_horario: document.querySelector('input[name="entrevista_horario"]:checked')?.value || "",
-        experiencia_vendas: document.getElementById("vendas").value,
-        experiencia: document.getElementById("experiencia").value.trim(),
-        motivo: document.getElementById("motivo").value.trim(),
-        site: document.getElementById("site").value.trim(),
-        linkedin: document.getElementById("linkedin").value.trim(),
-        instagram: document.getElementById("instagram").value.trim(),
-        apresentacao_profissional: document.getElementById("apresentacao_profissional").value.trim(),
-        experiencia_profissional: document.getElementById("experiencia_profissional").value.trim()
+        sexo: sexo,
+        trabalhando_atualmente: trabalhando,
+        como_soube: origem,
+        inicio: inicio,
+        entrevista_dia: entrevistaDiaSelecionado,
+        entrevista_horario: entrevistaHorarioSelecionado,
+        experiencia_vendas: experienciaVendas,
+        experiencia: experiencia,
+        motivo: motivo,
+        site: site,
+        linkedin: linkedin,
+        instagram: instagram,
+        apresentacao_profissional: apresentacao,
+        experiencia_profissional: experienciaProfissional
+      };
+
+      // Compatibilidade: a versão antiga da tabela já trabalhava com este núcleo.
+      // Os campos digitais/profissionais são tentados primeiro; se o PostgREST
+      // informar que alguma coluna nova não existe, fazemos um único retry
+      // somente com o conjunto compatível. Nunca repetimos após erro de rede/5xx,
+      // para evitar inserir o mesmo candidato duas vezes.
+      const payloadCompativel = {
+        nome_completo: nome,
+        telefone: telefone,
+        email: email,
+        codigo_protocolo: protocolo,
+        idade: idade,
+        sexo: sexo,
+        trabalhando_atualmente: trabalhando,
+        como_soube: origem,
+        inicio: inicio,
+        entrevista_dia: entrevistaDiaSelecionado,
+        entrevista_horario: entrevistaHorarioSelecionado,
+        experiencia_vendas: experienciaVendas,
+        experiencia: experiencia,
+        motivo: motivo
       };
 
       try {
+        let resultado = await postCandidatura(payloadCompleto);
+        if (!resultado.resposta.ok && isSchemaColumnError(resultado.errorInfo)) {
+          resultado = await postCandidatura(payloadCompativel);
+        }
 
-        const resposta = await fetch(
-          SUPABASE_URL + "/rest/v1/candidaturas",
-          {
-            method: "POST",
-            headers: {
-              "apikey": SUPABASE_KEY,
-              "Content-Type": "application/json",
-              "Prefer": "return=minimal"
-            },
-            body: JSON.stringify(dados)
+        if (!resultado.resposta.ok) {
+          console.error("ERRO AFINCO / SUPABASE:", resultado.errorInfo);
+          if (isPublicInsertBlocked(resultado.errorInfo)) {
+            showCandidaturaFeedback(
+              "O banco recebeu a solicitação, mas bloqueou o envio público. É uma permissão do Supabase (RLS/INSERT) e não do formulário. A configuração necessária está no SQL de correção que acompanha esta versão."
+            );
+          } else if (resultado.errorInfo?.message) {
+            showCandidaturaFeedback(`Não foi possível concluir o envio. Supabase ${resultado.errorInfo.status}: ${resultado.errorInfo.message}`);
+          } else {
+            showCandidaturaFeedback("Não foi possível concluir o envio. Verifique sua conexão e tente novamente.");
           }
-        );
-
-        if (!resposta.ok) {
-          const erro = await resposta.text();
-          console.error("Erro Supabase:", erro);
-          throw new Error("Falha ao enviar candidatura.");
+          return;
         }
 
         const protocoloEl = document.getElementById("successProtocol");
@@ -2469,22 +2593,15 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
         if (successModal) { successModal.classList.add("show"); document.body.style.overflow = "hidden"; }
         form.reset();
         updateScheduleSummary();
+        hideCandidaturaFeedback();
 
       } catch (erro) {
-
-        console.error("Erro ao enviar candidatura:", erro);
-
-        alert(
-          "Não foi possível enviar sua candidatura agora. Tente novamente."
-        );
-
+        console.error("ERRO DE REDE AO ENVIAR CANDIDATURA:", erro);
+        showCandidaturaFeedback("Não foi possível conectar ao banco agora. Confira a internet e tente novamente. Nenhuma confirmação de candidatura é exibida quando o banco não confirma o recebimento.");
       } finally {
-
         botao.disabled = false;
         botao.textContent = "Enviar minha candidatura →";
-
       }
-
     });
 
     const successOverlay = document.getElementById("successOverlay");
@@ -2514,6 +2631,8 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 .alpha-final-timegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.alpha-final-timegrid>div{padding:13px 14px;border:1px solid rgba(245,197,66,.16);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border-radius:14px}.alpha-final-timegrid small{display:block;color:#8d98a4;font-size:8px;font-weight:900;letter-spacing:.13em}.alpha-final-timegrid strong{display:block;margin-top:6px;color:#ffe28a;font-size:16px;letter-spacing:.04em}.alpha-final-timegrid>div:last-child strong{color:#57e6a0}.alpha-final-status i{line-height:1.45}
 @media(max-width:620px){.alpha-final-timegrid{grid-template-columns:1fr 1fr}.alpha-final-timegrid>div:last-child{grid-column:1/-1}}
 </style>
+
+<div id="alpha068-build" style="display:none" data-version="068"></div>
 
 </body>
 </html>
