@@ -4098,7 +4098,7 @@ function renderAlphaCommand(){
   const taskOverdue=(typeof crm041TaskStats==="function") ? crm041TaskStats().overdue : 0; set("alphaTaskOverdue",taskOverdue);
   const n=document.getElementById("alphaLoggedName"); if(n)n.textContent=window.afincoAdminName||afincoAdminName||"ALPHA";
   const r=document.getElementById("alphaLoggedRole"); if(r)r.textContent=(window.afincoAdminRole||"Super Admin").toUpperCase();
-  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro(); renderAlphaSlaEngine();
+  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro(); if(typeof window.renderAlphaSlaEngine==="function"){ window.renderAlphaSlaEngine(); }
 }
 function alphaJump(id){
   const el=document.getElementById(id);
@@ -8704,9 +8704,31 @@ function crm053UltraSection(c){
   }
   document.addEventListener('DOMContentLoaded',boot,{once:true});
   window.addEventListener('load',()=>setTimeout(renderSla,500));
+  /* ALPHA 067.2 — Expose the real SLA renderer to the existing command center. */
+  window.renderAlphaSlaEngine=renderSla;
   window.alphaRenderSla0671=renderSla;
 })();
 </script>
+<script id="alpha-0672-sla-watchdog">
+(function(){
+  'use strict';
+  function syncSla(){
+    try{
+      if(typeof window.renderAlphaSlaEngine==='function'){
+        window.renderAlphaSlaEngine();
+      }
+    }catch(err){
+      console.warn('ALPHA 067.2 SLA renderer',err);
+    }
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(syncSla,800);
+    setTimeout(syncSla,1800);
+  },{once:true});
+  window.addEventListener('load',function(){setTimeout(syncSla,500);});
+})();
+</script>
+
 
 </body>
 
