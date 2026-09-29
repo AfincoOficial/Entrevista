@@ -2924,6 +2924,50 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
     <div class="a56-ticker">
       <span>● LIVE</span><b>AFINCO</b><i></i><span>CANDIDATOS <strong id="a56TickCandidates">0</strong></span><i></i><span>ENTREVISTAS <strong id="a56TickInterviews">0</strong></span><i></i><span>APROVADOS <strong id="a56TickApproved">0</strong></span><i></i><span>TAREFAS <strong id="a56TickTasks">0</strong></span><i></i><span>CONVERSÃO <strong id="a56TickConversion">0%</strong></span><i></i><span>ÚLTIMA LEITURA <strong id="a56TickSync">--:--</strong></span>
     </div>
+
+    <section class="alpha-data-core-v068" id="alphaDataCore" aria-label="ALPHA DATA CORE">
+      <div class="adc-head-v068">
+        <div>
+          <div class="adc-kicker-v068">ALPHA DATA CORE // FASE 01</div>
+          <h3>COMMAND CENTER <span>2.0</span></h3>
+          <p>Uma leitura única da base para transformar cadastro em operação: volume, qualidade, recência, cobertura e sinais de atenção.</p>
+        </div>
+        <div class="adc-health-v068" id="adcHealthBadge"><i></i><b>CALCULANDO</b><span id="adcHealthMeta">—</span></div>
+      </div>
+
+      <div class="adc-kpis-v068">
+        <article><small>REGISTROS</small><strong id="adcTotal">0</strong><span>base carregada</span></article>
+        <article><small>ATIVOS</small><strong id="adcActive">0</strong><span>em operação</span></article>
+        <article><small>LIXEIRA</small><strong id="adcTrash">0</strong><span>fora da operação</span></article>
+        <article><small>CONTATO</small><strong id="adcContact">0%</strong><span>e-mail ou telefone</span></article>
+        <article><small>CADASTRO CORE</small><strong id="adcCompleteness">0%</strong><span>campos principais</span></article>
+        <article><small>PROTOCOLOS</small><strong id="adcProtocols">0%</strong><span>com código</span></article>
+        <article><small>7 DIAS</small><strong id="adcRecent">0</strong><span>entradas recentes</span></article>
+        <article><small>ORIGENS</small><strong id="adcSources">0</strong><span>canais registrados</span></article>
+      </div>
+
+      <div class="adc-grid-v068">
+        <article class="adc-card-v068 adc-flow-v068">
+          <div class="adc-card-head-v068"><div><b>FLUXO OPERACIONAL</b><span>onde a base está agora</span></div><button type="button" onclick="window.alphaDataCoreRender&&window.alphaDataCoreRender()">↻</button></div>
+          <div id="adcFlow" class="adc-flow-list-v068"></div>
+        </article>
+        <article class="adc-card-v068">
+          <div class="adc-card-head-v068"><div><b>SAÚDE DA BASE</b><span>qualidade e sinais de dados</span></div><div class="adc-live-tag-v068">LIVE</div></div>
+          <div id="adcQuality" class="adc-quality-list-v068"></div>
+        </article>
+        <article class="adc-card-v068 adc-priority-v068">
+          <div class="adc-card-head-v068"><div><b>ATENÇÃO AGORA</b><span>regras operacionais</span></div><div class="adc-live-tag-v068">AUTO</div></div>
+          <div id="adcAttention" class="adc-attention-list-v068"></div>
+        </article>
+      </div>
+
+      <div class="adc-footer-v068">
+        <span>BASE: SUPABASE / CANDIDATURAS</span>
+        <span id="adcUpdated">ÚLTIMA LEITURA: —</span>
+        <span>SEM NOVA TABELA</span>
+      </div>
+    </section>
+
     <div class="alpha-os-rail" id="alphaOsRail" aria-label="Navegação operacional">
       <div class="alpha-os-brand"><span>ALPHA OS</span><b>OPERAÇÃO 360°</b></div>
       <button class="alpha-os-step active" data-os="command" onclick="alphaOSStage('command')"><i>01</i><span>COMANDO</span></button>
@@ -4516,9 +4560,13 @@ async function deleteCandidateForever(id){
   const candidate = candidates.find(c => c.id === id);
   if(!candidate) return;
   const name = candidate.nome_completo || "este candidato";
-  const first = confirm(`ATENÇÃO! Apagar "${name}" definitivamente?\n\nEsta ação não poderá ser desfeita.`);
+  const first = confirm(`ATENÇÃO! Apagar "${name}" definitivamente?
+
+Esta ação não poderá ser desfeita.`);
   if(!first) return;
-  const second = confirm(`CONFIRMAÇÃO FINAL\n\nVocê realmente quer apagar "${name}" do banco de dados?`);
+  const second = confirm(`CONFIRMAÇÃO FINAL
+
+Você realmente quer apagar "${name}" do banco de dados?`);
   if(!second) return;
 
   try{
@@ -7018,7 +7066,11 @@ async function saveTeamUser043(){
   if(!nome||!email){alert('Informe nome e e-mail.');return;}
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Informe um e-mail válido.');return;}
   if(team043Users.some(u=>String(u.email||'').trim().toLowerCase()===email)){alert('Este e-mail já possui um perfil na equipe. Use PROMOVER/REBAIXAR ou edite o cadastro existente.');return;}
-  if(role==='Super Admin' && !confirm(`CRIAR SUPER ADMIN?\n\n${nome} será cadastrado como Super Admin e terá acesso à gestão da equipe e permissões.\n\nConfirma?`))return;
+  if(role==='Super Admin' && !confirm(`CRIAR SUPER ADMIN?
+
+${nome} será cadastrado como Super Admin e terá acesso à gestão da equipe e permissões.
+
+Confirma?`))return;
   try{
     const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users`,{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({nome,email,ativo:true,role,auth_user_id})});
     const raw=await r.text();
@@ -7028,7 +7080,12 @@ async function saveTeamUser043(){
     document.getElementById('crm043AuthId').value='';
     document.getElementById('crm043Role').value='Recrutador';
     await loadTeam043();
-    alert(`Perfil criado com sucesso.\n\n${nome} • ${role}\n${email}\n\nAgora vincule o mesmo e-mail a uma conta do Supabase Auth para permitir o login.`);
+    alert(`Perfil criado com sucesso.
+
+${nome} • ${role}
+${email}
+
+Agora vincule o mesmo e-mail a uma conta do Supabase Auth para permitir o login.`);
   }catch(e){alert('Não foi possível criar o perfil: '+(e.message||'Erro'));}
 }
 function toggleCreateAdmin043(){
@@ -7069,7 +7126,11 @@ async function changeRoleTeam044(email,direction){
   if(index<0||targetIndex<0||targetIndex>=TEAM044_ROLE_ORDER.length){alert(direction>0?'Este membro já está no maior cargo permitido.':'Este membro já está no menor cargo permitido.');return;}
   const target=TEAM044_ROLE_ORDER[targetIndex];
   const action=direction>0?'PROMOVER':'REBAIXAR';
-  if(!confirm(`${action} ${u.nome||u.email}?\n\n${current} → ${target}\n\nEssa alteração muda as permissões do membro no CRM.`))return;
+  if(!confirm(`${action} ${u.nome||u.email}?
+
+${current} → ${target}
+
+Essa alteração muda as permissões do membro no CRM.`))return;
   try{
     const r=await fetch(`${SUPABASE_URL}/rest/v1/admin_users?email=eq.${encodeURIComponent(email)}`,{
       method:'PATCH',headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json',Prefer:'return=minimal'},
@@ -7457,7 +7518,8 @@ function crm053UltraSection(c){
       </div>
     </section>`;
 }
-</script>\n
+</script>
+
 <details class="alpha-global-history" id="alphaGlobalHistory">
   <summary>
     <div class="alpha-gh-left">
@@ -8308,6 +8370,54 @@ function crm053UltraSection(c){
 })();
 </script>
 
+
+<style id="alpha-data-core-v068">
+/* ALPHA 066.8 — DATA CORE + COMMAND CENTER 2.0 */
+.alpha-data-core-v068{margin:16px 0 20px;padding:18px;border-radius:24px;border:1px solid rgba(245,197,66,.16);background:linear-gradient(145deg,rgba(8,15,22,.97),rgba(3,7,11,.985));box-shadow:0 26px 80px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.035)}
+.adc-head-v068{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:16px}.adc-kicker-v068{font-size:8px;letter-spacing:.19em;color:#f5c542;font-weight:1000}.adc-head-v068 h3{margin:5px 0 5px;font-size:22px;letter-spacing:-.035em;color:#eef3f7}.adc-head-v068 h3 span{color:#f5c542}.adc-head-v068 p{max-width:780px;margin:0;color:#778493;font-size:10px;line-height:1.55}.adc-health-v068{display:grid;grid-template-columns:auto auto;column-gap:7px;align-items:center;min-width:150px;padding:10px 12px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.02)}.adc-health-v068 i{grid-row:1/3;width:9px;height:9px;border-radius:50%;background:#61e3ad;box-shadow:0 0 16px rgba(97,227,173,.45)}.adc-health-v068 b{font-size:8px;color:#edf3f8;letter-spacing:.11em}.adc-health-v068 span{font-size:8px;color:#6f7a87}
+.adc-kpis-v068{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}.adc-kpis-v068 article{min-height:92px;padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.065);background:linear-gradient(145deg,rgba(18,27,36,.88),rgba(4,9,14,.96));position:relative;overflow:hidden}.adc-kpis-v068 article:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,rgba(245,197,66,.75),transparent)}.adc-kpis-v068 small{display:block;color:#778391;font-size:7px;font-weight:1000;letter-spacing:.12em}.adc-kpis-v068 strong{display:block;margin-top:7px;color:#f5f8fa;font-size:25px;line-height:1}.adc-kpis-v068 span{display:block;margin-top:7px;color:#64717d;font-size:8px}.adc-grid-v068{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:10px;margin-top:10px}.adc-card-v068{padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.06);background:linear-gradient(145deg,rgba(12,20,28,.88),rgba(3,7,11,.96));min-height:180px}.adc-card-head-v068{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.adc-card-head-v068 b{display:block;color:#e6edf2;font-size:8px;letter-spacing:.1em}.adc-card-head-v068 span{display:block;margin-top:4px;color:#667480;font-size:8px}.adc-card-head-v068 button{border:1px solid rgba(245,197,66,.18);background:rgba(245,197,66,.05);color:#f5c542;border-radius:9px;padding:6px 8px;cursor:pointer}.adc-live-tag-v068{padding:4px 7px;border-radius:999px;border:1px solid rgba(97,227,173,.15);color:#7be8bc;font-size:7px;font-weight:1000;letter-spacing:.1em}.adc-flow-list-v068,.adc-quality-list-v068,.adc-attention-list-v068{display:grid;gap:7px}.adc-flow-row-v068{display:grid;grid-template-columns:86px 1fr 34px;gap:8px;align-items:center}.adc-flow-row-v068 label{font-size:8px;color:#7d8995}.adc-flow-bar-v068{height:7px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.05)}.adc-flow-bar-v068 i{display:block;height:100%;min-width:2px;border-radius:999px;background:linear-gradient(90deg,#f5c542,#79dbff)}.adc-flow-row-v068 b{text-align:right;color:#edf3f8;font-size:9px}.adc-quality-row-v068{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 9px;border-radius:11px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.04)}.adc-quality-row-v068 span{color:#7d8995;font-size:8px}.adc-quality-row-v068 b{color:#f0f4f8;font-size:9px}.adc-attn-v068{padding:9px 10px;border-radius:11px;border:1px solid rgba(245,197,66,.1);background:rgba(245,197,66,.035)}.adc-attn-v068 b{display:block;color:#f3d47e;font-size:8px}.adc-attn-v068 span{display:block;margin-top:3px;color:#778490;font-size:8px;line-height:1.45}.adc-empty-v068{padding:18px;text-align:center;color:#61707d;font-size:9px;border:1px dashed rgba(255,255,255,.07);border-radius:11px}.adc-footer-v068{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px solid rgba(255,255,255,.055);color:#53606d;font-size:7px;font-weight:1000;letter-spacing:.1em}
+@media(max-width:1100px){.adc-kpis-v068{grid-template-columns:repeat(4,minmax(0,1fr))}.adc-grid-v068{grid-template-columns:1fr 1fr}.adc-card-v068:last-child{grid-column:1/-1}}
+@media(max-width:720px){.adc-head-v068{flex-direction:column}.adc-health-v068{width:100%;min-width:0}.adc-kpis-v068{grid-template-columns:repeat(2,minmax(0,1fr))}.adc-grid-v068{grid-template-columns:1fr}.adc-card-v068:last-child{grid-column:auto}.adc-flow-row-v068{grid-template-columns:75px 1fr 28px}}
+</style>
+
+<script id="alpha-data-core-v068-js">
+(function(){
+  const $=id=>document.getElementById(id);
+  const txt=v=>String(v??'').trim();
+  const arr=()=>{try{return Array.isArray(window.candidates)?window.candidates:[];}catch(e){return [];}};
+  const isDeleted=c=>!!c?.deleted_at;
+  const active=()=>arr().filter(c=>!isDeleted(c));
+  const hasContact=c=>!!(txt(c?.email)||txt(c?.telefone)||txt(c?.whatsapp));
+  const hasProtocol=c=>!!(txt(c?.codigo_protocolo)||txt(c?.protocolo)||txt(c?.protocol)||txt(c?.codigo));
+  const coreKeys=['nome_completo','telefone','email','idade','sexo','trabalhando_atualmente','como_soube','inicio','entrevista_dia','entrevista_horario','experiencia_vendas','experiencia','motivo','apresentacao_profissional','experiencia_profissional'];
+  const hasCore=c=>coreKeys.filter(k=>txt(c?.[k])).length/coreKeys.length;
+  const esc=v=>{try{return typeof window.esc==='function'?window.esc(v):String(v).replace(/[&<>'\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[m]));}catch(e){return String(v??'')}};
+  function pct(v){return Number.isFinite(v)?Math.round(v*100)+'%':'0%'}
+  function render(){
+    const all=arr(), act=active(), trash=all.filter(isDeleted), total=all.length;
+    const contact=act.filter(hasContact).length;
+    const protocol=act.filter(hasProtocol).length;
+    const completeness=act.length?act.reduce((s,c)=>s+hasCore(c),0)/act.length:0;
+    const recent=act.filter(c=>{const d=new Date(c.created_at||c.updated_at||0).getTime();return Number.isFinite(d)&&Date.now()-d<=7*86400000}).length;
+    const sources=new Set(act.map(c=>txt(c.origem||c.como_soube)).filter(Boolean)).size;
+    const dupMap={};act.forEach(c=>{const k=txt(c.email).toLowerCase();if(k)dupMap[k]=(dupMap[k]||0)+1});const duplicates=Object.values(dupMap).filter(n=>n>1).reduce((s,n)=>s+n,0);
+    const invalidEmails=act.filter(c=>{const e=txt(c.email);return e&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(e)}).length;
+    const stale=act.filter(c=>{const d=new Date(c.ultima_atividade_at||c.updated_at||c.created_at||0).getTime();return Number.isFinite(d)&&Date.now()-d>72*3600000}).length;
+    const noAction=act.filter(c=>!txt(c.proxima_acao)&&!txt(c.proxima_acao_at)).length;
+    const health=Math.max(0,Math.min(100,Math.round(((contact/Math.max(1,act.length))*.32+completeness*.38+(protocol/Math.max(1,act.length))*.15+(1-Math.min(1,duplicates/Math.max(1,act.length)))*.10+(1-Math.min(1,invalidEmails/Math.max(1,act.length)))*.05)*100)));
+    const set=(id,v)=>{const e=$(id);if(e)e.textContent=v};
+    set('adcTotal',total);set('adcActive',act.length);set('adcTrash',trash.length);set('adcContact',pct(contact/Math.max(1,act.length)));set('adcCompleteness',pct(completeness));set('adcProtocols',pct(protocol/Math.max(1,act.length)));set('adcRecent',recent);set('adcSources',sources);
+    const hb=$('adcHealthBadge'); if(hb){const b=hb.querySelector('b'),s=$('adcHealthMeta'); const tone=health>=90?'EXCELENTE':health>=75?'SAUDÁVEL':health>=55?'ATENÇÃO':'CRÍTICA'; if(b)b.textContent=tone; if(s)s.textContent=health+'% integridade'; hb.style.borderColor=health>=75?'rgba(97,227,173,.18)':'rgba(245,197,66,.18)'; const dot=hb.querySelector('i');if(dot){dot.style.background=health>=75?'#61e3ad':health>=55?'#f5c542':'#ff7182';}}
+    const stages=[['NOVOS',act.filter(c=>txt(c.status).toLowerCase().includes('novo')).length],['ANÁLISE',act.filter(c=>txt(c.status).toLowerCase().includes('anál')).length],['ENTREVISTA',act.filter(c=>txt(c.status).toLowerCase().includes('entrev')).length],['APROVADOS',act.filter(c=>txt(c.status).toLowerCase().includes('aprov')).length],['REPROVADOS',act.filter(c=>txt(c.status).toLowerCase().includes('reprov')).length]];const max=Math.max(1,...stages.map(x=>x[1]));
+    const fl=$('adcFlow');if(fl)fl.innerHTML=stages.map(([name,n])=>`<div class="adc-flow-row-v068"><label>${name}</label><div class="adc-flow-bar-v068"><i style="width:${Math.max(2,(n/max)*100)}%"></i></div><b>${n}</b></div>`).join('');
+    const q=$('adcQuality');if(q)q.innerHTML=[['Contato',pct(contact/Math.max(1,act.length))],['Cadastro core',pct(completeness)],['Protocolos',pct(protocol/Math.max(1,act.length))],['Duplicidade de e-mail',duplicates?String(duplicates)+' registros':'Nenhuma'],['E-mails inválidos',invalidEmails?String(invalidEmails):'Nenhum']].map(([a,b])=>`<div class="adc-quality-row-v068"><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join('');
+    const at=$('adcAttention');if(at){const rows=[];if(stale)rows.push(['WIP envelhecido',stale+' candidato(s) sem atividade há mais de 72h.']);if(noAction)rows.push(['Sem próxima ação',noAction+' candidato(s) não possuem próxima ação registrada.']);if(!contact){}if(duplicates)rows.push(['Possível duplicidade',duplicates+' registro(s) compartilham e-mail.']);if(invalidEmails)rows.push(['Dados de contato',invalidEmails+' e-mail(s) parecem inválidos.']);at.innerHTML=rows.length?rows.slice(0,4).map(([a,b])=>`<div class="adc-attn-v068"><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''):'<div class="adc-empty-v068">Nenhum sinal crítico detectado na leitura atual.</div>';}
+    set('adcUpdated','ÚLTIMA LEITURA: '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'}));
+  }
+  window.alphaDataCoreRender=render;
+  document.addEventListener('DOMContentLoaded',()=>{render();setInterval(render,3000)});
+})();
+</script>
 </body>
 
 <style id="alpha-plus-pro-max-css">
@@ -8671,5 +8781,4 @@ body.alpha-authenticated #adminScreen>.container>#alphaGlobalHistory{display:non
   else enterLoginExperience();
 })();
 </script>
-
 
