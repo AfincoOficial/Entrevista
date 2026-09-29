@@ -8543,6 +8543,171 @@ function crm053UltraSection(c){
   document.addEventListener('DOMContentLoaded',()=>{render();setInterval(render,3000)});
 })();
 </script>
+
+<script id="alpha-0671-sla-sync-fix">
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const text=v=>String(v??'').trim();
+  const esc=v=>{
+    try{return typeof escapeHTML==='function'?escapeHTML(v??''):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+    catch(e){return String(v??'')}
+  };
+  const getCandidates=()=>{
+    try{
+      if(Array.isArray(window.candidates)) return window.candidates;
+      if(typeof candidates!=='undefined' && Array.isArray(candidates)) return candidates;
+    }catch(e){}
+    return null;
+  };
+  const isActive=c=>!c?.deleted_at && !['lixeira','excluido','excluído'].includes(text(c?.status).toLowerCase());
+  const active=()=>{const a=getCandidates();return Array.isArray(a)?a.filter(isActive):null};
+  const norm=v=>text(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  const stage=c=>text(c?.status||'Novo');
+  const lastActivity=c=>{
+    const raw=c?.ultima_atividade_at||c?.updated_at||c?.created_at;
+    const d=new Date(raw||0);
+    return Number.isFinite(d.getTime())?d:null;
+  };
+  const ageHours=c=>{const d=lastActivity(c);return d?Math.max(0,(Date.now()-d.getTime())/3600000):0};
+  const threshold=c=>{
+    const s=norm(stage(c));
+    if(s.includes('novo'))return 24;
+    if(s.includes('anal'))return 48;
+    if(s.includes('entrev'))return 24;
+    if(s.includes('aprov')||s.includes('reprov'))return Infinity;
+    return 72;
+  };
+  const actionDue=c=>{
+    const d=new Date(c?.proxima_acao_at||0);
+    return Number.isFinite(d.getTime())&&d.getTime()>0&&d.getTime()<Date.now()&&!['aprovado','reprovado'].includes(norm(stage(c)));
+  };
+  const slaState=c=>{
+    const s=norm(stage(c));
+    if(s.includes('aprov')||s.includes('reprov'))return {key:'done',label:'Encerrado',score:0,age:ageHours(c),limit:Infinity};
+    const age=ageHours(c), lim=threshold(c), due=actionDue(c);
+    if(due || (Number.isFinite(lim)&&age>=lim))return {key:'critical',label:'Crítico',score:3,age,limit:lim};
+    if(Number.isFinite(lim) && age>=lim*.75)return {key:'attention',label:'Atenção',score:2,age,limit:lim};
+    return {key:'ok',label:'Dentro',score:1,age,limit:lim};
+  };
+  const fmtHours=h=>{
+    if(!Number.isFinite(h))return '—';
+    if(h<1)return Math.max(1,Math.round(h*60))+'min';
+    if(h<24)return Math.floor(h)+'h';
+    const d=Math.floor(h/24), r=Math.floor(h%24);return r?d+'d '+r+'h':d+'d';
+  };
+  const fmtCountdown=(h,limit)=>{
+    if(!Number.isFinite(limit))return 'sem SLA ativo';
+    const remaining=limit-h;
+    if(remaining>=0)return 'faltam '+fmtHours(remaining);
+    return 'vencido há '+fmtHours(Math.abs(remaining));
+  };
+  const priorityRank=s=>s.key==='critical'?0:s.key==='attention'?1:s.key==='ok'?2:3;
+  function renderSla(){
+    const a=active();
+    if(!a){
+      if($('slaLiveState'))$('slaLiveState').textContent='AGUARDANDO DADOS';
+      if($('slaLastRead'))$('slaLastRead').textContent='sincronizando candidatos...';
+      if($('slaComplianceHeadline'))$('slaComplianceHeadline').textContent='Aguardando dados';
+      if($('slaComplianceReason'))$('slaComplianceReason').textContent='O motor será preenchido assim que a central terminar a primeira leitura.';
+      return false;
+    }
+
+    const states=a.map(c=>({c,s:slaState(c)}));
+    const operational=states.filter(x=>x.s.key!=='done');
+    const critical=operational.filter(x=>x.s.key==='critical');
+    const attention=operational.filter(x=>x.s.key==='attention');
+    const ok=operational.filter(x=>x.s.key==='ok');
+    const considered=operational.length||1;
+    const compliance=Math.round((ok.length/considered)*100);
+    const overdueActions=a.filter(actionDue).length;
+    const aged72=operational.filter(x=>x.s.age>=72).length;
+    const medianAge=(()=>{const vals=operational.map(x=>x.s.age).sort((x,y)=>x-y);if(!vals.length)return 0;const m=Math.floor(vals.length/2);return vals.length%2?vals[m]:(vals[m-1]+vals[m])/2})();
+
+    if($('slaLiveState'))$('slaLiveState').textContent=`LIVE · ${a.length} REGISTROS`;
+    if($('slaLastRead'))$('slaLastRead').textContent=`leitura ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
+
+    if($('slaKpis')){
+      const k=(label,val,sub,cls='')=>`<div class="sla-kpi ${cls}"><small>${label}</small><strong>${val}</strong><span>${sub}</span></div>`;
+      $('slaKpis').innerHTML=
+        k('CRÍTICOS',critical.length,'fora do limiar',critical.length?'critical':'good')+
+        k('ATENÇÃO',attention.length,'próximos do limite',attention.length?'attention':'good')+
+        k('DENTRO',ok.length,'dentro do SLA','good')+
+        k('COMPLIANCE',compliance+'%','cobertura operacional',compliance>=80?'good':compliance>=60?'attention':'critical')+
+        k('AÇÕES VENCIDAS',overdueActions,'próxima ação atrasada',overdueActions?'critical':'good')+
+        k('MEDIANA',fmtHours(medianAge),'idade operacional',medianAge>=48?'attention':'good');
+    }
+
+    if($('slaRadarLabel'))$('slaRadarLabel').textContent=`${critical.length} crítico · ${attention.length} atenção`;
+    if($('slaRadar')){
+      const total=Math.max(1,operational.length);
+      $('slaRadar').innerHTML=`<div class="sla-radar-main"><div class="sla-radar-ring" style="--critical:${Math.round(critical.length/total*100)}%"><span>${Math.round(critical.length/total*100)}%</span></div><div><b>Pressão atual</b><p>${critical.length} crítico(s), ${attention.length} em atenção e ${ok.length} dentro do prazo.</p></div></div><div class="sla-radar-bars"><div><span>Crítico</span><i><b style="width:${Math.max(2,critical.length/total*100)}%"></b></i><em>${critical.length}</em></div><div><span>Atenção</span><i><b style="width:${Math.max(2,attention.length/total*100)}%"></b></i><em>${attention.length}</em></div><div><span>Dentro</span><i><b style="width:${Math.max(2,ok.length/total*100)}%"></b></i><em>${ok.length}</em></div></div>`;
+    }
+
+    if($('slaComplianceLabel'))$('slaComplianceLabel').textContent=`${ok.length}/${operational.length||0} dentro`;
+    if($('slaComplianceScore'))$('slaComplianceScore').textContent=compliance+'%';
+    const ring=$('slaComplianceRing'); if(ring)ring.style.setProperty('--sla-compliance',compliance+'%');
+    if($('slaComplianceHeadline'))$('slaComplianceHeadline').textContent=compliance>=85?'Operação dentro do ritmo':compliance>=60?'Operação requer atenção':'Operação sob pressão';
+    if($('slaComplianceReason'))$('slaComplianceReason').textContent=`${critical.length} crítico(s), ${attention.length} em atenção e ${overdueActions} ação(ões) vencida(s).`;
+
+    const stages=[
+      {key:'Novo',label:'Novo',icon:'🆕'},
+      {key:'Em análise',label:'Em análise',icon:'🔎'},
+      {key:'Entrevista',label:'Entrevista',icon:'🎯'},
+      {key:'Aprovado',label:'Aprovado',icon:'✅'},
+      {key:'Reprovado',label:'Reprovado',icon:'⛔'}
+    ];
+    if($('slaStageBody'))$('slaStageBody').innerHTML=stages.map(st=>{
+      const rows=states.filter(x=>stage(x.c)===st.key);const operationalRows=rows.filter(x=>x.s.key!=='done');
+      const c=operationalRows.filter(x=>x.s.key==='critical').length,a2=operationalRows.filter(x=>x.s.key==='attention').length,o=operationalRows.filter(x=>x.s.key==='ok').length;
+      const base=Math.max(1,operationalRows.length);const health=Math.round(o/base*100);
+      return `<tr><td><strong>${st.icon} ${st.label}</strong></td><td>${rows.length}</td><td>${c}</td><td>${a2}</td><td>${o}</td><td><span class="sla-health-chip ${health>=80?'good':health>=60?'warn':'bad'}">${rows.length&&operationalRows.length?health+'%':'—'}</span></td></tr>`;
+    }).join('');
+
+    const queue=states.filter(x=>x.s.key==='critical'||x.s.key==='attention').sort((a,b)=>priorityRank(a.s)-priorityRank(b.s)||b.s.age-a.s.age).slice(0,10);
+    if($('slaQueueSummary'))$('slaQueueSummary').textContent=`${critical.length+attention.length} em atenção`;
+    if($('slaQueue')){
+      $('slaQueue').innerHTML=queue.length?queue.map(({c,s})=>{
+        const due=actionDue(c);
+        return `<div class="sla-queue-row ${s.key}"><div class="sla-queue-avatar">${esc((text(c.nome_completo)||'CA').split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase())}</div><div class="sla-queue-main"><strong>${esc(c.nome_completo||'Candidato')}</strong><span>${esc(stage(c))} · idade ${fmtHours(s.age)} · ${fmtCountdown(s.age,s.limit)}</span><small>${due?'⚠ ação vencida':text(c.proxima_acao)||'sem próxima ação definida'}</small></div><div class="sla-queue-side"><b>${s.label.toUpperCase()}</b><button type="button" onclick="openDetails('${esc(c.id)}')">ABRIR</button></div></div>`;
+      }).join(''):'<div class="sla-empty">✓ Nenhum candidato exige atenção imediata pelo SLA atual.</div>';
+    }
+
+    const footer=$('slaFooterStrip');
+    if(footer){
+      footer.innerHTML=`<span>● MOTOR SLA ONLINE</span><b>${a.length} REGISTROS ANALISADOS</b><span>${critical.length} CRÍTICOS · ${attention.length} ATENÇÃO · ${ok.length} DENTRO</span><span>${aged72} COM 72H+</span><time>${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}</time>`;
+    }
+    return true;
+  }
+  function addStyles(){
+    if($('alpha-0671-sla-inline-css'))return;
+    const st=document.createElement('style');st.id='alpha-0671-sla-inline-css';
+    st.textContent=`
+      .sla-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;padding:0 0 12px}
+      .sla-kpi{padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:linear-gradient(145deg,rgba(15,25,34,.88),rgba(3,8,13,.96));min-height:88px}
+      .sla-kpi small{display:block;color:#74818f;font-size:7px;font-weight:1000;letter-spacing:.13em}.sla-kpi strong{display:block;margin-top:8px;color:#f2f6f8;font-size:24px;line-height:1}.sla-kpi span{display:block;margin-top:6px;color:#5f6c79;font-size:8px}.sla-kpi.critical{border-color:rgba(255,104,117,.24)}.sla-kpi.critical strong{color:#ff909b}.sla-kpi.attention{border-color:rgba(246,200,74,.22)}.sla-kpi.attention strong{color:#f6c84a}.sla-kpi.good{border-color:rgba(97,227,173,.17)}.sla-kpi.good strong{color:#62e1af}
+      .sla-radar-main{display:flex;align-items:center;gap:16px;padding:16px}.sla-radar-ring{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#ff7180 var(--critical,0%),rgba(255,255,255,.06) 0);position:relative}.sla-radar-ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#071017;border:1px solid rgba(255,255,255,.055)}.sla-radar-ring span{position:relative;z-index:1;color:#fff;font-size:17px;font-weight:1000}.sla-radar-main b{display:block;color:#eef3f7;font-size:11px}.sla-radar-main p{margin:5px 0 0;color:#71808d;font-size:8px;line-height:1.45}.sla-radar-bars{padding:0 14px 14px;display:grid;gap:8px}.sla-radar-bars>div{display:grid;grid-template-columns:54px 1fr 26px;gap:8px;align-items:center}.sla-radar-bars span{font-size:8px;color:#788692}.sla-radar-bars i{display:block;height:7px;border-radius:999px;background:rgba(255,255,255,.05);overflow:hidden}.sla-radar-bars b{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#1d5ca8,#f6c84a)}.sla-radar-bars em{font-style:normal;font-size:8px;text-align:right;color:#dbe3e9}.sla-health-chip{display:inline-flex;padding:4px 7px;border-radius:999px;border:1px solid rgba(255,255,255,.08);font-size:7px;font-weight:1000}.sla-health-chip.good{color:#6ee5b4;border-color:rgba(97,227,173,.15)}.sla-health-chip.warn{color:#f6d67b;border-color:rgba(246,200,74,.16)}.sla-health-chip.bad{color:#ff949d;border-color:rgba(255,104,117,.17)}
+      .sla-queue{display:grid;gap:7px;padding:10px 12px 14px}.sla-queue-row{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:10px 11px;border:1px solid rgba(255,255,255,.06);border-radius:13px;background:rgba(255,255,255,.018)}.sla-queue-row.critical{border-color:rgba(255,104,117,.19);box-shadow:inset 3px 0 #ff7180}.sla-queue-row.attention{border-color:rgba(246,200,74,.16);box-shadow:inset 3px 0 #f6c84a}.sla-queue-avatar{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#172432,#071017);border:1px solid rgba(255,255,255,.06);color:#fff;font-size:9px;font-weight:1000}.sla-queue-main{min-width:0}.sla-queue-main strong{display:block;color:#edf2f6;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sla-queue-main span,.sla-queue-main small{display:block;margin-top:3px;color:#6f7c89;font-size:7px}.sla-queue-main small{color:#a0abb6}.sla-queue-side{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}.sla-queue-side b{font-size:7px;letter-spacing:.08em}.sla-queue-row.critical .sla-queue-side b{color:#ff909b}.sla-queue-row.attention .sla-queue-side b{color:#f6c84a}.sla-queue-side button{border:1px solid rgba(255,255,255,.08);background:#0d131a;color:#c7d0d8;border-radius:8px;padding:6px 8px;font:inherit;font-size:7px;font-weight:1000;cursor:pointer}.sla-queue-side button:hover{border-color:rgba(246,200,74,.35);color:#ffe08a}.sla-empty{padding:24px;text-align:center;color:#70808e;font-size:9px;border:1px dashed rgba(255,255,255,.08);border-radius:12px}.sla-footer-strip{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;padding:11px 13px;border:1px solid rgba(246,200,74,.13);border-radius:13px;background:linear-gradient(100deg,rgba(10,18,26,.95),rgba(3,8,13,.96));color:#667482;font-size:7px;font-weight:1000;letter-spacing:.1em}.sla-footer-strip b{color:#dce4ea}.sla-footer-strip time{margin-left:auto;color:#f6c84a}
+      .sla-compliance .sla-ring{background:conic-gradient(#f6c84a var(--sla-compliance,0%),rgba(255,255,255,.06) 0)!important}
+      @media(max-width:1050px){.sla-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+      @media(max-width:760px){.sla-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.sla-queue-row{grid-template-columns:32px 1fr}.sla-queue-side{grid-column:2;justify-content:flex-start}.sla-queue-side button{flex:0 0 auto}.sla-footer-strip time{margin-left:0}.sla-radar-main{align-items:flex-start}}
+    `;
+    document.head.appendChild(st);
+  }
+  function boot(){
+    addStyles();
+    renderSla();
+    setTimeout(renderSla,500);
+    setTimeout(renderSla,1500);
+    setTimeout(renderSla,3000);
+    setInterval(renderSla,3000);
+  }
+  document.addEventListener('DOMContentLoaded',boot,{once:true});
+  window.addEventListener('load',()=>setTimeout(renderSla,500));
+  window.alphaRenderSla0671=renderSla;
+})();
+</script>
+
 </body>
 
 <style id="alpha-plus-pro-max-css">
