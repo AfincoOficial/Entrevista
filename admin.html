@@ -3140,6 +3140,7 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
         <button type="button" onclick="openAgenda040()">🎯 AGENDA 2.0</button>
         <button type="button" class="alpha-history-open" onclick="openHistory038Modal()">🧠 HISTÓRICO <span id="alphaHistoryQuickCount">0</span></button>
         <button type="button" onclick="alphaJump('candidatesList')">👥 CANDIDATOS</button>
+        <button type="button" onclick="alphaJump('alphaSlaEngine')">⏱ SLA</button>
         <button type="button" onclick="openTeam043()">👑 EQUIPE</button>
         <button type="button" onclick="alphaSmartRefresh()">⚡ SINCRONIZAR</button>
       </div>
@@ -3300,7 +3301,7 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
   <section class="alpha-pipeline-intel" id="alphaPipelineIntelligence" aria-label="ALPHA Pipeline Intelligence">
     <div class="api-head">
       <div>
-        <div class="api-kicker">ALPHA 066.9 // PIPELINE INTELLIGENCE</div>
+        <div class="api-kicker">ALPHA 067.0 // PIPELINE INTELLIGENCE + SLA ENGINE</div>
         <h3>⚡ Inteligência de <span>Fluxo</span></h3>
         <p>Leitura operacional do pipeline com volume, aging, pressão, entrada recente e saúde do fluxo. Os cálculos usam os candidatos e o histórico já carregados no CRM.</p>
       </div>
@@ -3362,6 +3363,62 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
     </div>
 
     <div class="api-bottom-strip" id="apiActionStrip"></div>
+  </section>
+
+
+  <section class="alpha-sla-engine" id="alphaSlaEngine" aria-label="ALPHA SLA Engine">
+    <div class="sla-head">
+      <div>
+        <div class="sla-kicker">ALPHA 067.0 // SLA ENGINE</div>
+        <h3>⏱ Controle de <span>tempo operacional</span></h3>
+        <p>Monitora prazos operacionais reais com base na data de cadastro, atividade, próxima ação e agenda. O motor separa crítico, atenção e dentro do prazo sem inventar dados.</p>
+      </div>
+      <div class="sla-head-badge"><i></i><div><b id="slaLiveState">AGUARDANDO DADOS</b><span id="slaLastRead">—</span></div></div>
+    </div>
+
+    <div class="sla-kpis" id="slaKpis"></div>
+
+    <div class="sla-top-grid">
+      <article class="sla-panel sla-pressure-panel">
+        <div class="sla-panel-head"><div><small>SLA RADAR</small><strong>Pressão operacional</strong></div><span id="slaRadarLabel">—</span></div>
+        <div class="sla-radar" id="slaRadar"></div>
+      </article>
+
+      <article class="sla-panel">
+        <div class="sla-panel-head"><div><small>COMPLIANCE</small><strong>Cobertura dentro do prazo</strong></div><span id="slaComplianceLabel">—</span></div>
+        <div class="sla-compliance"><div class="sla-ring" id="slaComplianceRing"><span id="slaComplianceScore">0%</span></div><div><b id="slaComplianceHeadline">Calculando...</b><p id="slaComplianceReason">Aguardando sincronização da operação.</p></div></div>
+        <div class="sla-mini-legend"><span><i class="ok"></i> Dentro</span><span><i class="warn"></i> Atenção</span><span><i class="bad"></i> Crítico</span></div>
+      </article>
+
+      <article class="sla-panel">
+        <div class="sla-panel-head"><div><small>REGRAS ATIVAS</small><strong>Limiar operacional</strong></div><span>sem nova tabela</span></div>
+        <div class="sla-rule-list">
+          <div><b>Novo</b><span>24h para atacar primeiro contato</span><em>24h</em></div>
+          <div><b>Análise</b><span>48h para evitar fila envelhecida</span><em>48h</em></div>
+          <div><b>WIP crítico</b><span>72h sem atividade suficiente</span><em>72h</em></div>
+          <div><b>Entrevista</b><span>prioriza confirmação próxima</span><em>24h</em></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="sla-main-grid">
+      <article class="sla-panel sla-queue-panel">
+        <div class="sla-panel-head"><div><small>FILA SLA</small><strong>Quem precisa de atenção agora</strong></div><span id="slaQueueSummary">—</span></div>
+        <div class="sla-queue" id="slaQueue"></div>
+      </article>
+
+      <article class="sla-panel">
+        <div class="sla-panel-head"><div><small>POR ETAPA</small><strong>Saúde do SLA</strong></div><span>base ativa</span></div>
+        <div class="sla-stage-table-wrap">
+          <table class="sla-stage-table">
+            <thead><tr><th>Etapa</th><th>Base</th><th>Crítico</th><th>Atenção</th><th>Dentro</th><th>Saúde</th></tr></thead>
+            <tbody id="slaStageBody"></tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+
+    <div class="sla-footer-strip" id="slaFooterStrip"></div>
   </section>
 
   <section class="crm037-section" id="alphaCRM037">
@@ -4041,7 +4098,7 @@ function renderAlphaCommand(){
   const taskOverdue=(typeof crm041TaskStats==="function") ? crm041TaskStats().overdue : 0; set("alphaTaskOverdue",taskOverdue);
   const n=document.getElementById("alphaLoggedName"); if(n)n.textContent=window.afincoAdminName||afincoAdminName||"ALPHA";
   const r=document.getElementById("alphaLoggedRole"); if(r)r.textContent=(window.afincoAdminRole||"Super Admin").toUpperCase();
-  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro();
+  renderAlphaTradeChart(); renderAlphaPipeline(); renderAlphaInsights(); renderAlphaHot(); renderAlphaAlerts(); renderAlphaMicroTelemetry(active,stale,hot,taskOverdue); renderAlphaMaxPro(); renderAlphaSlaEngine();
 }
 function alphaJump(id){
   const el=document.getElementById(id);
