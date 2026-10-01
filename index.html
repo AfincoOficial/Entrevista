@@ -1196,6 +1196,31 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 @media(max-width:600px){.alpha-final-card{padding:25px 17px!important}.alpha-final-topline{font-size:7px}.alpha-final-grid{grid-template-columns:1fr}.alpha-copy-code{min-height:48px}.alpha-final-status{align-items:flex-start;flex-wrap:wrap}.alpha-final-status i{width:100%;margin-left:0}.alpha-final-code strong{font-size:21px!important}}
 </style>
 
+
+
+    <style id="alpha-0684-duplicate-notice-css">
+      .duplicate-overlay{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,6,9,.84);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+      .duplicate-overlay.show{display:flex}
+      .duplicate-card{position:relative;width:min(680px,100%);padding:34px;border-radius:28px;border:1px solid rgba(245,197,66,.42);background:radial-gradient(circle at 50% 0%,rgba(245,197,66,.11),transparent 34%),linear-gradient(145deg,#11161b,#050709 76%);box-shadow:0 45px 140px rgba(0,0,0,.82),0 0 75px rgba(245,197,66,.07);overflow:hidden;text-align:center}
+      .duplicate-card:after{content:"AFINCO";position:absolute;right:-18px;bottom:-28px;font-size:74px;font-weight:1000;letter-spacing:-.08em;color:rgba(255,255,255,.025);pointer-events:none}
+      .duplicate-close{position:absolute;right:15px;top:14px;width:34px;height:34px;border:1px solid rgba(255,255,255,.10);border-radius:10px;background:rgba(255,255,255,.035);color:#aab4be;font-size:20px;cursor:pointer;z-index:2}
+      .duplicate-topline{display:flex;align-items:center;justify-content:center;gap:8px;color:#8e9aa6;font-size:8px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}
+      .duplicate-pulse{width:7px;height:7px;border-radius:50%;background:#f5c542;box-shadow:0 0 14px rgba(245,197,66,.58)}
+      .duplicate-icon{width:58px;height:58px;margin:22px auto 12px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(145deg,#f5c542,#ffe28b);color:#090b0d;font-size:27px;font-weight:1000;box-shadow:0 0 40px rgba(245,197,66,.18)}
+      .duplicate-eyebrow{color:#f5d87b;font-size:8px;font-weight:1000;letter-spacing:.15em;text-transform:uppercase}
+      .duplicate-card h2{margin:8px auto 10px;color:#f3f6f8;font-size:clamp(25px,4vw,37px);line-height:1.02;letter-spacing:-.04em;max-width:590px}.duplicate-card h2 span{color:#f5c542}
+      .duplicate-lead{margin:0 auto;max-width:560px;color:#9aa5b0;font-size:12px;line-height:1.55}
+      .duplicate-highlight{display:grid;gap:4px;margin:20px 0 12px;padding:14px 15px;border-radius:15px;border:1px solid rgba(245,197,66,.17);background:linear-gradient(145deg,rgba(245,197,66,.07),rgba(255,255,255,.02));text-align:left}.duplicate-highlight strong{color:#ffe28a;font-size:11px}.duplicate-highlight span{color:#7f8b96;font-size:10px;line-height:1.5}
+      .duplicate-message{display:grid;gap:10px;text-align:left;color:#87939f;font-size:10px;line-height:1.6}.duplicate-message p{margin:0}.duplicate-message strong{color:#e9eef3}
+      .duplicate-meta{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:16px}.duplicate-meta span{padding:7px 9px;border:1px solid rgba(255,255,255,.06);border-radius:999px;background:rgba(255,255,255,.022);color:#7d8995;font-size:8px;font-weight:900}
+      .duplicate-confirm{position:relative;z-index:2;width:100%;margin-top:18px;min-height:48px;border:1px solid rgba(245,197,66,.34);border-radius:12px;background:linear-gradient(135deg,#ffe49a,#f5c542);color:#090b0d;font-weight:1000;font-size:11px;cursor:pointer;box-shadow:0 12px 30px rgba(245,197,66,.13)}
+      @media(max-width:620px){.duplicate-overlay{padding:10px}.duplicate-card{padding:26px 17px 20px;border-radius:22px}.duplicate-card h2{font-size:27px}.duplicate-lead{font-size:11px}.duplicate-message{font-size:9px}.duplicate-meta{justify-content:flex-start}.duplicate-meta span{font-size:7px}.duplicate-close{right:11px;top:10px}}
+    </style>
+
+    <style id="alpha-0683-duplicate-css">
+      .duplicate-note{margin-top:7px!important;color:#8c98a5!important;font-size:10px!important;line-height:1.45!important}
+      .duplicate-note strong{color:#d6b25b!important}
+    </style>
 </head>
 
 <body data-alpha-version="054" data-alpha-mode="ALPHA 054 — PUBLIC EXPERIENCE">
@@ -2274,6 +2299,9 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
             <p class="form-note">
               Seus dados serão utilizados exclusivamente para o processo de seleção.
             </p>
+            <p class="form-note duplicate-note">
+              <strong>Cadastro único:</strong> depois de enviado, não é possível realizar uma nova candidatura com o mesmo e-mail ou telefone.
+            </p>
 
           </form>
 
@@ -2285,6 +2313,32 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 
   </main>
 
+
+
+  <div class="duplicate-overlay" id="duplicateOverlay" role="dialog" aria-modal="true" aria-labelledby="duplicateTitle" aria-hidden="true">
+    <div class="duplicate-card">
+      <button type="button" class="duplicate-close" id="duplicateClose" aria-label="Fechar aviso">×</button>
+      <div class="duplicate-topline"><span class="duplicate-pulse"></span> AFINCO • CADASTRO ÚNICO</div>
+      <div class="duplicate-icon">!</div>
+      <div class="duplicate-eyebrow">Identificamos uma nova tentativa</div>
+      <h2 id="duplicateTitle">Seu cadastro <span>já consta em nossa base.</span></h2>
+      <p class="duplicate-lead">Devido à repetição do seu cadastro, não foi criado um segundo processo.</p>
+      <div class="duplicate-highlight">
+        <strong>Seu perfil original continua sendo considerado.</strong>
+        <span>Esta nova tentativa não apaga, não substitui e não reinicia sua candidatura anterior.</span>
+      </div>
+      <div class="duplicate-message">
+        <p>Seu perfil será analisado conforme os critérios da oportunidade. A identificação desta repetição, por si só, <strong>não significa uma eliminação definitiva.</strong></p>
+        <p>Fique tranquilo: caso você se enquadre no perfil que estamos procurando, <strong>nossa equipe entrará em contato com você.</strong></p>
+      </div>
+      <div class="duplicate-meta">
+        <span>✓ Cadastro anterior preservado</span>
+        <span>✓ Segunda candidatura bloqueada</span>
+        <span>✓ Perfil continua no processo de análise</span>
+      </div>
+      <button type="button" class="duplicate-confirm" id="duplicateConfirm">Entendi</button>
+    </div>
+  </div>
 
   <div class="success-overlay" id="successOverlay" role="dialog" aria-modal="true" aria-labelledby="successTitle">
     <div class="success-card alpha-final-card">
@@ -2420,6 +2474,76 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
     function isPublicInsertBlocked(errorInfo){
       const hay = `${errorInfo?.message||""} ${JSON.stringify(errorInfo?.data||{})}`.toLowerCase();
       return errorInfo?.status === 401 || errorInfo?.status === 403 || hay.includes("row-level security") || hay.includes("rls") || hay.includes("42501");
+    }
+
+    function isDuplicateCandidateError(errorInfo){
+      const hay = `${errorInfo?.message||""} ${JSON.stringify(errorInfo?.data||{})}`.toLowerCase();
+      return hay.includes("duplicate_candidate") ||
+        hay.includes("cadastro já realizado") ||
+        hay.includes("cadastro ja realizado") ||
+        hay.includes("candidatura já cadastrada") ||
+        hay.includes("candidatura ja cadastrada") ||
+        hay.includes("já existe uma candidatura") ||
+        hay.includes("ja existe uma candidatura") ||
+        hay.includes("duplicate_candidate") ||
+        hay.includes("p0001");
+    }
+
+
+    function duplicateType(errorInfo){
+      const hay = `${errorInfo?.message||""} ${JSON.stringify(errorInfo?.data||{})}`.toLowerCase();
+      const email = hay.includes("e-mail") || hay.includes("email");
+      const telefone = hay.includes("telefone") || hay.includes("phone");
+      if(email && telefone) return "E-MAIL + TELEFONE";
+      if(telefone) return "TELEFONE";
+      return "E-MAIL";
+    }
+
+    async function registrarTentativaDuplicada({nome,email,telefone,errorInfo}){
+      const payload = {
+        nome_completo: nome,
+        email: email,
+        telefone: telefone,
+        tipo_duplicidade: duplicateType(errorInfo),
+        detalhe: String(errorInfo?.message || "Tentativa de candidatura duplicada.").slice(0,500)
+      };
+      try{
+        await fetch(
+          SUPABASE_URL + "/rest/v1/tentativas_candidatura",
+          {
+            method:"POST",
+            mode:"cors",
+            cache:"no-store",
+            headers:{
+              "apikey":SUPABASE_KEY,
+              "Content-Type":"application/json",
+              "Accept":"application/json",
+              "Prefer":"return=minimal"
+            },
+            body:JSON.stringify(payload)
+          }
+        );
+      }catch(e){
+        console.warn("AFINCO — não foi possível registrar a tentativa duplicada no painel:",e);
+      }
+    }
+
+    function showDuplicateCandidateNotice(){
+      const overlay=document.getElementById("duplicateOverlay");
+      if(overlay){
+        overlay.classList.add("show");
+        overlay.setAttribute("aria-hidden","false");
+        document.body.style.overflow="hidden";
+      }
+    }
+
+    function closeDuplicateCandidateNotice(){
+      const overlay=document.getElementById("duplicateOverlay");
+      if(overlay){
+        overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden","true");
+      }
+      if(!document.getElementById("successOverlay")?.classList.contains("show")) document.body.style.overflow="";
     }
 
     async function postCandidatura(payload){
@@ -2575,7 +2699,13 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 
         if (!resultado.resposta.ok) {
           console.error("ERRO AFINCO / SUPABASE:", resultado.errorInfo);
-          if (isPublicInsertBlocked(resultado.errorInfo)) {
+          if (isDuplicateCandidateError(resultado.errorInfo)) {
+            await registrarTentativaDuplicada({nome,email,telefone,errorInfo:resultado.errorInfo});
+            showCandidaturaFeedback(
+              "Cadastro já realizado. Identificamos uma candidatura anterior usando este e-mail ou telefone. Seu perfil original continuará em análise e, caso esteja dentro do perfil procurado, nossa equipe entrará em contato."
+            );
+            showDuplicateCandidateNotice();
+          } else if (isPublicInsertBlocked(resultado.errorInfo)) {
             showCandidaturaFeedback(
               "O banco recebeu a solicitação, mas bloqueou o envio público. É uma permissão do Supabase (RLS/INSERT) e não do formulário. A configuração necessária está no SQL de correção que acompanha esta versão."
             );
@@ -2627,6 +2757,14 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
         this.textContent="✓ CÓDIGO COPIADO"; setTimeout(()=>this.textContent="⧉ COPIAR CÓDIGO",1800);
       }
     });
+
+    const duplicateOverlay = document.getElementById("duplicateOverlay");
+    const duplicateClose = document.getElementById("duplicateClose");
+    const duplicateConfirm = document.getElementById("duplicateConfirm");
+    duplicateClose?.addEventListener("click",closeDuplicateCandidateNotice);
+    duplicateConfirm?.addEventListener("click",closeDuplicateCandidateNotice);
+    duplicateOverlay?.addEventListener("click",function(event){if(event.target===duplicateOverlay)closeDuplicateCandidateNotice();});
+
     successOverlay?.addEventListener("click",function(event){if(event.target===successOverlay)fecharConfirmacao();});
     document.addEventListener("keydown",function(event){if(event.key==="Escape")fecharConfirmacao();});
 
