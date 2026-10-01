@@ -2823,6 +2823,7 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
     <button class="alpha-plus-nav" data-plus-target="tasks" onclick="alphaPlusGo('tasks')"><i>✓</i><span>Execução</span><b>05</b></button>
     <div class="alpha-plus-section">GESTÃO</div>
     <button class="alpha-plus-nav" data-plus-target="intelligence" onclick="alphaPlusGo('intelligence')"><i>◈</i><span>Inteligência</span><b>06</b></button>
+    <button class="alpha-plus-nav alpha-dup-nav" type="button" data-plus-target="duplicates" onclick="alphaOpenDuplicateCenter()"><i>⚠</i><span>Reincidências</span><b id="alphaDuplicateAttemptsBadge">0</b></button>
     <button class="alpha-plus-nav" data-plus-target="team" onclick="alphaPlusGo('team')"><i>♛</i><span>Equipe</span><b>07</b></button>
     <button class="alpha-plus-nav" data-plus-target="history" onclick="alphaPlusGo('history')"><i>◷</i><span>Histórico</span><b>08</b></button>
     <button class="alpha-plus-nav" data-plus-target="reports" onclick="alphaPlusGo('reports')"><i>▣</i><span>Relatórios</span><b>09</b></button>
@@ -3830,6 +3831,35 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
   </section>
 </main>
 </section>
+
+<div id="alphaDuplicateModal" class="alpha-duplicate-modal" aria-hidden="true">
+  <div class="alpha-duplicate-shell" role="dialog" aria-modal="true" aria-labelledby="alphaDuplicateTitle">
+    <div class="alpha-duplicate-head">
+      <div>
+        <div class="alpha-duplicate-kicker">ALPHA OS // MONITOR DE REINCIDÊNCIA</div>
+        <div class="alpha-duplicate-title" id="alphaDuplicateTitle">⚠ Tentativas de novo cadastro</div>
+        <div class="alpha-duplicate-sub">Perfis que já possuem candidatura registrada e tentaram iniciar um novo cadastro.</div>
+      </div>
+      <div class="alpha-duplicate-head-actions">
+        <button type="button" class="alpha-duplicate-refresh" onclick="alphaLoadDuplicateAttempts(true)">↻ ATUALIZAR</button>
+        <button type="button" class="alpha-duplicate-close" onclick="alphaCloseDuplicateCenter()">✕ FECHAR</button>
+      </div>
+    </div>
+    <div class="alpha-duplicate-kpis" id="alphaDuplicateKpis"></div>
+    <div class="alpha-duplicate-toolbar">
+      <input id="alphaDuplicateSearch" type="search" placeholder="Buscar nome, e-mail, telefone ou protocolo..." autocomplete="off">
+      <select id="alphaDuplicateWindow">
+        <option value="all">Todos os períodos</option>
+        <option value="24h">Últimas 24 horas</option>
+        <option value="7d">Últimos 7 dias</option>
+        <option value="30d">Últimos 30 dias</option>
+      </select>
+    </div>
+    <div class="alpha-duplicate-summary" id="alphaDuplicateSummary"></div>
+    <div class="alpha-duplicate-list" id="alphaDuplicateList"></div>
+  </div>
+</div>
+
 <div id="crm038Modal" class="crm038-modal" aria-hidden="true">
   <div class="crm038-modal-shell" role="dialog" aria-modal="true" aria-labelledby="crm038ModalTitle">
     <div class="crm038-modal-head">
@@ -5256,6 +5286,7 @@ async function loadCandidates(){
     const syncEl=document.getElementById("alphaLastSync");
     if(syncEl) syncEl.textContent=`· última leitura: ${new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;
     setConnectionState(true, `CONECTADO · ${candidates.length} REGISTROS`);
+    try{ if(typeof window.alphaLoadDuplicateAttempts==='function') window.alphaLoadDuplicateAttempts(false); }catch(e){}
 
   }catch(error){
     console.error("ALPHA CANDIDATES ERROR:",error);
@@ -9375,5 +9406,128 @@ body.alpha-authenticated #adminScreen>.container>#alphaGlobalHistory{display:non
     }catch(e){console.warn('ALPHA 067.3 SLA visual',e)}
   };
   document.addEventListener('DOMContentLoaded',()=>{syncSlaVisual();setInterval(syncSlaVisual,1200);});
+})();
+</script>
+
+
+<style id="alpha-0674-reincidencia-css">
+.alpha-dup-nav{border-color:rgba(255,190,90,.06)!important}.alpha-dup-nav:hover{border-color:rgba(246,200,74,.26)!important}.alpha-dup-nav b{color:#f6c84a!important}
+.alpha-duplicate-modal{position:fixed;inset:0;z-index:10030;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(1,4,7,.84);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.alpha-duplicate-modal.open{display:flex}
+.alpha-duplicate-shell{width:min(1280px,100%);height:min(92vh,960px);display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(246,200,74,.24);border-radius:28px;background:linear-gradient(145deg,#0a1118,#03070b 80%);box-shadow:0 45px 150px rgba(0,0,0,.78),0 0 70px rgba(246,200,74,.035)}
+.alpha-duplicate-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 24px;border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(90deg,rgba(246,200,74,.07),rgba(82,184,255,.025),transparent)}
+.alpha-duplicate-kicker{font-size:8px;letter-spacing:.2em;color:#f6c84a;font-weight:1000}.alpha-duplicate-title{margin-top:5px;color:#f1f5f8;font-size:25px;font-weight:1000;letter-spacing:-.03em}.alpha-duplicate-sub{margin-top:5px;color:#758391;font-size:9px;line-height:1.45;max-width:760px}.alpha-duplicate-head-actions{display:flex;gap:7px;flex-wrap:wrap}.alpha-duplicate-head-actions button{border:1px solid rgba(255,255,255,.09);background:#0c131b;color:#c8d0d8;border-radius:10px;padding:9px 11px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.alpha-duplicate-refresh{border-color:rgba(246,200,74,.26)!important;color:#f6d97b!important;background:rgba(246,200,74,.06)!important}.alpha-duplicate-head-actions button:hover{border-color:rgba(246,200,74,.40)}
+.alpha-duplicate-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;padding:14px 14px 0}.alpha-dup-kpi{padding:14px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:linear-gradient(145deg,rgba(14,24,33,.92),rgba(3,8,13,.98))}.alpha-dup-kpi small{display:block;color:#6f7d8a;font-size:7px;font-weight:1000;letter-spacing:.13em}.alpha-dup-kpi strong{display:block;margin-top:7px;color:#f2f6f8;font-size:25px;line-height:1}.alpha-dup-kpi span{display:block;margin-top:5px;color:#5f6d7a;font-size:8px}.alpha-dup-kpi.warn{border-color:rgba(246,200,74,.20)}.alpha-dup-kpi.warn strong{color:#f6c84a}.alpha-dup-kpi.red{border-color:rgba(255,104,117,.19)}.alpha-dup-kpi.red strong{color:#ff929d}.alpha-dup-kpi.green{border-color:rgba(97,227,173,.17)}.alpha-dup-kpi.green strong{color:#65e3af}
+.alpha-duplicate-toolbar{display:grid;grid-template-columns:1fr 190px;gap:8px;padding:12px 14px 8px}.alpha-duplicate-toolbar input,.alpha-duplicate-toolbar select{box-sizing:border-box;width:100%;min-height:40px;padding:9px 11px;border:1px solid rgba(255,255,255,.09);border-radius:11px;background:#071017;color:#eaf0f4;outline:none;font:inherit;font-size:9px}.alpha-duplicate-toolbar input:focus,.alpha-duplicate-toolbar select:focus{border-color:rgba(246,200,74,.40)}
+.alpha-duplicate-summary{padding:0 14px 8px;color:#687684;font-size:8px}.alpha-duplicate-summary b{color:#dbe3e9}.alpha-duplicate-summary strong{color:#f6c84a}
+.alpha-duplicate-list{flex:1;min-height:0;overflow:auto;padding:0 14px 18px;display:grid;gap:8px}.alpha-dup-row{border:1px solid rgba(255,255,255,.065);border-radius:17px;background:linear-gradient(145deg,rgba(12,21,29,.92),rgba(3,8,13,.97));overflow:hidden}.alpha-dup-main{display:grid;grid-template-columns:45px 1fr auto;gap:12px;align-items:center;padding:13px}.alpha-dup-avatar{width:45px;height:45px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#152536,#071017);border:1px solid rgba(246,200,74,.18);color:#f9dd8d;font-size:11px;font-weight:1000}.alpha-dup-info{min-width:0}.alpha-dup-name{color:#eef3f7;font-size:11px;font-weight:1000}.alpha-dup-sub{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.alpha-dup-chip{padding:4px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);color:#73818d;font-size:7px;font-weight:900}.alpha-dup-chip.gold{color:#f6d87f;border-color:rgba(246,200,74,.16)}.alpha-dup-chip.red{color:#ff969f;border-color:rgba(255,104,117,.16)}.alpha-dup-contact{margin-top:6px;color:#71808d;font-size:8px;line-height:1.45}.alpha-dup-side{text-align:right}.alpha-dup-side strong{display:block;color:#f6c84a;font-size:13px}.alpha-dup-side span{display:block;margin-top:3px;color:#677583;font-size:7px}.alpha-dup-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:7px}.alpha-dup-actions button{border:1px solid rgba(255,255,255,.08);background:#0a1118;color:#c2cbd4;border-radius:8px;padding:6px 8px;font:inherit;font-size:7px;font-weight:1000;cursor:pointer}.alpha-dup-actions button:hover{border-color:rgba(246,200,74,.34);color:#f6d87f}.alpha-dup-profile{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:8px;padding:10px 12px 12px;border-top:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.012)}.alpha-dup-profile-card{padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.018)}.alpha-dup-profile-card small{display:block;color:#5e6d79;font-size:6px;font-weight:1000;letter-spacing:.12em}.alpha-dup-profile-card b{display:block;margin-top:5px;color:#dfe5ea;font-size:8px;line-height:1.45}.alpha-dup-attempts{grid-column:1/-1;display:grid;gap:5px}.alpha-dup-attempt{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 8px;border-radius:9px;background:rgba(246,200,74,.025);border:1px solid rgba(246,200,74,.08);color:#778592;font-size:7px}.alpha-dup-attempt strong{color:#dfe5ea}.alpha-dup-attempt em{font-style:normal;color:#f6c84a;font-weight:1000}.alpha-dup-empty{padding:42px;text-align:center;color:#6c7a87;border:1px dashed rgba(255,255,255,.08);border-radius:15px}.alpha-dup-empty strong{display:block;color:#cdd5dc;font-size:11px}.alpha-dup-empty span{display:block;margin-top:5px;font-size:8px}
+@media(max-width:900px){.alpha-duplicate-shell{height:96vh;border-radius:22px}.alpha-duplicate-head{align-items:flex-start;flex-direction:column}.alpha-duplicate-head-actions{width:100%}.alpha-duplicate-head-actions button{flex:1}.alpha-duplicate-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.alpha-duplicate-toolbar{grid-template-columns:1fr}.alpha-dup-profile{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.alpha-duplicate-modal{padding:0}.alpha-duplicate-shell{width:100%;height:100%;max-height:none;border-radius:0}.alpha-duplicate-head{padding:17px}.alpha-duplicate-title{font-size:21px}.alpha-duplicate-kpis{padding:10px}.alpha-dup-kpi{padding:11px}.alpha-duplicate-toolbar{padding:10px}.alpha-duplicate-list{padding:0 10px 14px}.alpha-dup-main{grid-template-columns:38px 1fr}.alpha-dup-avatar{width:38px;height:38px;border-radius:11px}.alpha-dup-side{grid-column:2;text-align:left}.alpha-dup-actions{justify-content:flex-start}.alpha-dup-profile{grid-template-columns:1fr}.alpha-dup-attempts{grid-column:auto}}
+</style>
+
+<script id="alpha-0674-reincidencia-js">
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const text=v=>String(v??'').trim();
+  let attempts=[];
+  let search='';
+  let windowKey='all';
+
+  function emailNorm(v){return text(v).toLowerCase().replace(/\s+/g,'');}
+  function phoneNorm(v){return text(v).replace(/\D/g,'');}
+  function listCandidates(){try{return Array.isArray(window.candidates)?window.candidates:[]}catch(e){return []}}
+  function initials(name){const parts=text(name).split(/\s+/).filter(Boolean);return ((parts[0]?.[0]||'')+(parts.length>1?parts[parts.length-1]?.[0]||'':'' )).toUpperCase().slice(0,2)||'CA';}
+  function esc(v){return typeof escapeHTML==='function'?escapeHTML(v??''):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function findProfile(a){
+    const em=emailNorm(a.email), ph=phoneNorm(a.telefone);
+    return listCandidates().find(c=>{
+      const ce=emailNorm(c.email), cp=phoneNorm(c.telefone);
+      return (em&&ce===em)||(ph&&cp===ph);
+    })||null;
+  }
+  function withinWindow(a){
+    if(windowKey==='all')return true;
+    const d=new Date(a.created_at||0).getTime(); if(!Number.isFinite(d))return false;
+    const delta=Date.now()-d;
+    if(windowKey==='24h')return delta<=86400000;
+    if(windowKey==='7d')return delta<=7*86400000;
+    if(windowKey==='30d')return delta<=30*86400000;
+    return true;
+  }
+  function matches(a){
+    if(!withinWindow(a))return false;
+    if(!search)return true;
+    const p=findProfile(a);
+    const hay=[a.nome_completo,a.email,a.telefone,a.tipo_duplicidade,a.detalhe,p?.codigo_protocolo,p?.protocolo,p?.nome_completo].map(text).join(' ').toLowerCase();
+    return hay.includes(search);
+  }
+  function formatDate(v){const d=new Date(v||0);return Number.isNaN(d.getTime())?'—':d.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});}
+  function relative(v){const d=new Date(v||0).getTime();if(!Number.isFinite(d))return 'sem data';const h=(Date.now()-d)/3600000;if(h<1)return Math.max(1,Math.round(h*60))+'min atrás';if(h<24)return Math.floor(h)+'h atrás';return Math.floor(h/24)+'d atrás';}
+  function uniqueProfiles(){
+    const map=new Map();
+    attempts.forEach(a=>{const p=findProfile(a);const key=p?String(p.id):'attempt:'+emailNorm(a.email)+'|'+phoneNorm(a.telefone);const item=map.get(key)||{profile:p,rows:[]};item.rows.push(a);map.set(key,item);});
+    return [...map.values()].sort((a,b)=>new Date(b.rows[0]?.created_at||0)-new Date(a.rows[0]?.created_at||0));
+  }
+  function render(){
+    const filtered=attempts.filter(matches);
+    const groups=uniqueProfiles().filter(g=>g.rows.some(matches));
+    const last24=attempts.filter(a=>Date.now()-new Date(a.created_at||0).getTime()<=86400000).length;
+    const unique=uniqueProfiles().length;
+    const repeaters=uniqueProfiles().filter(g=>g.rows.length>1).length;
+    const k=$('alphaDuplicateKpis');
+    if(k)k.innerHTML=`<div class="alpha-dup-kpi warn"><small>TENTATIVAS</small><strong>${filtered.length}</strong><span>registros no período atual</span></div><div class="alpha-dup-kpi"><small>CANDIDATOS ÚNICOS</small><strong>${unique}</strong><span>perfis identificados</span></div><div class="alpha-dup-kpi red"><small>ÚLTIMAS 24H</small><strong>${last24}</strong><span>novas tentativas</span></div><div class="alpha-dup-kpi green"><small>REINCIDÊNCIA</small><strong>${repeaters}</strong><span>mais de uma tentativa</span></div>`;
+    const s=$('alphaDuplicateSummary'); if(s)s.innerHTML=`Exibindo <b>${groups.length}</b> perfil(is) · <strong>${filtered.length}</strong> tentativa(s) registrada(s) · última atualização <b>${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}</b>`;
+    const list=$('alphaDuplicateList');if(!list)return;
+    if(!groups.length){list.innerHTML='<div class="alpha-dup-empty"><strong>✓ Nenhuma reincidência encontrada</strong><span>Quando um candidato tentar se cadastrar novamente, o perfil aparecerá aqui automaticamente.</span></div>';return;}
+    list.innerHTML=groups.map((g,idx)=>{
+      const p=g.profile, rows=[...g.rows].sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));
+      const last=rows[0];
+      const protocol=p?(p.codigo_protocolo||p.protocolo||p.protocol||p.codigo||'Sem protocolo'):'Sem correspondência';
+      const status=p?.status||'Perfil localizado';
+      const exp=p?.experiencia_profissional||p?.experiencia||'Não informado';
+      const intro=p?.apresentacao_profissional||p?.motivo||'Não informado';
+      const responsavel=p?.responsavel||'ALPHA';
+      const socials=[p?.site,p?.linkedin,p?.instagram].filter(Boolean).length;
+      return `<article class="alpha-dup-row"><div class="alpha-dup-main"><div class="alpha-dup-avatar">${initials(p?.nome_completo||last.nome_completo)}</div><div class="alpha-dup-info"><div class="alpha-dup-name">${esc(p?.nome_completo||last.nome_completo||'Candidato')}</div><div class="alpha-dup-sub"><span class="alpha-dup-chip gold">${esc(protocol)}</span><span class="alpha-dup-chip">${esc(status)}</span><span class="alpha-dup-chip red">⚠ ${rows.length} tentativa(s)</span><span class="alpha-dup-chip">${esc(last.tipo_duplicidade||'DUPLICIDADE')}</span></div><div class="alpha-dup-contact">${esc(p?.email||last.email||'Sem e-mail')} · ${esc(p?.telefone||last.telefone||'Sem telefone')} · original ${p?.created_at?formatDate(p.created_at):'não localizado'}</div></div><div class="alpha-dup-side"><strong>${rows.length}x</strong><span>última ${relative(last.created_at)}</span><div class="alpha-dup-actions"><button type="button" onclick="alphaToggleDuplicateProfile(${idx})">DETALHES</button>${p?`<button type="button" onclick="openDetails('${esc(p.id)}')">360°</button>`:''}</div></div></div><div class="alpha-dup-profile" id="alphaDupProfile${idx}" style="display:none"><div class="alpha-dup-profile-card"><small>PERFIL</small><b>${esc(p?.idade?String(p.idade)+' anos':'Idade não informada')} · ${esc(p?.sexo||'Sexo não informado')}<br>${esc(p?.trabalhando_atualmente||'Situação profissional não informada')}</b></div><div class="alpha-dup-profile-card"><small>EXPERIÊNCIA</small><b>${esc(exp).slice(0,320)}</b></div><div class="alpha-dup-profile-card"><small>PRESENÇA PROFISSIONAL</small><b>${socials} link(s) cadastrado(s) · ${esc(p?.como_soube||'Origem não informada')}</b></div><div class="alpha-dup-profile-card"><small>APRESENTAÇÃO</small><b>${esc(intro).slice(0,420)}</b></div><div class="alpha-dup-profile-card"><small>RESPONSÁVEL</small><b>${esc(responsavel)} · início ${esc(p?.inicio||'não informado')}</b></div><div class="alpha-dup-attempts"><small style="color:#5e6d79;font-size:6px;font-weight:1000;letter-spacing:.12em">HISTÓRICO DA REINCIDÊNCIA</small>${rows.map(r=>`<div class="alpha-dup-attempt"><span><strong>${formatDate(r.created_at)}</strong> · ${esc(r.nome_completo||'Sem nome')}</span><em>${esc(r.tipo_duplicidade||'DUPLICIDADE')}</em></div>`).join('')}</div></div></article>`;
+    }).join('');
+  }
+  window.alphaToggleDuplicateProfile=function(index){const el=$('alphaDupProfile'+index);if(el)el.style.display=el.style.display==='none'?'grid':'none';};
+  window.alphaOpenDuplicateCenter=async function(){
+    const m=$('alphaDuplicateModal'); if(!m)return;
+    m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+    document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.classList.contains('alpha-dup-nav')));
+    const crumb=$('alphaPlusCurrent'); if(crumb)crumb.textContent='REINCIDÊNCIAS';
+    const q=$('alphaDuplicateSearch');const w=$('alphaDuplicateWindow');
+    if(q&&!q.dataset.bound){q.dataset.bound='1';q.addEventListener('input',()=>{search=text(q.value).toLowerCase();render()});}
+    if(w&&!w.dataset.bound){w.dataset.bound='1';w.addEventListener('change',()=>{windowKey=w.value;render()});}
+    await window.alphaLoadDuplicateAttempts(false);
+  };
+  window.alphaCloseDuplicateCenter=function(){const m=$('alphaDuplicateModal');if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget==='command'));const crumb=$('alphaPlusCurrent');if(crumb)crumb.textContent='COMANDO';};
+  window.alphaLoadDuplicateAttempts=async function(showToastAfter){
+    let currentToken='';
+    try{ currentToken=(typeof accessToken!=='undefined'&&accessToken)?accessToken:''; }catch(e){}
+    if(!currentToken){return;}
+    try{
+      const r=await fetch(`${SUPABASE_URL}/rest/v1/tentativas_candidatura?select=*&order=created_at.desc&limit=1000`,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${currentToken}`,Accept:'application/json'},cache:'no-store'});
+      const raw=await r.text(); let data=null; try{data=raw?JSON.parse(raw):[];}catch{data=[]}
+      if(!r.ok)throw new Error(data?.message||data?.hint||raw||`SUPABASE ${r.status}`);
+      attempts=Array.isArray(data)?data:[];
+      window.alphaDuplicateAttempts=attempts;
+      const b=$('alphaDuplicateAttemptsBadge');if(b)b.textContent=attempts.length;
+      render();
+      if(showToastAfter&&typeof showToast==='function')showToast(`✓ ${attempts.length} tentativa(s) de novo cadastro carregadas.`);
+    }catch(e){
+      console.warn('ALPHA REINCIDÊNCIAS',e);
+      const list=$('alphaDuplicateList');if(list)list.innerHTML=`<div class="alpha-dup-empty"><strong>⚠ Não foi possível carregar as reincidências</strong><span>${esc(e.message||'Verifique a tabela tentativas_candidatura e as permissões do Supabase.')}</span></div>`;
+    }
+  };
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')window.alphaCloseDuplicateCenter?.();});
+  document.addEventListener('DOMContentLoaded',()=>{
+    setTimeout(()=>window.alphaLoadDuplicateAttempts?.(false),2200);
+    setInterval(()=>{
+      if(document.visibilityState==='visible'){try{if(typeof accessToken!=='undefined'&&accessToken)window.alphaLoadDuplicateAttempts?.(false)}catch(e){}}
+    },60000);
+  });
 })();
 </script>
