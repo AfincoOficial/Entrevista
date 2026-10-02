@@ -2775,7 +2775,178 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 @media(max-width:620px){.alpha-final-timegrid{grid-template-columns:1fr 1fr}.alpha-final-timegrid>div:last-child{grid-column:1/-1}}
 </style>
 
-<div id="alpha068-build" style="display:none" data-version="068"></div>
+<div id="alpha068-build" style="display:none" data-version="068.5.1"></div>
+
+
+<script id="alpha-public-0685-visitor-analytics">
+(function(){
+  'use strict';
+
+  /* ============================================================
+     AFINCO 068.5 — VISITOR + ENGAGEMENT ANALYTICS
+     Métricas anônimas: visitante, sessão, rolagem e seções vistas.
+     Não coleta nome, e-mail, telefone, IP ou fingerprint.
+  ============================================================ */
+  const ANALYTICS_URL = (typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://suxumbvzokoezwxouyeg.supabase.co');
+  const ANALYTICS_KEY = (typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'sb_publishable_1N3VgWZFmYC6UKTYdW_xYw_dwsa91AZ');
+  const PAGE_PATH = window.location.pathname || '/';
+  const STORAGE_VISITOR = 'afinco_public_visitor_v1';
+  const STORAGE_SESSION = 'afinco_public_session_v1';
+  const STORAGE_STARTED = 'afinco_public_form_started_v1';
+  const sentSection = new Set();
+  const sentScroll = new Set();
+  const startedAt = Date.now();
+  let exitSent = false;
+
+  function id(){
+    try{
+      if(window.crypto && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+    }catch(e){}
+    return 'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,14);
+  }
+  function getLocal(key, storage){
+    try{
+      const v = storage.getItem(key);
+      return v && String(v).trim() ? v : null;
+    }catch(e){ return null; }
+  }
+  function setLocal(key,value,storage){
+    try{ storage.setItem(key,value); }catch(e){}
+  }
+  function visitorId(){
+    const ls = window.localStorage;
+    let v = getLocal(STORAGE_VISITOR, ls);
+    if(!v){ v=id(); setLocal(STORAGE_VISITOR,v,ls); }
+    return v;
+  }
+  function sessionId(){
+    const ss = window.sessionStorage;
+    let v = getLocal(STORAGE_SESSION, ss);
+    if(!v){ v=id(); setLocal(STORAGE_SESSION,v,ss); }
+    return v;
+  }
+  function shouldTrack(){
+    try{ return navigator.doNotTrack !== '1' && navigator.globalPrivacyControl !== true; }
+    catch(e){ return true; }
+  }
+  if(!shouldTrack()) return;
+
+  const VISITOR_ID = visitorId();
+  const SESSION_ID = sessionId();
+
+  function send(eventType, extra, keepalive){
+    const payload = Object.assign({
+      visitor_id: VISITOR_ID,
+      session_id: SESSION_ID,
+      event_type: eventType,
+      page_path: PAGE_PATH,
+      section_id: null,
+      scroll_depth: null,
+      duration_seconds: null
+    }, extra || {});
+    try{
+      fetch(ANALYTICS_URL + '/rest/v1/site_visitas',{
+        method:'POST',
+        mode:'cors',
+        cache:'no-store',
+        keepalive: keepalive === true,
+        headers:{
+          'apikey': ANALYTICS_KEY,
+          'Content-Type':'application/json',
+          'Prefer':'return=minimal'
+        },
+        body:JSON.stringify(payload)
+      }).catch(()=>{});
+    }catch(e){}
+  }
+
+  function sendOnce(eventType, extra, key){
+    const marker = key || eventType + JSON.stringify(extra || {});
+    if(sentSection.has(marker)) return;
+    sentSection.add(marker);
+    send(eventType,extra,false);
+  }
+
+  function trackSection(section){
+    if(!section || !section.id) return;
+    sendOnce('section_view',{section_id:section.id},'section:'+section.id);
+  }
+
+  function trackScroll(){
+    const doc = document.documentElement;
+    const body = document.body;
+    const scrollTop = window.scrollY || doc.scrollTop || 0;
+    const maxScroll = Math.max(1, Math.max(doc.scrollHeight, body ? body.scrollHeight : 0) - window.innerHeight);
+    const pct = Math.max(0, Math.min(100, Math.round((scrollTop / maxScroll) * 100)));
+    [25,50,75,90,100].forEach(mark=>{
+      if(pct >= mark && !sentScroll.has(mark)){
+        sentScroll.add(mark);
+        send('scroll_depth',{scroll_depth:mark},false);
+      }
+    });
+  }
+
+  function trackFormStart(){
+    try{
+      if(sessionStorage.getItem(STORAGE_STARTED)==='1') return;
+      sessionStorage.setItem(STORAGE_STARTED,'1');
+    }catch(e){}
+    sendOnce('form_start',{section_id:'cadastro'},'form-start');
+  }
+
+  function observeOverlay(idName, className, eventType){
+    const el=document.getElementById(idName);
+    if(!el) return;
+    const fire=()=>{
+      if(el.classList.contains(className)) sendOnce(eventType,{},eventType);
+    };
+    try{
+      const obs=new MutationObserver(fire);
+      obs.observe(el,{attributes:true,attributeFilter:['class']});
+      fire();
+    }catch(e){}
+  }
+
+  function init(){
+    sendOnce('page_view',{},'page-view');
+    window.addEventListener('scroll',trackScroll,{passive:true});
+    window.addEventListener('resize',trackScroll,{passive:true});
+    trackScroll();
+
+    const sections=[...document.querySelectorAll('main section[id]')];
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{ if(entry.isIntersecting && entry.intersectionRatio >= .25) trackSection(entry.target); });
+      },{threshold:[.25]});
+      sections.forEach(s=>io.observe(s));
+    }else{
+      sections.slice(0,2).forEach(trackSection);
+    }
+
+    const form=document.getElementById('candidaturaForm');
+    if(form){
+      form.addEventListener('focusin',trackFormStart,{once:true});
+      form.addEventListener('change',trackFormStart,{once:true});
+      form.addEventListener('submit',()=>sendOnce('submit_attempt',{section_id:'cadastro'},'submit-attempt'),{once:false});
+    }
+
+    observeOverlay('successOverlay','show','application_submitted');
+    observeOverlay('duplicateOverlay','show','duplicate_attempt');
+  }
+
+  function leave(){
+    if(exitSent) return;
+    exitSent = true;
+    const seconds=Math.max(0,Math.round((Date.now()-startedAt)/1000));
+    send('page_exit',{duration_seconds:seconds,scroll_depth:Math.max(...[0,...sentScroll])},true);
+  }
+  window.addEventListener('pagehide',leave,{once:true});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')leave();});
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
 
 </body>
 </html>
