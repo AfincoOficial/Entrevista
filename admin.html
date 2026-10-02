@@ -9032,6 +9032,321 @@ body.alpha-plus-focus .a56-kpis,body.alpha-plus-focus .a58-control-deck>.a58-com
 })();
 </script>
 
+
+<script id="alpha-0675-visitor-command-center">
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const txt=v=>String(v??'').trim();
+  const esc=v=>typeof escapeHTML==='function'?escapeHTML(v):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  let rows=[];
+  let days=30;
+  let bound=false;
+  const sections={
+    inicio:'Início',oportunidade:'Oportunidade',afinco:'Afinco',videos:'Vídeos',unidades:'Unidades',processo:'Processo',cadastro:'Cadastro'
+  };
+  const sectionLabel=id=>sections[id]||id||'Página';
+  const sinceDate=()=>new Date(Date.now()-days*86400000).toISOString();
+  const unique=list=>new Set(list.filter(Boolean));
+  const countEvent=(type,list=rows)=>list.filter(r=>r.event_type===type).length;
+  const uniqueVisitors=(list)=>unique(list.map(r=>r.visitor_id)).size;
+  const uniqueSessions=(list)=>unique(list.map(r=>r.session_id)).size;
+  const withinHours=(h)=>Date.now()-new Date(h).getTime()<=days*86400000;
+
+  function ensureNav(){
+    const sidebar=$('alphaPlusSidebar');
+    if(!sidebar || sidebar.querySelector('.alpha-visitor-nav')) return;
+    const ref=sidebar.querySelector('.alpha-dup-nav');
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='alpha-plus-nav alpha-visitor-nav';
+    b.dataset.plusTarget='visitors';
+    b.innerHTML='<i>◉</i><span>Visitantes</span><b id="alphaVisitorAttemptsBadge">0</b>';
+    b.addEventListener('click',openVisitorCenter);
+    if(ref) ref.insertAdjacentElement('afterend',b);
+    else sidebar.appendChild(b);
+  }
+
+  function ensureModal(){
+    if($('alphaVisitorModal')) return;
+    document.body.insertAdjacentHTML('beforeend',`
+      <div id="alphaVisitorModal" class="alpha-visitor-modal" aria-hidden="true">
+        <div class="alpha-visitor-shell" role="dialog" aria-modal="true" aria-labelledby="alphaVisitorTitle">
+          <div class="alpha-visitor-head">
+            <div>
+              <div class="alpha-visitor-kicker">ALPHA OS // PUBLIC INTELLIGENCE 068.6</div>
+              <div class="alpha-visitor-title" id="alphaVisitorTitle">◉ Visitantes & comportamento</div>
+              <div class="alpha-visitor-sub">Controle anônimo de entradas, sessões, rolagem e seções visualizadas no site público.</div>
+            </div>
+            <div class="alpha-visitor-head-actions">
+              <select id="alphaVisitorDays"><option value="7">7 DIAS</option><option value="30" selected>30 DIAS</option><option value="90">90 DIAS</option></select>
+              <button type="button" id="alphaVisitorRefresh">↻ ATUALIZAR</button>
+              <button type="button" id="alphaVisitorClose">✕ FECHAR</button>
+            </div>
+          </div>
+          <div class="alpha-visitor-kpis" id="alphaVisitorKpis"></div>
+          <div class="alpha-visitor-grid">
+            <section class="alpha-visitor-card alpha-visitor-flow-card">
+              <div class="alpha-visitor-card-head"><div><small>COMPORTAMENTO</small><b>Funil de atenção</b></div><span id="alphaVisitorFlowHint">—</span></div>
+              <div class="alpha-visitor-funnel" id="alphaVisitorFunnel"></div>
+            </section>
+            <section class="alpha-visitor-card">
+              <div class="alpha-visitor-card-head"><div><small>ROLAGEM</small><b>Profundidade da visita</b></div><span>sessões alcançando o marco</span></div>
+              <div class="alpha-visitor-scroll" id="alphaVisitorScroll"></div>
+            </section>
+            <section class="alpha-visitor-card">
+              <div class="alpha-visitor-card-head"><div><small>SEÇÕES</small><b>O que foi visualizado</b></div><span>visitantes únicos</span></div>
+              <div class="alpha-visitor-sections" id="alphaVisitorSections"></div>
+            </section>
+            <section class="alpha-visitor-card">
+              <div class="alpha-visitor-card-head"><div><small>ENTRADAS</small><b>Visitas por dia</b></div><span>últimos dias</span></div>
+              <div class="alpha-visitor-days-chart" id="alphaVisitorDaysChart"></div>
+              <div class="alpha-visitor-days-footer" id="alphaVisitorDaysFooter">—</div>
+            </section>
+          </div>
+          <section class="alpha-visitor-leak" id="alphaVisitorLeakRadar">
+            <div class="alpha-visitor-card-head">
+              <div><small>LEAK RADAR</small><b>Profundidade × conversão</b></div>
+              <span>visitantes que avançaram e não concluíram candidatura</span>
+            </div>
+            <div class="alpha-visitor-depth-grid" id="alphaVisitorDepthSummary"></div>
+            <div class="alpha-visitor-leak-grid">
+              <div class="alpha-visitor-leak-list-wrap">
+                <div class="alpha-visitor-mini-head"><span>ALTA INTENÇÃO · 75%+ SEM CANDIDATURA</span><b id="alphaVisitorLeakCount">0</b></div>
+                <div class="alpha-visitor-leak-list" id="alphaVisitorLeakList"></div>
+              </div>
+              <div class="alpha-visitor-mini-panel">
+                <div class="alpha-visitor-mini-head"><span>FORMULÁRIO</span><b id="alphaVisitorFormLeakCount">0</b></div>
+                <p>Visitantes que iniciaram o formulário, mas não concluíram uma candidatura confirmada no período.</p>
+                <div class="alpha-visitor-form-leak" id="alphaVisitorFormLeak"></div>
+              </div>
+            </div>
+          </section>
+          <div class="alpha-visitor-footer" id="alphaVisitorFooter">—</div>
+        </div>
+      </div>
+    `);
+    $('alphaVisitorClose')?.addEventListener('click',closeVisitorCenter);
+    $('alphaVisitorRefresh')?.addEventListener('click',()=>loadVisitorAnalytics(true));
+    $('alphaVisitorDays')?.addEventListener('change',e=>{days=Math.max(1,Number(e.target.value)||30);loadVisitorAnalytics(false);});
+    $('alphaVisitorModal')?.addEventListener('click',e=>{if(e.target.id==='alphaVisitorModal')closeVisitorCenter();});
+    injectStyles();
+  }
+
+  function injectStyles(){
+    if($('alpha-0675-visitor-css'))return;
+    const s=document.createElement('style');s.id='alpha-0675-visitor-css';s.textContent=`
+      .alpha-plus-nav.alpha-visitor-nav{margin-top:2px}
+      #alphaVisitorModal{position:fixed;inset:0;z-index:10010;background:rgba(1,4,7,.88);backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center;padding:18px}
+      #alphaVisitorModal.open{display:flex}
+      .alpha-visitor-shell{width:min(1240px,100%);height:min(900px,94vh);overflow:auto;border:1px solid rgba(245,196,66,.22);border-radius:26px;background:linear-gradient(145deg,#070e15,#03070b);box-shadow:0 40px 140px rgba(0,0,0,.8);color:#edf3f7}
+      .alpha-visitor-head{position:sticky;top:0;z-index:3;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:22px 24px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(4,9,14,.94);backdrop-filter:blur(18px)}
+      .alpha-visitor-kicker{font-size:8px;font-weight:1000;letter-spacing:.2em;color:#f5c44a}.alpha-visitor-title{font-size:25px;font-weight:1000;letter-spacing:-.03em;margin-top:5px}.alpha-visitor-sub{font-size:9px;color:#758391;line-height:1.5;margin-top:5px;max-width:720px}
+      .alpha-visitor-head-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.alpha-visitor-head-actions select,.alpha-visitor-head-actions button{border:1px solid rgba(255,255,255,.09);background:#0b1219;color:#bdc7d0;border-radius:10px;padding:9px 11px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.alpha-visitor-head-actions select{color:#f3d57d;border-color:rgba(245,196,66,.20)}.alpha-visitor-head-actions button:hover{border-color:rgba(245,196,66,.4);color:#ffe292}
+      .alpha-visitor-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;padding:14px}.alpha-visitor-kpi{padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:linear-gradient(145deg,rgba(13,22,31,.94),rgba(3,8,13,.98));min-height:86px}.alpha-visitor-kpi small{display:block;color:#71808d;font-size:7px;font-weight:1000;letter-spacing:.12em}.alpha-visitor-kpi strong{display:block;margin-top:7px;color:#f4f7f9;font-size:24px}.alpha-visitor-kpi span{display:block;margin-top:4px;color:#5f6d7b;font-size:7px}.alpha-visitor-kpi.gold{border-color:rgba(245,196,66,.18)}.alpha-visitor-kpi.gold strong{color:#f5c44a}.alpha-visitor-kpi.green{border-color:rgba(89,229,160,.16)}.alpha-visitor-kpi.green strong{color:#63e4ad}.alpha-visitor-kpi.blue{border-color:rgba(88,220,255,.16)}.alpha-visitor-kpi.blue strong{color:#62dcff}.alpha-visitor-kpi.red{border-color:rgba(255,111,123,.17)}.alpha-visitor-kpi.red strong{color:#ff9099}
+      .alpha-visitor-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:10px;padding:0 14px 14px}.alpha-visitor-card{border:1px solid rgba(255,255,255,.055);border-radius:18px;background:linear-gradient(145deg,rgba(10,18,26,.94),rgba(3,8,13,.98));overflow:hidden;min-height:205px}.alpha-visitor-flow-card{grid-column:1}.alpha-visitor-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.055)}.alpha-visitor-card-head small{display:block;color:#687683;font-size:7px;font-weight:1000;letter-spacing:.13em}.alpha-visitor-card-head b{display:block;margin-top:3px;font-size:11px;color:#eaf0f5}.alpha-visitor-card-head span{font-size:7px;color:#5d6b78;text-align:right}
+      .alpha-visitor-funnel{padding:13px;display:grid;gap:10px}.alpha-vis-funnel-row{display:grid;grid-template-columns:145px 1fr 42px;gap:9px;align-items:center}.alpha-vis-funnel-row label{font-size:8px;color:#99a5b0}.alpha-vis-track{height:9px;background:rgba(255,255,255,.04);border-radius:999px;overflow:hidden}.alpha-vis-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#1d5ca8,#f5c44a);min-width:2px}.alpha-vis-funnel-row b{text-align:right;font-size:8px;color:#edf2f7}
+      .alpha-visitor-scroll{padding:13px;display:grid;gap:8px}.alpha-vis-scroll-row{display:grid;grid-template-columns:46px 1fr 40px;gap:8px;align-items:center}.alpha-vis-scroll-row label{font-size:8px;color:#7a8792}.alpha-vis-scroll-track{height:8px;border-radius:999px;background:rgba(255,255,255,.04);overflow:hidden}.alpha-vis-scroll-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#5fdfff,#f5c44a)}.alpha-vis-scroll-row b{font-size:8px;color:#e9eef3;text-align:right}
+      .alpha-visitor-sections{padding:12px;display:grid;gap:6px}.alpha-vis-section-row{display:grid;grid-template-columns:1fr 80px;gap:8px;align-items:center;padding:8px 9px;border:1px solid rgba(255,255,255,.045);border-radius:10px;background:rgba(255,255,255,.018)}.alpha-vis-section-row span{font-size:8px;color:#a6b0b9}.alpha-vis-section-row b{font-size:8px;color:#f4d474;text-align:right}
+      .alpha-visitor-days-chart{padding:12px 13px 6px;display:grid;grid-template-columns:repeat(14,minmax(13px,1fr));gap:4px;align-items:end;min-height:145px}.alpha-vis-day-col{height:118px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}.alpha-vis-day-bar{width:100%;max-width:19px;background:linear-gradient(180deg,#f5c44a,#1d5ca8);border-radius:4px 4px 2px 2px;min-height:3px}.alpha-vis-day-label{font-size:5px;color:#5f6e7c}.alpha-visitor-days-footer{padding:0 13px 13px;color:#6a7885;font-size:8px}
+      .alpha-visitor-footer{margin:0 14px 14px;padding:10px 12px;border:1px solid rgba(245,196,66,.13);border-radius:13px;background:linear-gradient(100deg,rgba(10,18,26,.95),rgba(3,8,13,.97));color:#657482;font-size:7px;font-weight:1000;letter-spacing:.08em}
+      .alpha-visitor-leak{margin:0 14px 14px;border:1px solid rgba(255,111,123,.15);border-radius:19px;background:linear-gradient(145deg,rgba(15,19,25,.92),rgba(3,8,13,.98));overflow:hidden}
+      .alpha-visitor-depth-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:12px 13px}
+      .alpha-visitor-depth-card{padding:12px;border:1px solid rgba(255,255,255,.055);border-radius:14px;background:rgba(255,255,255,.018);position:relative;overflow:hidden}
+      .alpha-visitor-depth-card.high{border-color:rgba(255,111,123,.20);box-shadow:inset 0 2px rgba(255,111,123,.55)}
+      .alpha-visitor-depth-card .depth-label{display:flex;justify-content:space-between;align-items:center;color:#8b97a3;font-size:7px;font-weight:1000;letter-spacing:.12em}
+      .alpha-visitor-depth-card .depth-label b{color:#f5c44a;font-size:9px}
+      .alpha-visitor-depth-card strong{display:block;margin-top:7px;color:#eef3f7;font-size:23px;line-height:1}
+      .alpha-visitor-depth-card .depth-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;color:#6d7a87;font-size:7px}
+      .alpha-visitor-depth-card .depth-loss{color:#ff929c;font-weight:1000}
+      .alpha-visitor-depth-card .depth-conv{color:#63e4ad;font-weight:1000}
+      .alpha-visitor-depth-card .depth-track{height:6px;border-radius:999px;background:rgba(255,255,255,.05);margin-top:8px;overflow:hidden}.alpha-visitor-depth-card .depth-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#1d5ca8,#f5c44a)}
+      .alpha-visitor-leak-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:10px;padding:0 13px 13px}
+      .alpha-visitor-leak-list-wrap,.alpha-visitor-mini-panel{border:1px solid rgba(255,255,255,.05);border-radius:15px;background:rgba(255,255,255,.016);overflow:hidden}
+      .alpha-visitor-mini-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 12px;border-bottom:1px solid rgba(255,255,255,.05);color:#75828f;font-size:7px;font-weight:1000;letter-spacing:.11em}.alpha-visitor-mini-head b{color:#f5c44a;font-size:12px}
+      .alpha-visitor-leak-list{padding:9px;display:grid;gap:7px;max-height:275px;overflow:auto}
+      .alpha-visitor-leak-row{display:grid;grid-template-columns:62px 1fr auto;gap:9px;align-items:center;padding:9px 10px;border:1px solid rgba(255,255,255,.045);border-radius:11px;background:rgba(255,255,255,.018)}
+      .alpha-visitor-leak-id{color:#dfe6eb;font-size:8px;font-weight:1000;letter-spacing:.06em}.alpha-visitor-leak-main strong{display:block;color:#eaf0f5;font-size:8px}.alpha-visitor-leak-main span{display:block;color:#687684;font-size:7px;margin-top:3px}.alpha-visitor-leak-score{display:inline-flex;padding:5px 7px;border-radius:999px;border:1px solid rgba(255,111,123,.18);color:#ff969f;background:rgba(255,111,123,.06);font-size:7px;font-weight:1000}
+      .alpha-visitor-mini-panel p{margin:12px;color:#74818e;font-size:8px;line-height:1.5}.alpha-visitor-form-leak{padding:0 12px 12px}.alpha-visitor-form-stat{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border:1px solid rgba(255,255,255,.045);border-radius:11px;background:rgba(255,255,255,.018);margin-top:7px}.alpha-visitor-form-stat span{color:#8b97a3;font-size:7px}.alpha-visitor-form-stat b{color:#eef3f7;font-size:11px}.alpha-visitor-empty{padding:18px;text-align:center;color:#687684;font-size:8px}
+      @media(max-width:900px){.alpha-visitor-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.alpha-visitor-grid{grid-template-columns:1fr}.alpha-visitor-flow-card{grid-column:auto}.alpha-vis-funnel-row{grid-template-columns:110px 1fr 34px}.alpha-visitor-leak-grid{grid-template-columns:1fr}.alpha-visitor-depth-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:620px){#alphaVisitorModal{padding:0}.alpha-visitor-shell{width:100%;height:100%;max-height:none;border-radius:0}.alpha-visitor-head{padding:17px;flex-direction:column}.alpha-visitor-head-actions{width:100%}.alpha-visitor-head-actions>*{flex:1}.alpha-visitor-kpis{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px}.alpha-visitor-grid{padding:0 10px 10px}.alpha-visitor-footer{margin:0 10px 10px}}
+    `;document.head.appendChild(s);
+  }
+
+  function classifyRows(){ return rows.filter(r=>r.event_type); }
+  function shortVisitorCode(value){
+    const s=String(value||'').trim(); if(!s)return 'VIS-????';
+    let h=2166136261; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);} h>>>=0;
+    return 'VIS-'+h.toString(16).slice(0,6).toUpperCase();
+  }
+  function depthMap(list,mark){
+    return unique(list.filter(r=>r.event_type==='scroll_depth'&&Number(r.scroll_depth)>=mark).map(r=>r.visitor_id));
+  }
+
+  function renderVisitorCenter(){
+    const list=classifyRows();
+    const pageViews=list.filter(r=>r.event_type==='page_view');
+    const exits=list.filter(r=>r.event_type==='page_exit');
+    const formStarts=list.filter(r=>r.event_type==='form_start');
+    const submitted=list.filter(r=>r.event_type==='application_submitted');
+    const duplicates=list.filter(r=>r.event_type==='duplicate_attempt');
+    const cadastro=list.filter(r=>r.event_type==='section_view'&&r.section_id==='cadastro');
+    const oportunidade=list.filter(r=>r.event_type==='section_view'&&r.section_id==='oportunidade');
+    const engagedVisitors=unique(list.filter(r=>r.event_type==='scroll_depth' && Number(r.scroll_depth)>=75).map(r=>r.visitor_id));
+    const visitors=uniqueVisitors(pageViews.length?pageViews:list);
+    const sessions=uniqueSessions(pageViews.length?pageViews:list);
+    const durationVals=exits.map(r=>Number(r.duration_seconds)).filter(Number.isFinite);
+    const avgDuration=durationVals.length?Math.round(durationVals.reduce((a,b)=>a+b,0)/durationVals.length):0;
+    const set=(id,v)=>{const el=$(id);if(el)el.textContent=v;};
+    const k=(label,val,sub,cls='')=>`<div class="alpha-visitor-kpi ${cls}"><small>${label}</small><strong>${val}</strong><span>${sub}</span></div>`;
+    set('alphaVisitorKpis', '');
+    const box=$('alphaVisitorKpis'); if(box) box.innerHTML=
+      k('VISITANTES ÚNICOS',visitors,'navegadores anonimizados','gold')+
+      k('VISITAS',sessions,'sessões registradas','blue')+
+      k('ENGAJADOS 75%+',engagedVisitors.size,'alcançaram grande profundidade','green')+
+      k('OPORTUNIDADE VISTA',uniqueVisitors(oportunidade),'visitantes únicos','gold')+
+      k('CADASTRO VISTO',uniqueVisitors(cadastro),'chegaram ao formulário','blue')+
+      k('FORMULÁRIOS INICIADOS',uniqueVisitors(formStarts),'visitantes com interação','green');
+
+    const funnel=$('alphaVisitorFunnel');
+    if(funnel){
+      const base=Math.max(1,visitors);
+      const parts=[['Entrada',visitors],['Oportunidade',uniqueVisitors(oportunidade)],['Cadastro',uniqueVisitors(cadastro)],['Formulário iniciado',uniqueVisitors(formStarts)],['Candidatura confirmada',uniqueVisitors(submitted)]];
+      funnel.innerHTML=parts.map(([label,n])=>`<div class="alpha-vis-funnel-row"><label>${esc(label)}</label><div class="alpha-vis-track"><i style="width:${Math.max(2,Math.min(100,n/base*100))}%"></i></div><b>${n}</b></div>`).join('');
+      set('alphaVisitorFlowHint',`${visitors} visitante(s) no período`);
+    }
+
+    const scroll=$('alphaVisitorScroll');
+    if(scroll){
+      const thresholds=[25,50,75,90,100];
+      scroll.innerHTML=thresholds.map(mark=>{const n=uniqueVisitors(list.filter(r=>r.event_type==='scroll_depth'&&Number(r.scroll_depth)>=mark));return `<div class="alpha-vis-scroll-row"><label>${mark}%+</label><div class="alpha-vis-scroll-track"><i style="width:${visitors?Math.max(2,n/visitors*100):2}%"></i></div><b>${n}</b></div>`}).join('');
+    }
+
+    const sec=$('alphaVisitorSections');
+    if(sec){
+      const secIds=['inicio','oportunidade','afinco','videos','unidades','processo','cadastro'];
+      const vals=secIds.map(id=>[id,uniqueVisitors(list.filter(r=>r.event_type==='section_view'&&r.section_id===id))]).sort((a,b)=>b[1]-a[1]);
+      sec.innerHTML=vals.map(([id,n])=>`<div class="alpha-vis-section-row"><span>${esc(sectionLabel(id))}</span><b>${n} visitante(s)</b></div>`).join('');
+    }
+
+    const chart=$('alphaVisitorDaysChart');
+    if(chart){
+      const dayCount=14;
+      const byDay=[];
+      for(let i=dayCount-1;i>=0;i--){
+        const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-i);
+        const key=d.toISOString().slice(0,10);
+        const n=uniqueVisitors(list.filter(r=>r.event_type==='page_view'&&String(r.created_at||'').slice(0,10)===key));
+        byDay.push({d,n});
+      }
+      const max=Math.max(1,...byDay.map(x=>x.n));
+      chart.innerHTML=byDay.map(x=>`<div class="alpha-vis-day-col" title="${x.d.toLocaleDateString('pt-BR')} · ${x.n} visitante(s)"><div class="alpha-vis-day-bar" style="height:${Math.max(4,Math.round(x.n/max*96))}px"></div><span class="alpha-vis-day-label">${x.d.getDate()}/${x.d.getMonth()+1}</span></div>`).join('');
+      set('alphaVisitorDaysFooter',`${byDay.reduce((s,x)=>s+x.n,0)} visitantes únicos somados nos últimos 14 dias · duração média registrada ${avgDuration?fmtDuration(avgDuration):'sem dados'}`);
+    }
+
+    // LEAK RADAR: profundidade alcançada vs. conclusão de candidatura.
+    const submittedVisitors = new Set(submitted.map(r=>r.visitor_id).filter(Boolean));
+    const depthMarks=[25,50,75,100];
+    const depthSummary=depthMarks.map(mark=>{
+      const depthVisitors=depthMap(list,mark);
+      const converted=[...depthVisitors].filter(v=>submittedVisitors.has(v)).length;
+      const lost=Math.max(0,depthVisitors.size-converted);
+      const conversion=depthVisitors.size?Math.round(converted/depthVisitors.size*100):0;
+      return {mark,viewed:depthVisitors.size,converted,lost,conversion};
+    });
+    const depthEl=$('alphaVisitorDepthSummary');
+    if(depthEl){
+      depthEl.innerHTML=depthSummary.map(x=>`<div class="alpha-visitor-depth-card ${x.mark>=75?'high':''}"><div class="depth-label"><span>${x.mark}%+</span><b>${x.viewed}</b></div><strong>${x.lost}</strong><div class="depth-meta"><span class="depth-loss">sem candidatura</span><span class="depth-conv">${x.conversion}% conversão</span></div><div class="depth-track"><i style="width:${x.viewed?Math.max(2,x.conversion):2}%"></i></div></div>`).join('');
+    }
+
+    // Visitantes de alta intenção: chegaram a 75%/100% e não tiveram candidatura confirmada.
+    const perVisitor=new Map();
+    list.forEach(r=>{
+      const vid=String(r.visitor_id||'').trim(); if(!vid)return;
+      if(!perVisitor.has(vid))perVisitor.set(vid,{visitor_id:vid,maxDepth:0,formStart:false,lastAt:0,sections:new Set()});
+      const item=perVisitor.get(vid);
+      if(r.event_type==='scroll_depth')item.maxDepth=Math.max(item.maxDepth,Number(r.scroll_depth)||0);
+      if(r.event_type==='form_start')item.formStart=true;
+      if(r.event_type==='section_view'&&r.section_id)item.sections.add(r.section_id);
+      const t=Date.parse(r.created_at||''); if(Number.isFinite(t))item.lastAt=Math.max(item.lastAt,t);
+    });
+    const highIntent=[...perVisitor.values()].filter(x=>x.maxDepth>=75&&!submittedVisitors.has(x.visitor_id)).sort((a,b)=>b.maxDepth-a.maxDepth||b.lastAt-a.lastAt);
+    const leakCount=$('alphaVisitorLeakCount'); if(leakCount)leakCount.textContent=highIntent.length;
+    const leakList=$('alphaVisitorLeakList');
+    if(leakList){
+      leakList.innerHTML=highIntent.slice(0,12).map(x=>{
+        const last=x.lastAt?new Date(x.lastAt).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+        const section=x.sections.has('cadastro')?'Cadastro visto':x.sections.has('oportunidade')?'Oportunidade vista':'Página visitada';
+        return `<div class="alpha-visitor-leak-row"><div class="alpha-visitor-leak-id">${shortVisitorCode(x.visitor_id)}</div><div class="alpha-visitor-leak-main"><strong>${x.maxDepth>=100?'Chegou ao fim da página':`Chegou a ${x.maxDepth}% da página`}</strong><span>${section} · ${x.formStart?'formulário iniciado':'formulário não iniciado'} · ${last}</span></div><span class="alpha-visitor-leak-score">${x.maxDepth}%</span></div>`;
+      }).join('') || '<div class="alpha-visitor-empty">Nenhum visitante de alta intenção sem candidatura confirmada no período.</div>';
+    }
+
+    const formLeak=[...perVisitor.values()].filter(x=>x.formStart&&!submittedVisitors.has(x.visitor_id));
+    const formLeakCount=$('alphaVisitorFormLeakCount'); if(formLeakCount)formLeakCount.textContent=formLeak.length;
+    const formLeakEl=$('alphaVisitorFormLeak');
+    if(formLeakEl){
+      const d75=depthSummary.find(x=>x.mark===75), d100=depthSummary.find(x=>x.mark===100);
+      formLeakEl.innerHTML=`<div class="alpha-visitor-form-stat"><span>Iniciaram o formulário</span><b>${uniqueVisitors(formStarts)}</b></div><div class="alpha-visitor-form-stat"><span>75%+ sem candidatura</span><b>${d75?.lost||0}</b></div><div class="alpha-visitor-form-stat"><span>100% sem candidatura</span><b>${d100?.lost||0}</b></div>`;
+    }
+
+    const footer=$('alphaVisitorFooter');
+    if(footer) footer.textContent=`PERÍODO ${days}D · ${list.length} EVENTOS · ${submitted.length} CANDIDATURA(S) CONFIRMADA(S) · ${duplicates.length} TENTATIVA(S) DUPLICADA(S) · ${depthSummary.find(x=>x.mark===100)?.lost||0} VISITANTE(S) CHEGARAM AO FIM SEM CANDIDATURA · DADOS ANÔNIMOS`;
+    const badge=$('alphaVisitorAttemptsBadge'); if(badge)badge.textContent=uniqueVisitors(duplicates);
+  }
+  function fmtDuration(sec){ if(sec<60)return sec+'s'; const m=Math.floor(sec/60),r=sec%60; return m+'m'+(r?' '+r+'s':''); }
+
+  async function loadVisitorAnalytics(toast){
+    let token='';
+    try{ token=(typeof accessToken!=='undefined'&&accessToken)?accessToken:''; }catch(e){}
+    if(!token){ return; }
+    try{
+      const url=`${SUPABASE_URL}/rest/v1/site_visitas?select=event_type,visitor_id,session_id,page_path,section_id,scroll_depth,duration_seconds,created_at&created_at=gte.${encodeURIComponent(sinceDate())}&order=created_at.desc&limit=10000`;
+      const r=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${token}`,Accept:'application/json'},cache:'no-store'});
+      const raw=await r.text();let data=[];try{data=raw?JSON.parse(raw):[];}catch(e){data=[]}
+      if(!r.ok)throw new Error(data?.message||data?.hint||raw||`SUPABASE ${r.status}`);
+      rows=Array.isArray(data)?data:[];
+      renderVisitorCenter();
+      const badge=$('alphaVisitorAttemptsBadge'); if(badge)badge.textContent=uniqueVisitors(rows.filter(r=>r.event_type==='page_view'));
+      if(toast&&typeof showToast==='function')showToast(`✓ Analytics públicas atualizadas · ${rows.length} eventos`);
+    }catch(e){
+      console.warn('ALPHA VISITANTES',e);
+      const footer=$('alphaVisitorFooter');if(footer)footer.textContent='⚠ Não foi possível carregar as métricas públicas. Verifique a tabela site_visitas e a policy SELECT do Supabase.';
+    }
+  }
+
+  function openVisitorCenter(){
+    ensureNav();ensureModal();
+    const m=$('alphaVisitorModal');if(!m)return;
+    m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+    document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.classList.contains('alpha-visitor-nav')));
+    const crumb=$('alphaPlusCurrent');if(crumb)crumb.textContent='VISITANTES';
+    loadVisitorAnalytics(false);
+  }
+  function closeVisitorCenter(){
+    const m=$('alphaVisitorModal');if(!m)return;
+    m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';
+    document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget==='command'));
+    const crumb=$('alphaPlusCurrent');if(crumb)crumb.textContent='COMANDO';
+  }
+  window.alphaOpenVisitorCenter=openVisitorCenter;
+  window.alphaCloseVisitorCenter=closeVisitorCenter;
+
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVisitorCenter();});
+  document.addEventListener('DOMContentLoaded',()=>{
+    ensureNav();ensureModal();
+    setTimeout(()=>{
+      try{loadVisitorAnalytics(false)}catch(e){}
+    },3200);
+    setInterval(()=>{
+      if(document.visibilityState==='visible'){
+        try{if(typeof accessToken!=='undefined'&&accessToken)loadVisitorAnalytics(false)}catch(e){}
+      }
+    },60000);
+  },{once:true});
+  window.addEventListener('load',()=>{ensureNav();ensureModal();});
+})();
+</script>
+
 </html>
 <style id="alpha058-background-final">
 .a56-hero-bg{background-size:cover!important;background-position:center center!important;filter:saturate(.9) contrast(1.08) brightness(.62)!important;}
