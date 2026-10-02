@@ -2478,15 +2478,20 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 
     function isDuplicateCandidateError(errorInfo){
       const hay = `${errorInfo?.message||""} ${JSON.stringify(errorInfo?.data||{})}`.toLowerCase();
-      return hay.includes("duplicate_candidate") ||
+      return hay.includes("afinco_duplicate_candidate") ||
+        hay.includes("duplicate_candidate") ||
         hay.includes("cadastro já realizado") ||
         hay.includes("cadastro ja realizado") ||
         hay.includes("candidatura já cadastrada") ||
         hay.includes("candidatura ja cadastrada") ||
         hay.includes("já existe uma candidatura") ||
         hay.includes("ja existe uma candidatura") ||
-        hay.includes("duplicate_candidate") ||
         hay.includes("p0001");
+    }
+
+    function duplicateWasLoggedByDatabase(errorInfo){
+      const hay = `${errorInfo?.message||""} ${JSON.stringify(errorInfo?.data||{})}`.toLowerCase();
+      return hay.includes("afinco_duplicate_candidate");
     }
 
 
@@ -2548,7 +2553,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 
     async function postCandidatura(payload){
       const resposta = await fetch(
-        SUPABASE_URL + "/rest/v1/candidaturas",
+        SUPABASE_URL + "/rest/v1/rpc/afinco_submit_candidatura",
         {
           method: "POST",
           mode: "cors",
@@ -2557,13 +2562,15 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
             "apikey": SUPABASE_KEY,
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Prefer": "return=minimal"
+            "Prefer": "return=representation"
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ p_payload: payload })
         }
       );
       const raw = await resposta.text();
-      return { resposta, raw, errorInfo: resposta.ok ? null : parseSupabaseError(raw, resposta.status) };
+      let rpcData = null;
+      try { rpcData = raw ? JSON.parse(raw) : null; } catch (_) {}
+      return { resposta, raw, rpcData, errorInfo: resposta.ok ? null : parseSupabaseError(raw, resposta.status) };
     }
 
     form.addEventListener("submit", async function(event) {
@@ -2668,11 +2675,8 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
         experiencia_profissional: experienciaProfissional
       };
 
-      // Compatibilidade: a versão antiga da tabela já trabalhava com este núcleo.
-      // Os campos digitais/profissionais são tentados primeiro; se o PostgREST
-      // informar que alguma coluna nova não existe, fazemos um único retry
-      // somente com o conjunto compatível. Nunca repetimos após erro de rede/5xx,
-      // para evitar inserir o mesmo candidato duas vezes.
+      // Mantido no código para compatibilidade documental com versões anteriores.
+      // A submissão atual usa a RPC segura do Supabase como único caminho oficial.
       const payloadCompativel = {
         nome_completo: nome,
         telefone: telefone,
@@ -2692,28 +2696,37 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
       };
 
       try {
-        let resultado = await postCandidatura(payloadCompleto);
-        if (!resultado.resposta.ok && isSchemaColumnError(resultado.errorInfo)) {
-          resultado = await postCandidatura(payloadCompativel);
-        }
+        const resultado = await postCandidatura(payloadCompleto);
 
         if (!resultado.resposta.ok) {
           console.error("ERRO AFINCO / SUPABASE:", resultado.errorInfo);
           if (isDuplicateCandidateError(resultado.errorInfo)) {
-            await registrarTentativaDuplicada({nome,email,telefone,errorInfo:resultado.errorInfo});
             showCandidaturaFeedback(
               "Cadastro já realizado. Identificamos uma candidatura anterior usando este e-mail ou telefone. Seu perfil original continuará em análise e, caso esteja dentro do perfil procurado, nossa equipe entrará em contato."
             );
             showDuplicateCandidateNotice();
           } else if (isPublicInsertBlocked(resultado.errorInfo)) {
             showCandidaturaFeedback(
-              "O banco recebeu a solicitação, mas bloqueou o envio público. É uma permissão do Supabase (RLS/INSERT) e não do formulário. A configuração necessária está no SQL de correção que acompanha esta versão."
+              "O banco recebeu a solicitação, mas bloqueou o envio público. Verifique a configuração do Supabase para a submissão pública."
             );
           } else if (resultado.errorInfo?.message) {
             showCandidaturaFeedback(`Não foi possível concluir o envio. Supabase ${resultado.errorInfo.status}: ${resultado.errorInfo.message}`);
           } else {
             showCandidaturaFeedback("Não foi possível concluir o envio. Verifique sua conexão e tente novamente.");
           }
+          return;
+        }
+
+        const rpcData = resultado.rpcData || {};
+        if (rpcData && rpcData.duplicate === true && rpcData.accepted === false) {
+          showCandidaturaFeedback(
+            "Cadastro já realizado. Identificamos uma candidatura anterior usando este e-mail ou telefone. Seu perfil original continuará em análise e, caso esteja dentro do perfil procurado, nossa equipe entrará em contato."
+          );
+          showDuplicateCandidateNotice();
+          return;
+        }
+        if (rpcData && rpcData.accepted !== true) {
+          showCandidaturaFeedback(rpcData.error || "Não foi possível concluir a candidatura.");
           return;
         }
 
@@ -2775,7 +2788,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
 @media(max-width:620px){.alpha-final-timegrid{grid-template-columns:1fr 1fr}.alpha-final-timegrid>div:last-child{grid-column:1/-1}}
 </style>
 
-<div id="alpha068-build" style="display:none" data-version="068.5.1"></div>
+<div id="alpha068-build" style="display:none" data-version="068.6.1"></div>
 
 
 <script id="alpha-public-0685-visitor-analytics">
@@ -2797,6 +2810,7 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
   const sentScroll = new Set();
   const startedAt = Date.now();
   let exitSent = false;
+  let sessionConverted = false;
 
   function id(){
     try{
@@ -2879,7 +2893,8 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
     const maxScroll = Math.max(1, Math.max(doc.scrollHeight, body ? body.scrollHeight : 0) - window.innerHeight);
     const pct = Math.max(0, Math.min(100, Math.round((scrollTop / maxScroll) * 100)));
     [25,50,75,90,100].forEach(mark=>{
-      if(pct >= mark && !sentScroll.has(mark)){
+      const effectivePct = mark === 100 ? (pct >= 98 ? 100 : pct) : pct;
+      if(effectivePct >= mark && !sentScroll.has(mark)){
         sentScroll.add(mark);
         send('scroll_depth',{scroll_depth:mark},false);
       }
@@ -2898,7 +2913,10 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
     const el=document.getElementById(idName);
     if(!el) return;
     const fire=()=>{
-      if(el.classList.contains(className)) sendOnce(eventType,{},eventType);
+      if(el.classList.contains(className)){
+        if(eventType==='application_submitted') sessionConverted=true;
+        sendOnce(eventType,{},eventType);
+      }
     };
     try{
       const obs=new MutationObserver(fire);
@@ -2937,8 +2955,28 @@ footer{border-top:1px solid rgba(215,181,109,.14);background:linear-gradient(180
   function leave(){
     if(exitSent) return;
     exitSent = true;
+    try{
+      // Garante o marco de 100% quando a pessoa chegou muito perto do fim,
+      // mesmo que o último evento de scroll ainda não tenha sido transmitido.
+      const doc=document.documentElement, body=document.body;
+      const scrollTop=window.scrollY||doc.scrollTop||0;
+      const maxScroll=Math.max(1,Math.max(doc.scrollHeight,body?body.scrollHeight:0)-window.innerHeight);
+      if((scrollTop/maxScroll)>=.98 && !sentScroll.has(100)){
+        sentScroll.add(100);
+        send('scroll_depth',{scroll_depth:100},true);
+      }
+    }catch(e){}
     const seconds=Math.max(0,Math.round((Date.now()-startedAt)/1000));
-    send('page_exit',{duration_seconds:seconds,scroll_depth:Math.max(...[0,...sentScroll])},true);
+    const maxDepth=Math.max(...[0,...sentScroll]);
+    if(!sessionConverted && maxDepth>=75){
+      send('high_intent_exit',{scroll_depth:maxDepth,duration_seconds:seconds},true);
+    }
+    let formStarted=false;
+    try{formStarted=sessionStorage.getItem(STORAGE_STARTED)==='1';}catch(e){}
+    if(!sessionConverted && formStarted){
+      send('form_abandon',{scroll_depth:maxDepth,duration_seconds:seconds,section_id:'cadastro'},true);
+    }
+    send('page_exit',{duration_seconds:seconds,scroll_depth:maxDepth},true);
   }
   window.addEventListener('pagehide',leave,{once:true});
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')leave();});
