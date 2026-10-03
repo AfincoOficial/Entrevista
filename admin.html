@@ -2824,6 +2824,7 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
     <div class="alpha-plus-section">GESTÃO</div>
     <button class="alpha-plus-nav" data-plus-target="intelligence" onclick="alphaPlusGo('intelligence')"><i>◈</i><span>Inteligência</span><b>06</b></button>
     <button class="alpha-plus-nav alpha-dup-nav" type="button" data-plus-target="duplicates" onclick="alphaOpenDuplicateCenter()"><i>⚠</i><span>Reincidências</span><b id="alphaDuplicateAttemptsBadge">0</b></button>
+    <button class="alpha-plus-nav alpha-conversion-nav" type="button" data-plus-target="conversion" onclick="alphaOpenConversionCenter()"><i>◒</i><span>Conversão</span><b id="alphaConversionBadge">0%</b></button>
     <button class="alpha-plus-nav" data-plus-target="team" onclick="alphaPlusGo('team')"><i>♛</i><span>Equipe</span><b>07</b></button>
     <button class="alpha-plus-nav" data-plus-target="history" onclick="alphaPlusGo('history')"><i>◷</i><span>Histórico</span><b>08</b></button>
     <button class="alpha-plus-nav" data-plus-target="reports" onclick="alphaPlusGo('reports')"><i>▣</i><span>Relatórios</span><b>09</b></button>
@@ -9374,6 +9375,178 @@ body.alpha-plus-focus .a56-kpis,body.alpha-plus-focus .a58-control-deck>.a58-com
 })();
 </script>
 
+
+
+<style id="alpha-06762-depth-command-css">
+/* ============================================================
+   ALPHA 067.6.2 — PROFUNDIDADE // CONVERSÃO COMMAND
+   Painel dedicado: somente profundidade 25/50/75/100 e conversão.
+============================================================ */
+.alpha-conversion-nav{border-color:rgba(89,210,255,.08)!important}
+.alpha-conversion-nav:hover{border-color:rgba(89,210,255,.28)!important}
+.alpha-conversion-nav b{color:#62dcff!important}
+#alphaConversionModal{position:fixed;inset:0;z-index:10040;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(1,4,7,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+#alphaConversionModal.open{display:flex}
+.alpha-conversion-shell{width:min(1340px,100%);height:min(920px,94vh);overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(98,220,255,.20);border-radius:28px;background:linear-gradient(145deg,#071018 0%,#02070c 78%);box-shadow:0 50px 170px rgba(0,0,0,.82),0 0 80px rgba(98,220,255,.035);color:#edf3f7}
+.alpha-conversion-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:23px 25px 20px;border-bottom:1px solid rgba(255,255,255,.065);background:linear-gradient(90deg,rgba(98,220,255,.055),rgba(246,200,74,.035),transparent)}
+.alpha-conversion-kicker{font-size:8px;font-weight:1000;letter-spacing:.22em;color:#62dcff}.alpha-conversion-title{margin-top:5px;font-size:27px;font-weight:1000;letter-spacing:-.035em}.alpha-conversion-sub{margin-top:6px;max-width:820px;color:#748290;font-size:9px;line-height:1.5}
+.alpha-conversion-head-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.alpha-conversion-head-actions select,.alpha-conversion-head-actions button{min-height:40px;border:1px solid rgba(255,255,255,.09);border-radius:10px;background:#0a131b;color:#cbd4dc;padding:9px 12px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.alpha-conversion-head-actions select{color:#a8eaff;border-color:rgba(98,220,255,.20)}.alpha-conversion-head-actions button:hover{border-color:rgba(98,220,255,.38);color:#fff}
+.alpha-conversion-body{flex:1;min-height:0;overflow:auto;padding:14px}
+.alpha-conversion-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.alpha-conversion-kpi{padding:15px;border:1px solid rgba(255,255,255,.06);border-radius:17px;background:linear-gradient(145deg,rgba(13,23,32,.95),rgba(3,8,13,.98));min-height:92px}.alpha-conversion-kpi small{display:block;color:#71808d;font-size:7px;font-weight:1000;letter-spacing:.13em}.alpha-conversion-kpi strong{display:block;margin-top:8px;font-size:27px;line-height:1;color:#f3f7f9}.alpha-conversion-kpi span{display:block;margin-top:5px;color:#63717f;font-size:8px}.alpha-conversion-kpi.gold{border-color:rgba(246,200,74,.20)}.alpha-conversion-kpi.gold strong{color:#f6c84a}.alpha-conversion-kpi.blue{border-color:rgba(98,220,255,.17)}.alpha-conversion-kpi.blue strong{color:#62dcff}.alpha-conversion-kpi.green{border-color:rgba(99,228,173,.17)}.alpha-conversion-kpi.green strong{color:#63e4ad}.alpha-conversion-kpi.red{border-color:rgba(255,111,123,.17)}.alpha-conversion-kpi.red strong{color:#ff929c}
+.alpha-depth-panel{border:1px solid rgba(255,255,255,.06);border-radius:20px;background:linear-gradient(145deg,rgba(10,18,26,.96),rgba(2,7,11,.99));overflow:hidden}.alpha-depth-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.05)}.alpha-depth-head>div small{display:block;color:#6a7885;font-size:7px;font-weight:1000;letter-spacing:.15em}.alpha-depth-head>div b{display:block;margin-top:4px;color:#edf2f6;font-size:12px}.alpha-depth-head>span{font-size:8px;color:#687684;text-align:right}
+.alpha-depth-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:12px}.alpha-depth-card{position:relative;padding:16px;border-radius:17px;border:1px solid rgba(255,255,255,.07);background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));overflow:hidden}.alpha-depth-card.depth-75,.alpha-depth-card.depth-100{border-color:rgba(246,200,74,.17)}.alpha-depth-card.depth-100{box-shadow:inset 0 2px rgba(99,228,173,.23)}.alpha-depth-mark{display:flex;justify-content:space-between;gap:8px;align-items:center}.alpha-depth-mark strong{font-size:18px;color:#f6c84a;letter-spacing:.04em}.alpha-depth-share{font-size:14px;font-weight:1000;color:#f1f5f8}.alpha-depth-big{display:flex;align-items:baseline;gap:7px;margin-top:15px}.alpha-depth-big strong{font-size:38px;line-height:1;color:#fff}.alpha-depth-big span{font-size:8px;color:#657381}.alpha-depth-track{height:8px;margin-top:13px;border-radius:99px;background:rgba(255,255,255,.045);overflow:hidden}.alpha-depth-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#1c5ba6,#62dcff,#f6c84a)}.alpha-depth-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}.alpha-depth-mini div{padding:8px 9px;border-radius:11px;background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.045)}.alpha-depth-mini small{display:block;color:#62707d;font-size:6px;font-weight:1000;letter-spacing:.11em}.alpha-depth-mini b{display:block;margin-top:4px;color:#e8edf2;font-size:11px}.alpha-depth-mini .lost b{color:#ff919a}.alpha-depth-mini .converted b{color:#63e4ad}
+.alpha-depth-lower{display:grid;grid-template-columns:1.25fr .75fr;gap:10px;padding:0 12px 12px}.alpha-drop-grid{display:grid;gap:7px;padding:10px 12px}.alpha-drop-row{display:grid;grid-template-columns:105px 1fr 74px;gap:10px;align-items:center;padding:9px 10px;border:1px solid rgba(255,255,255,.045);border-radius:12px;background:rgba(255,255,255,.015)}.alpha-drop-row label{color:#96a2ad;font-size:8px}.alpha-drop-track{height:7px;border-radius:99px;background:rgba(255,255,255,.04);overflow:hidden}.alpha-drop-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#62dcff,#f6c84a);min-width:2px}.alpha-drop-row b{text-align:right;color:#e9eef2;font-size:8px}.alpha-drop-row em{font-style:normal;color:#ff929c}
+.alpha-conv-side{padding:12px;display:grid;gap:7px}.alpha-conv-stat{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.016);border:1px solid rgba(255,255,255,.045)}.alpha-conv-stat span{color:#778591;font-size:8px}.alpha-conv-stat b{color:#f6c84a;font-size:13px}.alpha-conv-stat.green b{color:#63e4ad}.alpha-conv-stat.red b{color:#ff929c}.alpha-conv-note{margin-top:auto;padding:11px 12px;border:1px solid rgba(98,220,255,.10);border-radius:12px;background:rgba(98,220,255,.025);color:#6f7f8c;font-size:8px;line-height:1.5}
+.alpha-depth-footer{padding:11px 12px;color:#596876;font-size:7px;border-top:1px solid rgba(255,255,255,.05);text-align:center;letter-spacing:.04em}
+@media(max-width:980px){.alpha-conversion-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.alpha-depth-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.alpha-depth-lower{grid-template-columns:1fr}}
+@media(max-width:620px){#alphaConversionModal{padding:0}.alpha-conversion-shell{width:100%;height:100%;border-radius:0}.alpha-conversion-head{padding:17px;flex-direction:column}.alpha-conversion-head-actions{width:100%}.alpha-conversion-head-actions>*{flex:1}.alpha-conversion-body{padding:10px}.alpha-conversion-kpis{grid-template-columns:1fr 1fr;gap:7px}.alpha-conversion-kpi{padding:11px}.alpha-depth-cards{grid-template-columns:1fr 1fr;gap:7px;padding:8px}.alpha-depth-card{padding:12px}.alpha-depth-big strong{font-size:31px}.alpha-depth-lower{padding:0 8px 8px}.alpha-drop-row{grid-template-columns:82px 1fr 60px}}
+</style>
+
+<div id="alphaConversionModal" aria-hidden="true">
+  <div class="alpha-conversion-shell" role="dialog" aria-modal="true" aria-labelledby="alphaConversionTitle">
+    <div class="alpha-conversion-head">
+      <div>
+        <div class="alpha-conversion-kicker">ALPHA CRM // DEPTH COMMAND</div>
+        <div class="alpha-conversion-title" id="alphaConversionTitle">◒ Profundidade & Conversão</div>
+        <div class="alpha-conversion-sub">Painel dedicado exclusivamente a mostrar quantos visitantes chegaram a 25%, 50%, 75% e 100% da página e quantos converteram em candidatura confirmada.</div>
+      </div>
+      <div class="alpha-conversion-head-actions">
+        <select id="alphaConversionDays"><option value="7">7 DIAS</option><option value="30" selected>30 DIAS</option><option value="90">90 DIAS</option></select>
+        <button type="button" onclick="alphaLoadConversionCenter(true)">↻ ATUALIZAR</button>
+        <button type="button" onclick="alphaCloseConversionCenter()">✕ FECHAR</button>
+      </div>
+    </div>
+    <div class="alpha-conversion-body">
+      <div class="alpha-conversion-kpis" id="alphaConversionKpis"></div>
+      <section class="alpha-depth-panel">
+        <div class="alpha-depth-head"><div><small>RADAR PRINCIPAL</small><b>Alcance real por profundidade</b></div><span>percentual calculado sobre visitantes únicos do período</span></div>
+        <div class="alpha-depth-cards" id="alphaDepthCards"></div>
+        <div class="alpha-depth-lower">
+          <section class="alpha-depth-panel"><div class="alpha-depth-head"><div><small>QUEDA DE ATENÇÃO</small><b>Quanto ficou pelo caminho</b></div><span>entre um marco e o próximo</span></div><div class="alpha-drop-grid" id="alphaDropGrid"></div></section>
+          <section class="alpha-depth-panel"><div class="alpha-depth-head"><div><small>LEITURA EXECUTIVA</small><b>Pressão do funil</b></div><span>sem pessoas identificáveis</span></div><div class="alpha-conv-side" id="alphaConvSide"></div></section>
+        </div>
+        <div class="alpha-depth-footer" id="alphaConversionFooter">—</div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script id="alpha-06762-depth-command-js">
+(function(){
+  const state={days:30,rows:[],loaded:false};
+  const $=id=>document.getElementById(id);
+  const text=v=>String(v??'').trim();
+  const esc=v=>typeof escapeHTML==='function'?escapeHTML(v):text(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const uniq=list=>new Set(list.filter(Boolean));
+  const since=()=>new Date(Date.now()-state.days*86400000).toISOString();
+  function eventDepth(r){
+    const n=Number(r?.scroll_depth);
+    if(!Number.isFinite(n))return null;
+    if(n>=98)return 100;
+    return Math.max(0,Math.min(100,n));
+  }
+  function visitorDepths(rows){
+    const m=new Map();
+    rows.forEach(r=>{
+      const vid=text(r.visitor_id);if(!vid)return;
+      let d=null;
+      if(['scroll_depth','page_exit','high_intent_exit','form_abandon'].includes(r.event_type)) d=eventDepth(r);
+      if(Number.isFinite(d))m.set(vid,Math.max(m.get(vid)||0,d));
+    });
+    return m;
+  }
+  function compute(rows){
+    const pageViews=rows.filter(r=>r.event_type==='page_view');
+    const visitorsSet=uniq((pageViews.length?pageViews:rows).map(r=>r.visitor_id));
+    const submittedSet=uniq(rows.filter(r=>r.event_type==='application_submitted').map(r=>r.visitor_id));
+    const depth=visitorDepths(rows);
+    const marks=[25,50,75,100].map(mark=>{
+      const reached=new Set([...depth.entries()].filter(([,d])=>d>=mark).map(([v])=>v));
+      const converted=[...reached].filter(v=>submittedSet.has(v)).length;
+      const lost=Math.max(0,reached.size-converted);
+      return {mark,reached:reached.size,share:visitorsSet.size?Math.round(reached.size/visitorsSet.size*100):0,converted,lost,conversion:reached.size?Math.round(converted/reached.size*100):0};
+    });
+    return {visitors:visitorsSet.size,submitted:submittedSet.size,overallConversion:visitorsSet.size?Math.round(submittedSet.size/visitorsSet.size*100):0,marks};
+  }
+  function render(){
+    const c=compute(state.rows);
+    const kpi=(label,val,sub,cls='')=>`<div class="alpha-conversion-kpi ${cls}"><small>${label}</small><strong>${val}</strong><span>${sub}</span></div>`;
+    const k=$('alphaConversionKpis');
+    if(k)k.innerHTML=kpi('VISITANTES ÚNICOS',c.visitors,'base de cálculo','gold')+kpi('100% DA PÁGINA',c.marks[3].reached,`${c.marks[3].share}% do público`,'blue')+kpi('CANDIDATURAS CONFIRMADAS',c.submitted,'no período','green')+kpi('CONVERSÃO GLOBAL',c.overallConversion+'%','visitante → candidatura','red');
+    const cards=$('alphaDepthCards');
+    if(cards){
+      cards.innerHTML=c.marks.map(x=>`<article class="alpha-depth-card depth-${x.mark}"><div class="alpha-depth-mark"><strong>${x.mark}%</strong><span class="alpha-depth-share">${x.share}%</span></div><div class="alpha-depth-big"><strong>${x.reached}</strong><span>visitantes</span></div><div class="alpha-depth-track"><i style="width:${Math.max(0,Math.min(100,x.share))}%"></i></div><div class="alpha-depth-mini"><div class="converted"><small>COM CANDIDATURA</small><b>${x.converted}</b></div><div class="lost"><small>SEM CANDIDATURA</small><b>${x.lost}</b></div></div><div style="margin-top:9px;color:#687683;font-size:7px">Conversão dentro deste grupo: <strong style="color:#63e4ad">${x.conversion}%</strong></div></article>`).join('');
+    }
+    const drop=$('alphaDropGrid');
+    if(drop){
+      const pairs=[[25,50],[50,75],[75,100]];
+      drop.innerHTML=pairs.map(([a,b])=>{const aa=c.marks.find(x=>x.mark===a),bb=c.marks.find(x=>x.mark===b);const lost=Math.max(0,(aa?.reached||0)-(bb?.reached||0));const pct=aa?.reached?Math.round(lost/aa.reached*100):0;return `<div class="alpha-drop-row"><label>${a}% → ${b}%</label><div class="alpha-drop-track"><i style="width:${Math.max(2,pct)}%"></i></div><b>${lost} <em>(${pct}%)</em></b></div>`}).join('');
+    }
+    const side=$('alphaConvSide');
+    if(side){
+      const m75=c.marks.find(x=>x.mark===75),m100=c.marks.find(x=>x.mark===100);
+      side.innerHTML=`<div class="alpha-conv-stat"><span>Chegaram a 75%</span><b>${m75?.share||0}%</b></div><div class="alpha-conv-stat"><span>Chegaram a 100%</span><b>${m100?.share||0}%</b></div><div class="alpha-conv-stat green"><span>100% e converteram</span><b>${m100?.conversion||0}%</b></div><div class="alpha-conv-stat red"><span>75%+ sem candidatura</span><b>${m75?.lost||0}</b></div><div class="alpha-conv-note">Os percentuais são calculados sobre visitantes únicos anonimizados no período selecionado. 98% ou mais é tratado como chegada ao fim da página para reduzir perda de medição no encerramento da sessão.</div>`;
+    }
+    const foot=$('alphaConversionFooter');if(foot)foot.textContent=`PERÍODO ${state.days}D · ${state.rows.length} EVENTOS · ${c.visitors} VISITANTES ÚNICOS · ${c.submitted} CANDIDATURA(S) CONFIRMADA(S) · ÚLTIMA LEITURA ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
+    const badge=$('alphaConversionBadge');if(badge)badge.textContent=(c.overallConversion||0)+'%';
+  }
+  async function load(showToast){
+    let token='';try{token=(typeof accessToken!=='undefined'&&accessToken)?accessToken:'';}catch(e){}
+    if(!token)return;
+    try{
+      const url=`${SUPABASE_URL}/rest/v1/site_visitas?select=event_type,visitor_id,session_id,page_path,section_id,scroll_depth,duration_seconds,created_at&created_at=gte.${encodeURIComponent(since())}&order=created_at.desc&limit=10000`;
+      const r=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${token}`,Accept:'application/json'},cache:'no-store'});
+      const raw=await r.text();let data=[];try{data=raw?JSON.parse(raw):[]}catch(e){data=[]}
+      if(!r.ok)throw new Error(data?.message||data?.hint||raw||`SUPABASE ${r.status}`);
+      state.rows=Array.isArray(data)?data:[];state.loaded=true;render();
+      if(showToast&&typeof showToast==='function')showToast(`✓ Profundidade atualizada · ${state.rows.length} eventos`);
+    }catch(e){
+      console.warn('ALPHA PROFUNDIDADE',e);
+      const foot=$('alphaConversionFooter');if(foot)foot.textContent='⚠ Não foi possível carregar site_visitas. Verifique a policy de leitura do Supabase.';
+    }
+  }
+  function open(){
+    const m=$('alphaConversionModal');if(!m)return;m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+    document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.classList.contains('alpha-conversion-nav')));
+    const crumb=$('alphaPlusCurrent');if(crumb)crumb.textContent='CONVERSÃO';
+    render();load(false);
+  }
+  function close(){
+    const m=$('alphaConversionModal');if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';
+    document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget==='command'));
+    const crumb=$('alphaPlusCurrent');if(crumb)crumb.textContent='COMANDO';
+  }
+  window.alphaOpenConversionCenter=open;window.alphaCloseConversionCenter=close;window.alphaLoadConversionCenter=load;
+  document.addEventListener('DOMContentLoaded',()=>{
+    $('alphaConversionDays')?.addEventListener('change',e=>{state.days=Math.max(1,Number(e.target.value)||30);load(false)});
+    $('alphaConversionModal')?.addEventListener('click',e=>{if(e.target.id==='alphaConversionModal')close()});
+    setTimeout(()=>{try{load(false)}catch(e){}},3400);
+    setInterval(()=>{if(document.visibilityState==='visible'){try{if(typeof accessToken!=='undefined'&&accessToken)load(false)}catch(e){}}},60000);
+  },{once:true});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+</script>
+
+<script id="alpha-06762-nav-init">
+(function(){
+  function ensureConversionNav(){
+    const side=document.getElementById('alphaPlusSidebar');if(!side||side.querySelector('.alpha-conversion-nav'))return;
+    const ref=side.querySelector('.alpha-dup-nav');if(!ref)return;
+    const b=document.createElement('button');b.type='button';b.className='alpha-plus-nav alpha-conversion-nav';b.dataset.plusTarget='conversion';b.innerHTML='<i>◒</i><span>Conversão</span><b id="alphaConversionBadge">0%</b>';b.addEventListener('click',window.alphaOpenConversionCenter);ref.insertAdjacentElement('afterend',b);
+  }
+  document.addEventListener('DOMContentLoaded',ensureConversionNav,{once:true});window.addEventListener('load',ensureConversionNav);
+})();
+</script>
+
+<script id="alpha-06762-duplicate-polish-js">
+(function(){
+  function polishDuplicateCenter(){
+    const title=document.getElementById('alphaDuplicateTitle');if(title)title.textContent='⚠ Tentativas de novo cadastro';
+    const sub=document.querySelector('#alphaDuplicateModal .alpha-duplicate-sub');if(sub)sub.textContent='Cada registro abaixo representa uma nova tentativa identificada depois de uma candidatura já existente — o segundo processo deve permanecer bloqueado.';
+  }
+  document.addEventListener('DOMContentLoaded',polishDuplicateCenter,{once:true});window.addEventListener('load',polishDuplicateCenter);
+})();
+</script>
 </html>
 <style id="alpha058-background-final">
 .a56-hero-bg{background-size:cover!important;background-position:center center!important;filter:saturate(.9) contrast(1.08) brightness(.62)!important;}
