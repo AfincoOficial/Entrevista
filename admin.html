@@ -10046,3 +10046,108 @@ body.alpha-authenticated #adminScreen>.container>#alphaGlobalHistory{display:non
   });
 })();
 </script>
+
+<style id="alpha067TeamPerfCss">
+.alpha067-team-overlay{position:fixed;inset:0;z-index:100500;display:none;background:rgba(2,5,9,.82);backdrop-filter:blur(18px);padding:24px}
+.alpha067-team-overlay.open{display:flex;align-items:center;justify-content:center}
+.alpha067-team-modal{width:min(1500px,100%);max-height:calc(100vh - 48px);overflow:auto;border:1px solid rgba(215,181,109,.2);border-radius:26px;background:linear-gradient(145deg,rgba(16,21,29,.98),rgba(7,10,14,.98));box-shadow:0 30px 100px rgba(0,0,0,.65)}
+.alpha067-team-head{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(9,12,17,.94);backdrop-filter:blur(18px)}
+.alpha067-team-kicker{font-size:9px;letter-spacing:2px;color:var(--gold);font-weight:950}.alpha067-team-title{font-size:25px;font-weight:950;margin-top:4px}.alpha067-team-sub{font-size:11px;color:var(--muted);margin-top:5px}
+.alpha067-team-close{width:40px;height:40px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;border-radius:12px;font-size:22px}
+.alpha067-team-body{padding:22px 24px 26px}.alpha067-team-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.alpha067-team-controls button,.alpha067-team-controls select{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);color:#eef2f7;border-radius:11px;padding:10px 13px;font-size:10px;font-weight:900}.alpha067-team-controls button:hover{border-color:rgba(215,181,109,.35)}
+.alpha067-team-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px}.alpha067-kpi{padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:16px;background:rgba(255,255,255,.025)}.alpha067-kpi small{display:block;color:#788493;font-size:8px;letter-spacing:1.4px;font-weight:950}.alpha067-kpi strong{display:block;font-size:25px;margin:6px 0 2px}.alpha067-kpi span{font-size:9px;color:#75808e}
+.alpha067-team-grid{display:grid;grid-template-columns:1.5fr .9fr;gap:16px}.alpha067-team-panel{border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.025);overflow:hidden}.alpha067-panel-head{padding:15px 16px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:end;gap:12px}.alpha067-panel-head small{display:block;color:var(--gold);font-size:8px;letter-spacing:1.5px;font-weight:950}.alpha067-panel-head h3{font-size:15px;margin-top:4px}.alpha067-panel-head span{font-size:9px;color:#6e7a89}
+.alpha067-table-wrap{overflow:auto}.alpha067-table{width:100%;border-collapse:collapse;min-width:980px}.alpha067-table th{padding:12px;text-align:left;font-size:8px;letter-spacing:1.2px;color:#6f7b89;background:rgba(255,255,255,.025);white-space:nowrap}.alpha067-table td{padding:13px 12px;border-top:1px solid rgba(255,255,255,.05);font-size:10px;white-space:nowrap}.alpha067-member{display:flex;align-items:center;gap:10px}.alpha067-avatar{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(215,181,109,.2),rgba(92,169,233,.12));border:1px solid rgba(215,181,109,.22);font-size:10px;font-weight:950}.alpha067-name strong{display:block}.alpha067-name span{display:block;color:#687585;font-size:8px;margin-top:2px}.alpha067-num{font-weight:950}.alpha067-good{color:#62d28a}.alpha067-warn{color:#e6a44c}.alpha067-bad{color:#e26d76}.alpha067-blue{color:#70bdf7}.alpha067-progress{width:110px;height:7px;border-radius:10px;background:rgba(255,255,255,.06);overflow:hidden}.alpha067-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#f0d99a);border-radius:inherit}.alpha067-empty{padding:35px;text-align:center;color:#748091;font-size:11px}
+.alpha067-insights{display:grid;gap:10px;padding:14px}.alpha067-insight{padding:13px;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025)}.alpha067-insight small{color:#7d8897;font-size:8px;letter-spacing:1px;font-weight:950}.alpha067-insight strong{display:block;margin-top:6px;font-size:14px}.alpha067-insight span{display:block;margin-top:4px;color:#788494;font-size:9px;line-height:1.45}.alpha067-footer{margin-top:16px;color:#657182;font-size:9px;text-align:right}
+@media(max-width:1200px){.alpha067-team-kpis{grid-template-columns:repeat(3,1fr)}.alpha067-team-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.alpha067-team-overlay{padding:10px}.alpha067-team-modal{max-height:calc(100vh - 20px);border-radius:18px}.alpha067-team-head,.alpha067-team-body{padding:16px}.alpha067-team-kpis{grid-template-columns:repeat(2,1fr)}.alpha067-team-title{font-size:20px}.alpha067-kpi strong{font-size:21px}}
+</style>
+
+<div class="alpha067-team-overlay" id="alpha067TeamOverlay" aria-hidden="true" onclick="if(event.target===this)alphaCloseTeamPerformance067()">
+  <div class="alpha067-team-modal" role="dialog" aria-modal="true" aria-labelledby="alpha067TeamTitle">
+    <div class="alpha067-team-head">
+      <div><div class="alpha067-team-kicker">ALPHA CRM 067.7 // TEAM INTELLIGENCE</div><div class="alpha067-team-title" id="alpha067TeamTitle">PERFORMANCE DA EQUIPE</div><div class="alpha067-team-sub">Carteira, produtividade, pressão operacional e qualidade de execução por responsável.</div></div>
+      <button class="alpha067-team-close" type="button" onclick="alphaCloseTeamPerformance067()">×</button>
+    </div>
+    <div class="alpha067-team-body">
+      <div class="alpha067-team-controls">
+        <button type="button" onclick="alphaLoadTeamPerformance067()">↻ ATUALIZAR</button>
+        <select id="alpha067TeamWindow"><option value="7">7 DIAS</option><option value="30" selected>30 DIAS</option><option value="90">90 DIAS</option><option value="365">12 MESES</option></select>
+        <button type="button" onclick="openTeam043()">♛ EQUIPE & PERMISSÕES</button>
+      </div>
+      <div class="alpha067-team-kpis" id="alpha067TeamKpis"></div>
+      <div class="alpha067-team-grid">
+        <section class="alpha067-team-panel"><div class="alpha067-panel-head"><div><small>RANKING OPERACIONAL</small><h3>DESEMPENHO POR RESPONSÁVEL</h3></div><span id="alpha067TeamUpdated">—</span></div><div class="alpha067-table-wrap"><table class="alpha067-table"><thead><tr><th>RESPONSÁVEL</th><th>CARTEIRA</th><th>ENTRADAS</th><th>SEM AÇÃO</th><th>48H+</th><th>TAREFAS</th><th>ATRASADAS</th><th>ENTREVISTAS</th><th>APROVADOS</th><th>AÇÃO / CARTEIRA</th></tr></thead><tbody id="alpha067TeamRows"></tbody></table></div></section>
+        <aside class="alpha067-team-panel"><div class="alpha067-panel-head"><div><small>EXECUTIVE INSIGHT</small><h3>LEITURA DA OPERAÇÃO</h3></div></div><div class="alpha067-insights" id="alpha067TeamInsights"></div></aside>
+      </div>
+      <div class="alpha067-footer" id="alpha067TeamFooter">Dados calculados a partir das candidaturas e tarefas já existentes no CRM. Nenhuma tabela nova é necessária.</div>
+    </div>
+  </div>
+</div>
+
+<script id="alpha067TeamPerfJs">
+(function(){
+  const esc067=v=>typeof escapeHTML==='function'?escapeHTML(v):String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  const q067=id=>document.getElementById(id);
+  const win067=()=>Number(q067('alpha067TeamWindow')?.value||30);
+  const norm067=v=>String(v||'').trim().toLowerCase();
+  const date067=v=>{const d=new Date(v||0);return Number.isNaN(d.getTime())?null:d};
+  const initials067=n=>String(n||'A').trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase()||'A';
+  const statusClosed067=s=>['Reprovado','Excluído','Excluída','Cancelado','Cancelada'].includes(String(s||'').trim());
+  const wip067=s=>['Novo','Em análise','Entrevista','Agendada','Confirmada'].includes(String(s||'').trim());
+  const taskState067=t=>String(t?.status||'Pendente').trim().toLowerCase();
+  function candidateOwner067(c){return String(c?.responsavel||'ALPHA').trim()||'ALPHA'}
+  function within067(v){const d=date067(v);if(!d)return false;return Date.now()-d.getTime()<=win067()*86400000}
+  function teamData067(){
+    const list=Array.isArray(candidates)?candidates:[];
+    const taskList=Array.isArray(crm039Tasks)?crm039Tasks:[];
+    const active=list.filter(c=>!statusClosed067(c.status));
+    const by=new Map();
+    const ensure=name=>{const key=norm067(name);if(!by.has(key))by.set(key,{name:name||'ALPHA',carteira:0,entradas:0,semAcao:0,aging48:0,tasks:0,overdue:0,interviews:0,approved:0,action:0});return by.get(key)};
+    active.forEach(c=>{
+      const owner=candidateOwner067(c),x=ensure(owner);x.carteira++;
+      if(within067(c.created_at))x.entradas++;
+      if(!String(c.proxima_acao||'').trim())x.semAcao++; else x.action++;
+      const d=date067(c.created_at); if(d&&wip067(c.status)&&(Date.now()-d.getTime()>48*3600000))x.aging48++;
+      if(['Agendada','Confirmada'].includes(String(c.status||'').trim())||String(c.entrevista_dia||'').trim())x.interviews++;
+      if(String(c.status||'').trim()==='Aprovado')x.approved++;
+    });
+    taskList.forEach(t=>{
+      const owner=String(t?.responsavel||'ALPHA').trim()||'ALPHA',x=ensure(owner);
+      const s=taskState067(t),done=['concluida','concluído','concluida','concluído','finalizada','finalizado','concluída'].includes(s);
+      if(done)return;
+      x.tasks++;
+      const due=date067(t.due_at); if(due&&due.getTime()<Date.now())x.overdue++;
+    });
+    return [...by.values()].sort((a,b)=>(b.carteira-b.semAcao*0.5+b.action*0.1)-(a.carteira-a.semAcao*0.5+b.action*0.1));
+  }
+  function render067(){
+    const rows=teamData067(), active=(Array.isArray(candidates)?candidates:[]).filter(c=>!statusClosed067(c.status));
+    const total=active.length, assigned=active.filter(c=>candidateOwner067(c)!=='ALPHA').length, unassigned=active.filter(c=>candidateOwner067(c)==='ALPHA').length;
+    const noAction=active.filter(c=>!String(c.proxima_acao||'').trim()).length;
+    const aging=active.filter(c=>wip067(c.status)&&(()=>{const d=date067(c.created_at);return d&&(Date.now()-d.getTime()>48*3600000)})()).length;
+    const overdue=(Array.isArray(crm039Tasks)?crm039Tasks:[]).filter(t=>!['concluida','concluído','finalizada','finalizado','concluída'].includes(taskState067(t))&&date067(t.due_at)?.getTime()<Date.now()).length;
+    q067('alpha067TeamKpis').innerHTML=[
+      ['👥','ATIVOS',total,'fora da lixeira'],['🎯','RESPONSÁVEIS',rows.filter(r=>r.name!=='ALPHA').length,'com carteira'],['📥','ENTRADAS',active.filter(c=>within067(c.created_at)).length,'no período'],['⚠️','SEM AÇÃO',noAction, total?Math.round(noAction/total*100)+'% da carteira':'0%'],['⏱','48H+',aging,'WIP envelhecido'],['🔴','ATRASADAS',overdue,'tarefas']
+    ].map(x=>`<div class="alpha067-kpi"><small>${x[0]} ${esc067(x[1])}</small><strong>${x[2]}</strong><span>${esc067(x[3])}</span></div>`).join('');
+    q067('alpha067TeamRows').innerHTML=rows.length?rows.map(r=>{const rate=r.carteira?Math.round(r.action/r.carteira*100):0;return `<tr><td><div class="alpha067-member"><div class="alpha067-avatar">${initials067(r.name)}</div><div class="alpha067-name"><strong>${esc067(r.name)}</strong><span>${r.name==='ALPHA'?'sistema':'responsável operacional'}</span></div></div></td><td class="alpha067-num">${r.carteira}</td><td class="alpha067-num alpha067-blue">${r.entradas}</td><td class="alpha067-num ${r.semAcao?'alpha067-warn':'alpha067-good'}">${r.semAcao}</td><td class="alpha067-num ${r.aging48?'alpha067-bad':'alpha067-good'}">${r.aging48}</td><td class="alpha067-num">${r.tasks}</td><td class="alpha067-num ${r.overdue?'alpha067-bad':'alpha067-good'}">${r.overdue}</td><td class="alpha067-num alpha067-blue">${r.interviews}</td><td class="alpha067-num">${r.approved}</td><td><div style="display:flex;align-items:center;gap:8px"><b style="min-width:34px">${rate}%</b><div class="alpha067-progress"><i style="width:${rate}%"></i></div></div></td></tr>`}).join(''):'<tr><td colspan="10"><div class="alpha067-empty">Nenhum dado operacional disponível.</div></td></tr>';
+    const sorted=[...rows].filter(r=>r.name!=='ALPHA');
+    const leader=sorted.sort((a,b)=>(b.action-b.semAcao)-(a.action-a.semAcao))[0];
+    const pressure=[...rows].sort((a,b)=>(b.semAcao+b.overdue+b.aging48)-(a.semAcao+a.overdue+a.aging48))[0];
+    const avg=rows.length?Math.round(rows.reduce((s,r)=>s+(r.carteira?Math.min(100,r.action/r.carteira*100):0),0)/rows.length):0;
+    q067('alpha067TeamInsights').innerHTML=`
+      <div class="alpha067-insight"><small>MAIOR COBERTURA DE AÇÃO</small><strong>${esc067(leader?.name||'—')} · ${leader?.carteira?Math.round(leader.action/leader.carteira*100):0}%</strong><span>Percentual da carteira com próxima ação registrada.</span></div>
+      <div class="alpha067-insight"><small>MAIOR PRESSÃO OPERACIONAL</small><strong>${esc067(pressure?.name||'—')} · ${pressure?pressure.semAcao+pressure.overdue+pressure.aging48:0}</strong><span>Soma de sem ação, tarefas atrasadas e WIP acima de 48h.</span></div>
+      <div class="alpha067-insight"><small>COBERTURA MÉDIA</small><strong>${avg}%</strong><span>Média de cobertura de próxima ação entre responsáveis listados.</span></div>
+      <div class="alpha067-insight"><small>CARTEIRA NÃO ATRIBUÍDA</small><strong>${unassigned}</strong><span>Candidaturas ainda marcadas como ALPHA no campo responsável.</span></div>
+      <div class="alpha067-insight"><small>DISTRIBUIÇÃO</small><strong>${total?Math.round(assigned/total*100):0}% atribuída</strong><span>${assigned} candidaturas fora de ALPHA. Use o responsável correto para transformar o painel em gestão real.</span></div>`;
+    q067('alpha067TeamUpdated').textContent='Atualizado '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    q067('alpha067TeamFooter').textContent=`Período selecionado: ${win067()} dia(s). Base: candidaturas ativas + candidatura_tarefas. Cálculos em memória, sem alteração de schema.`;
+  }
+  window.alphaLoadTeamPerformance067=function(){try{render067()}catch(e){console.error('TEAM INTELLIGENCE 067.7',e);q067('alpha067TeamInsights').innerHTML=`<div class="alpha067-insight"><strong>Não foi possível montar o painel.</strong><span>${esc067(e.message||'Erro')}</span></div>`}};
+  window.alphaOpenTeamPerformance067=function(){const m=q067('alpha067TeamOverlay');if(!m)return;m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget==='teamperf'));const c=q067('alphaPlusCurrent');if(c)c.textContent='PERFORMANCE DA EQUIPE';alphaLoadTeamPerformance067();};
+  window.alphaCloseTeamPerformance067=function(){const m=q067('alpha067TeamOverlay');if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';document.querySelectorAll('.alpha-plus-nav').forEach(b=>b.classList.toggle('active',b.dataset.plusTarget==='command'));const c=q067('alphaPlusCurrent');if(c)c.textContent='COMANDO';};
+  function addNav067(){const team=document.querySelector('.alpha-plus-nav[data-plus-target="team"]');if(!team||document.querySelector('.alpha067-team-nav'))return;const b=document.createElement('button');b.type='button';b.className='alpha-plus-nav alpha067-team-nav';b.dataset.plusTarget='teamperf';b.innerHTML='<i>◉</i><span>Performance</span><b>08</b>';b.addEventListener('click',window.alphaOpenTeamPerformance067);team.insertAdjacentElement('afterend',b);}
+  document.addEventListener('DOMContentLoaded',()=>{addNav067();setTimeout(addNav067,1200);});
+})();
+</script>
