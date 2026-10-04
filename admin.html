@@ -2756,6 +2756,80 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
 
 
 <!-- ALPHA 064.2 — ADMIN HERO ONLY: M4 AZUL / ALPHA01 / GERENTE LUCAS NASCIMENTO -->
+
+<style id="alpha-0677-data-integrity-mobile">
+/* ============================================================
+   ALPHA 067.7.1 — DATA INTEGRITY + MOBILE LOGIN
+   Objetivo: eliminar ambiguidade de contagem e devolver escala
+   premium ao login no celular.
+============================================================ */
+.alpha-data-integrity{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,2fr);
+  gap:14px;
+  align-items:stretch;
+  margin:0 0 16px;
+  padding:16px;
+  border:1px solid rgba(246,200,74,.17);
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(10,18,27,.98),rgba(2,7,11,.98));
+  box-shadow:0 18px 60px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.03);
+}
+.alpha-data-integrity-kicker{font-size:8px;letter-spacing:.18em;color:#f6c84a;font-weight:1000}
+.alpha-data-integrity-title{margin-top:5px;font-size:16px;font-weight:1000;letter-spacing:-.02em;color:#f3f6f9}
+.alpha-data-integrity-sub{margin-top:6px;color:#7e8b99;font-size:9px;line-height:1.55;max-width:520px}
+.alpha-data-integrity-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.alpha-data-integrity-stats>div{min-width:0;padding:12px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:rgba(255,255,255,.025)}
+.alpha-data-integrity-stats small{display:block;font-size:7px;letter-spacing:.11em;color:#6f7b88;font-weight:1000}
+.alpha-data-integrity-stats strong{display:block;margin-top:6px;color:#f4f7fa;font-size:24px;font-weight:1000;line-height:1}
+.alpha-data-integrity-stats span{display:block;margin-top:5px;color:#778492;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#alphaDataTotal{color:#f6c84a}
+#alphaDataTrash{color:#ff9b9b}
+#alphaDataVisible{color:#72d9ff}
+
+@media(max-width:900px){
+  .alpha-data-integrity{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .alpha-data-integrity{padding:12px;border-radius:16px}
+  .alpha-data-integrity-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .alpha-data-integrity-title{font-size:14px}
+  .alpha-data-integrity-sub{font-size:8px}
+}
+
+/* Login mobile: painel maior, leitura melhor e sem zoom automático nos inputs. */
+html,body{-webkit-text-size-adjust:100%}
+@media(max-width:700px){
+  #loginScreen{
+    min-height:100dvh!important;
+    height:100dvh!important;
+    padding:16px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    background-position:center center!important;
+  }
+  #loginScreen .login-box{
+    width:min(520px,calc(100vw - 24px))!important;
+    max-width:520px!important;
+    margin:0!important;
+    padding:27px 22px 24px!important;
+    border-radius:22px!important;
+  }
+  #loginScreen .login-brand{margin-bottom:22px!important}
+  #loginScreen .login-brand h1{font-size:50px!important;line-height:1!important;letter-spacing:-2.5px!important}
+  #loginScreen .login-brand p{font-size:10px!important;margin-top:8px!important}
+  #loginScreen .login-field{margin-bottom:15px!important}
+  #loginScreen .login-field label{font-size:10px!important;margin-bottom:7px!important}
+  #loginScreen .login-field input{height:56px!important;min-height:56px!important;font-size:16px!important;padding:0 16px!important;border-radius:12px!important}
+  #loginScreen .login-button{height:58px!important;min-height:58px!important;font-size:15px!important;border-radius:12px!important}
+  #loginScreen .alpha-login-signature{display:none!important}
+}
+@media(max-width:380px){
+  #loginScreen{padding:10px!important}
+  #loginScreen .login-box{width:calc(100vw - 18px)!important;padding:23px 18px 20px!important}
+  #loginScreen .login-brand h1{font-size:44px!important}
+}
+</style>
 </head>
 <body>
 <section id="loginScreen">
@@ -3735,6 +3809,19 @@ body.alpha-plus-compact .alpha-plus-modulebar{margin-top:8px;margin-bottom:10px}
           Candidaturas
         </div>
         <div id="resultsCount" class="results-count">0 candidatos</div>
+      </div>
+      <div class="alpha-data-integrity" id="alphaDataIntegrity" aria-live="polite">
+        <div class="alpha-data-integrity-main">
+          <div class="alpha-data-integrity-kicker">ALPHA DATA CORE · INTEGRIDADE DA BASE</div>
+          <div class="alpha-data-integrity-title">CONTAGEM REAL DA OPERAÇÃO</div>
+          <div class="alpha-data-integrity-sub">Leitura transparente para você saber exatamente quantos registros existem, quantos estão ativos e quantos estão na lixeira.</div>
+        </div>
+        <div class="alpha-data-integrity-stats">
+          <div><small>BASE TOTAL</small><strong id="alphaDataTotal">0</strong><span>registros carregados</span></div>
+          <div><small>ATIVOS</small><strong id="alphaDataActive">0</strong><span>fora da lixeira</span></div>
+          <div><small>LIXEIRA</small><strong id="alphaDataTrash">0</strong><span>preservados</span></div>
+          <div><small>VISÍVEIS AGORA</small><strong id="alphaDataVisible">0</strong><span>com os filtros atuais</span></div>
+        </div>
       </div>
       <div id="trashWarning" class="trash-warning hidden">
         <strong>🗑️ LIXEIRA</strong> — candidatos enviados para cá ficam fora da operação principal.
@@ -5229,53 +5316,78 @@ async function loadCandidates(){
   candidatesList.innerHTML = `
     <div class="empty">
       <strong>Sincronizando com o Command Center...</strong>
-      <span>Conectando ao banco AFINCO.</span>
+      <span>Conectando ao banco AFINCO e conferindo a base completa.</span>
     </div>`;
 
   try{
     if(!accessToken) throw new Error("Sessão não encontrada. Faça login novamente.");
 
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/candidaturas?select=*&order=created_at.desc`,
-      {
-        method:"GET",
-        cache:"no-store",
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":`Bearer ${accessToken}`,
-          "Accept":"application/json",
-          "Content-Type":"application/json"
+    const PAGE_SIZE = 1000;
+    let offset = 0;
+    const allRows = [];
+    let serverTotal = null;
+
+    while(true){
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/candidaturas?select=*&order=created_at.desc&limit=${PAGE_SIZE}&offset=${offset}`,
+        {
+          method:"GET",
+          cache:"no-store",
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":`Bearer ${accessToken}`,
+            "Accept":"application/json",
+            "Content-Type":"application/json",
+            "Prefer":"count=exact"
+          }
+        }
+      );
+
+      const raw = await response.text();
+      let payload;
+      try{ payload = raw ? JSON.parse(raw) : null; }catch{ payload = raw; }
+
+      if(response.status === 401){
+        logout();
+        return;
+      }
+
+      if(response.status === 403){
+        throw new Error("SUPABASE 403 — o usuário está logado, mas o banco recusou a leitura de candidaturas. Verifique a política SELECT do ALCATEIA.");
+      }
+
+      if(!response.ok){
+        const detail = typeof payload === "object" ? (payload.message || payload.error_description || payload.hint || payload.details || JSON.stringify(payload)) : String(payload);
+        throw new Error(`SUPABASE ${response.status} — ${detail}`);
+      }
+
+      if(!Array.isArray(payload)){
+        throw new Error("O Supabase respondeu, mas não devolveu uma lista de candidaturas.");
+      }
+
+      if(offset === 0){
+        const contentRange = response.headers.get("content-range") || "";
+        const slash = contentRange.lastIndexOf("/");
+        if(slash >= 0){
+          const parsedTotal = Number(contentRange.slice(slash+1));
+          if(Number.isFinite(parsedTotal)) serverTotal = parsedTotal;
         }
       }
-    );
 
-    const raw = await response.text();
-    let payload;
-    try{ payload = raw ? JSON.parse(raw) : null; }catch{ payload = raw; }
-
-    if(response.status === 401){
-      logout();
-      return;
+      allRows.push(...payload);
+      if(payload.length < PAGE_SIZE) break;
+      offset += PAGE_SIZE;
+      if(serverTotal != null && allRows.length >= serverTotal) break;
+      if(offset > 100000) throw new Error("A base ultrapassou o limite seguro de sincronização. Verifique a paginação do Supabase.");
     }
 
-    if(response.status === 403){
-      throw new Error("SUPABASE 403 — o usuário está logado, mas o banco recusou a leitura de candidaturas. Verifique a política SELECT do ALCATEIA.");
-    }
-
-    if(!response.ok){
-      const detail = typeof payload === "object" ? (payload.message || payload.error_description || payload.hint || payload.details || JSON.stringify(payload)) : String(payload);
-      throw new Error(`SUPABASE ${response.status} — ${detail}`);
-    }
-
-    if(!Array.isArray(payload)){
-      throw new Error("O Supabase respondeu, mas não devolveu uma lista de candidaturas.");
-    }
-
-    candidates = payload.map(candidate => ({
+    candidates = allRows.map(candidate => ({
       ...candidate,
       status: candidate.status || "Novo"
     }));
     candidates.forEach(c=>{ if(c.anotacao_interna!=null) candidateNotes[c.id]=c.anotacao_interna; });
+    window.alphaDataServerTotal = serverTotal;
+
     await loadHistory038();
     await loadTasks039();
 
@@ -5284,6 +5396,7 @@ async function loadCandidates(){
     buildOriginFilter();
     updateAnalytics();
     applyFilters();
+    updateAlphaDataIntegrity();
     const syncEl=document.getElementById("alphaLastSync");
     if(syncEl) syncEl.textContent=`· última leitura: ${new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;
     setConnectionState(true, `CONECTADO · ${candidates.length} REGISTROS`);
@@ -5303,6 +5416,20 @@ async function loadCandidates(){
   }
 }
 
+function updateAlphaDataIntegrity(){
+  const all = Array.isArray(candidates) ? candidates : [];
+  const active = all.filter(c=>!c.deleted_at);
+  const trash = all.filter(c=>!!c.deleted_at);
+  const visible = Array.isArray(filteredCandidates) ? filteredCandidates.length : active.length;
+  const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=String(value);};
+  set("alphaDataTotal", all.length);
+  set("alphaDataActive", active.length);
+  set("alphaDataTrash", trash.length);
+  set("alphaDataVisible", visible);
+  const range = document.getElementById("alphaDataRange");
+  if(range) range.textContent = window.alphaDataServerTotal != null ? `TOTAL NO BANCO: ${window.alphaDataServerTotal}` : `TOTAL CARREGADO: ${all.length}`;
+}
+
 function setConnectionState(online,message){
   const el=document.getElementById("alphaConnectionState");
   if(!el) return;
@@ -5320,16 +5447,18 @@ function updateDashboard(){
   renderInterviewAgenda();
   renderKanban();
 
+  const activeBase = activeCandidates();
+
   document.getElementById(
     "totalCount"
   ).textContent =
-    candidates.length;
+    activeBase.length;
 
 
   document.getElementById(
     "novoCount"
   ).textContent =
-    candidates.filter(
+    activeBase.filter(
       c =>
         (c.status || "Novo")
         === "Novo"
@@ -5339,7 +5468,7 @@ function updateDashboard(){
   document.getElementById(
     "analiseCount"
   ).textContent =
-    candidates.filter(
+    activeBase.filter(
       c =>
         c.status ===
         "Em análise"
@@ -5349,7 +5478,7 @@ function updateDashboard(){
   document.getElementById(
     "entrevistaCount"
   ).textContent =
-    candidates.filter(
+    activeBase.filter(
       c =>
         c.status ===
         "Entrevista"
@@ -5359,7 +5488,7 @@ function updateDashboard(){
   document.getElementById(
     "aprovadoCount"
   ).textContent =
-    candidates.filter(
+    activeBase.filter(
       c =>
         c.status ===
         "Aprovado"
@@ -5369,7 +5498,7 @@ function updateDashboard(){
   document.getElementById(
     "reprovadoCount"
   ).textContent =
-    candidates.filter(
+    activeBase.filter(
       c =>
         c.status ===
         "Reprovado"
@@ -5377,11 +5506,11 @@ function updateDashboard(){
 
 
   const total =
-    candidates.length;
+    activeBase.length;
 
 
   const approved =
-    candidates.filter(
+    activeBase.filter(
       c =>
         c.status ===
         "Aprovado"
@@ -5389,7 +5518,7 @@ function updateDashboard(){
 
 
   const interviews =
-    candidates.filter(
+    activeBase.filter(
       c =>
         c.status ===
         "Entrevista"
@@ -5788,6 +5917,7 @@ function applyFilters(){
 
 
   renderCandidates();
+  updateAlphaDataIntegrity();
 
 }
 
