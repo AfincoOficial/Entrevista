@@ -7,7 +7,7 @@
   content="width=device-width, initial-scale=1.0"
 >
 <title>
-  AFINCO | COMMAND CENTER — ULTIMATE REVOLUTION
+  AFINCO | COMMAND CENTER — ALPHA 067.10 FOCUS QUEUE
 </title>
 <style>
 
@@ -9320,6 +9320,63 @@ function crm053UltraSection(c){
 })();
 </script>
 
+<style id="alpha-06710-focus-css">
+.alpha06710-focus{margin:22px 0 0;border:1px solid rgba(244,200,79,.16);border-radius:22px;background:linear-gradient(145deg,rgba(12,17,24,.98),rgba(5,8,12,.98));box-shadow:0 24px 70px rgba(0,0,0,.28);overflow:hidden}
+.alpha06710-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;padding:20px;border-bottom:1px solid rgba(255,255,255,.06)}
+.alpha06710-kicker{font-size:9px;letter-spacing:.18em;color:#f0d27a;font-weight:950}.alpha06710-title{font-size:21px;font-weight:1000;margin-top:5px;color:#fff}.alpha06710-title span{color:#f0d27a}.alpha06710-sub{font-size:10px;color:#7f8998;margin-top:6px;line-height:1.5;max-width:850px}.alpha06710-actions{display:flex;gap:8px;flex-wrap:wrap}.alpha06710-actions button{border:1px solid rgba(255,255,255,.09);background:#0c1219;color:#dce4eb;border-radius:10px;padding:9px 12px;font-size:9px;font-weight:950}.alpha06710-actions button.primary{border-color:rgba(244,200,79,.28);color:#ffe69a;background:rgba(244,200,79,.07)}
+.alpha06710-kpis{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:8px;padding:14px 20px}.alpha06710-kpi{padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.018)}.alpha06710-kpi small{display:block;font-size:8px;color:#778392;font-weight:950;letter-spacing:.08em}.alpha06710-kpi strong{display:block;font-size:22px;line-height:1.1;margin-top:7px}.alpha06710-kpi span{display:block;font-size:8px;color:#697583;margin-top:5px}.alpha06710-kpi.critical strong{color:#ff7f86}.alpha06710-kpi.warning strong{color:#f0c76b}.alpha06710-kpi.good strong{color:#62df9a}.alpha06710-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);gap:12px;padding:0 20px 20px}.alpha06710-panel{border:1px solid rgba(255,255,255,.065);border-radius:16px;background:rgba(255,255,255,.012);overflow:hidden}.alpha06710-panel-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid rgba(255,255,255,.055)}.alpha06710-panel-head small{display:block;color:#778392;font-size:8px;font-weight:950;letter-spacing:.1em}.alpha06710-panel-head strong{display:block;color:#fff;font-size:11px;margin-top:3px}.alpha06710-panel-head span{font-size:8px;color:#687483}.alpha06710-list{display:flex;flex-direction:column}.alpha06710-row{display:grid;grid-template-columns:28px minmax(150px,1fr) minmax(150px,1fr) auto;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.045)}.alpha06710-row:last-child{border-bottom:0}.alpha06710-rank{font-size:10px;font-weight:1000;color:#f0d27a}.alpha06710-person strong{display:block;font-size:10px;color:#fff}.alpha06710-person span,.alpha06710-reason span{display:block;font-size:8px;color:#6f7b89;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.alpha06710-reason b{display:block;font-size:8px;color:#e9edf1}.alpha06710-row button{border:1px solid rgba(255,255,255,.08);background:#0a1017;color:#d9e0e7;border-radius:8px;padding:7px 9px;font-size:8px;font-weight:950}.alpha06710-side{padding:14px}.alpha06710-check{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.045)}.alpha06710-check:last-child{border-bottom:0}.alpha06710-dot{width:7px;height:7px;border-radius:50%;margin-top:4px;background:#61df9a;box-shadow:0 0 10px rgba(97,223,154,.45);flex:0 0 auto}.alpha06710-check.warn .alpha06710-dot{background:#efc56b;box-shadow:0 0 10px rgba(239,197,107,.4)}.alpha06710-check.critical .alpha06710-dot{background:#ff777f;box-shadow:0 0 10px rgba(255,119,127,.4)}.alpha06710-check b{display:block;font-size:9px;color:#e9edf1}.alpha06710-check span{display:block;font-size:8px;color:#6f7b89;line-height:1.4;margin-top:3px}.alpha06710-empty{padding:24px;color:#718090;font-size:9px;text-align:center}.alpha06710-foot{padding:10px 20px;border-top:1px solid rgba(255,255,255,.05);font-size:8px;color:#596675}
+@media(max-width:1050px){.alpha06710-kpis{grid-template-columns:repeat(3,1fr)}.alpha06710-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.alpha06710-head{align-items:flex-start;flex-direction:column}.alpha06710-kpis{grid-template-columns:repeat(2,1fr);padding:12px}.alpha06710-grid{padding:0 12px 12px}.alpha06710-row{grid-template-columns:24px minmax(0,1fr);}.alpha06710-reason{grid-column:2}.alpha06710-row button{grid-column:2;justify-self:start}.alpha06710-sub{font-size:9px}}
+</style>
+<script id="alpha-06710-focus-js">
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const esc=v=>typeof escapeHTML==='function'?escapeHTML(v):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const arr=()=>Array.isArray(window.candidates)?window.candidates:(typeof candidates!=='undefined'&&Array.isArray(candidates)?candidates:[]);
+  const str=v=>String(v??'').trim();
+  const norm=v=>str(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const dt=v=>{const d=new Date(v||0);return Number.isNaN(d.getTime())?null:d};
+  const active=c=>!c?.deleted_at&&!['Reprovado','Excluído','Excluída','Cancelado','Cancelada'].includes(str(c?.status));
+  const wip=c=>['Novo','Em análise','Entrevista','Agendada','Confirmada'].includes(str(c?.status||'Novo'));
+  const last=c=>dt(c?.ultima_atividade_at||c?.ultima_atividade||c?.updated_at||c?.created_at);
+  const age=c=>{const d=last(c);return d?Math.max(0,(Date.now()-d.getTime())/36e5):0};
+  const temp=c=>{try{return typeof crm037Priority==='function'?str(crm037Priority(c)):str(c?.prioridade)}catch(e){return str(c?.prioridade)}};
+  const taskList=()=>{try{return Array.isArray(crm039Tasks)?crm039Tasks:[]}catch(e){return []}};
+  const overdue=c=>taskList().filter(t=>str(t?.candidatura_id)===str(c?.id)&&!['concluida','concluido','finalizada','finalizado'].includes(norm(t?.status))&&dt(t?.due_at)?.getTime()<Date.now()).length;
+  const missing=c=>[c?.nome_completo,c?.email,c?.telefone,c?.status,c?.codigo_protocolo||c?.protocolo||c?.protocol||c?.codigo].filter(v=>!str(v)).length;
+  const score=c=>{const a=age(c),o=overdue(c),m=missing(c);let s=0,why=['FOLLOW-UP','manter o candidato em movimento'];if(o){s+=150+o*20;why=['AÇÃO ATRASADA',o+' tarefa(s) vencida(s)']}else if(a>72&&wip(c)){s+=110;why=['SLA CRÍTICO',Math.round(a)+'h sem movimentação']}else if(a>48&&wip(c)){s+=82;why=['SLA / 48H+',Math.round(a)+'h sem movimentação']}else if(!str(c?.proxima_acao)){s+=52;why=['SEM PRÓXIMA AÇÃO','registrar o próximo movimento']}if(/quente|hot|alta|urgente/i.test(temp(c)))s+=38;if(['Agendada','Confirmada'].includes(str(c?.status)))s+=24;if(a>24&&wip(c))s+=25;if(m)s+=Math.min(24,m*6);if(!o&&!(a>48&&wip(c))&&!str(c?.proxima_acao))why=['SEM PRÓXIMA AÇÃO','registrar o próximo movimento'];return {s,a,o,m,why}};
+  function build(){
+    const base=arr(), act=base.filter(active), ranked=act.map(c=>({c,i:score(c)})).filter(x=>wip(x.c)||x.i.o).sort((a,b)=>b.i.s-a.i.s).slice(0,10);
+    const critical=act.filter(c=>{const i=score(c);return i.o||i.a>72&&wip(c)}).length;
+    const attention=act.filter(c=>{const i=score(c);return !i.o&&wip(c)&&i.a>48}).length;
+    const noAction=act.filter(c=>!str(c?.proxima_acao)).length;
+    const stale=act.filter(c=>wip(c)&&age(c)>24).length;
+    const incomplete=act.filter(c=>missing(c)>0).length;
+    const k=$('alpha06710Kpis'); if(k) k.innerHTML=[
+      ['critical','CRÍTICOS',critical,'ação/SLA imediato'],['warning','ATENÇÃO',attention,'48h+ operacional'],['warning','SEM PRÓXIMA AÇÃO',noAction,'precisam de movimento'],['warning','+24H PARADOS',stale,'WIP envelhecido'],['critical','DADOS INCOMPLETOS',incomplete,'qualidade cadastral'],['good','CARTEIRA ATIVA',act.length,'registros operacionais']
+    ].map(x=>`<article class="alpha06710-kpi ${x[0]}"><small>${x[1]}</small><strong>${x[2]}</strong><span>${x[3]}</span></article>`).join('');
+    const q=$('alpha06710List'); if(q) q.innerHTML=ranked.length?ranked.map((x,i)=>{const c=x.c,z=x.i,p=c?.codigo_protocolo||c?.protocolo||c?.protocol||c?.codigo||'sem protocolo';return `<div class="alpha06710-row"><div class="alpha06710-rank">${String(i+1).padStart(2,'0')}</div><div class="alpha06710-person"><strong>${esc(c?.nome_completo||'Candidato sem nome')}</strong><span>${esc(c?.responsavel||'ALPHA')} · ${esc(p)} · ${esc(c?.status||'Novo')}</span></div><div class="alpha06710-reason"><b>${esc(z.why[0])}</b><span>${esc(z.why[1])}${z.m?' · '+z.m+' campo(s) pendente(s)':''}</span></div><button type="button" onclick="openDetails('${esc(c?.id||'')}')">ABRIR 360°</button></div>`}).join(''):`<div class="alpha06710-empty"><b>Fila limpa.</b><br>Nenhum candidato ativo exige intervenção prioritária com os dados atuais.</div>`;
+    const side=$('alpha06710Checks'); if(side){const checks=[
+      [critical?'critical':'','Risco imediato',critical?`${critical} registro(s) exigem intervenção por atraso ou SLA crítico.`:'Nenhum crítico identificado.'],
+      [attention?'warn':'','Pressão de SLA',attention?`${attention} registro(s) passaram de 48h de referência operacional.`:'Sem concentração relevante acima de 48h.'],
+      [noAction?'warn':'','Próxima ação',noAction?`${noAction} candidato(s) estão sem próxima ação registrada.`:'Todos os ativos possuem próxima ação registrada.'],
+      [incomplete?'warn':'','Qualidade',incomplete?`${incomplete} ativo(s) possuem pelo menos um campo essencial ausente.`:'Campos essenciais dos ativos estão completos.']
+    ];side.innerHTML=checks.map(x=>`<div class="alpha06710-check ${x[0]}"><i class="alpha06710-dot"></i><div><b>${x[1]}</b><span>${x[2]}</span></div></div>`).join('')}
+    const foot=$('alpha06710Foot');if(foot)foot.textContent=`FOCUS 067.10 · ${act.length} ativos · ${ranked.length} prioridades exibidas · atualização ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})} · recomendação sem execução automática.`;
+  }
+  function ensure(){
+    if($('alpha06710Focus'))return;
+    const anchor=$('alpha0679DecisionCenter')||$('alpha0678ActionControl')||$('alphaCommandCenter');if(!anchor)return;
+    const wrap=document.createElement('section');wrap.id='alpha06710Focus';wrap.className='alpha06710-focus';wrap.innerHTML=`<div class="alpha06710-head"><div><div class="alpha06710-kicker">ALPHA 067.10 // OPERATIONAL FOCUS</div><div class="alpha06710-title">FOCUS <span>QUEUE</span></div><div class="alpha06710-sub">Uma camada consolidada sobre os motores já existentes: mostra onde a operação precisa agir primeiro, por quê e quais riscos estão acumulados. Nenhuma alteração é feita automaticamente.</div></div><div class="alpha06710-actions"><button class="primary" type="button" onclick="alpha06710Refresh()">↻ ATUALIZAR</button><button type="button" onclick="openTasks039Center()">🎯 TAREFAS</button></div></div><div class="alpha06710-kpis" id="alpha06710Kpis"></div><div class="alpha06710-grid"><section class="alpha06710-panel"><div class="alpha06710-panel-head"><div><small>TOP PRIORITIES</small><strong>QUEM PRECISA DE ATENÇÃO AGORA</strong></div><span>10 maiores sinais</span></div><div class="alpha06710-list" id="alpha06710List"></div></section><aside class="alpha06710-panel"><div class="alpha06710-panel-head"><div><small>OPERATING HEALTH</small><strong>SAÚDE DA OPERAÇÃO</strong></div><span>leitura atual</span></div><div class="alpha06710-side" id="alpha06710Checks"></div></aside></div><div class="alpha06710-foot" id="alpha06710Foot">Aguardando sincronização...</div>`;anchor.insertAdjacentElement('afterend',wrap);build();
+  }
+  window.alpha06710Refresh=build;
+  function boot(){ensure();setTimeout(build,900);setTimeout(build,2200);}
+  document.addEventListener('DOMContentLoaded',boot,{once:true});window.addEventListener('load',()=>setTimeout(ensure,500));
+  const original=window.loadCandidates;if(typeof original==='function'&&!original.__alpha06710){const wrapped=async function(){const r=await original.apply(this,arguments);setTimeout(build,250);return r};wrapped.__alpha06710=true;window.loadCandidates=wrapped;}
+  setInterval(()=>{if(document.visibilityState==='visible'&&$('alpha06710Focus'))build()},60000);
+})();
+</script>
 </body>
 
 <style id="alpha-plus-pro-max-css">
