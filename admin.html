@@ -2001,6 +2001,7 @@ body:before{
 .login-brand h1{font-size:46px}
 .login-brand p{text-transform:uppercase;letter-spacing:.16em}
 .login-button{box-shadow:0 10px 30px rgba(215,181,109,.15)}
+.alpha0678-now-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;margin:-18px -18px 16px;border-bottom:1px solid rgba(244,200,79,.12);background:linear-gradient(90deg,rgba(244,200,79,.07),rgba(244,200,79,.015),transparent)}.alpha0678-now-strip b{display:block;color:#f5d77d;font-size:9px;letter-spacing:.12em}.alpha0678-now-strip span{display:block;color:#687683;font-size:7px;margin-top:3px}.alpha0678-now-actions{display:flex;gap:6px;flex-wrap:wrap}.alpha0678-now-actions button,.alpha0678-empty-actions button{border:1px solid rgba(255,255,255,.08);background:#0b1219;color:#cfd8df;border-radius:8px;padding:7px 9px;font-size:7px;font-weight:1000;cursor:pointer}.alpha0678-now-actions button:hover,.alpha0678-empty-actions button:hover{border-color:rgba(244,200,79,.32);color:#f5d77d}.alpha0678-empty-live{padding:28px 18px!important}.alpha0678-empty-live b{color:#f4d37d;font-size:12px}.alpha0678-empty-actions{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:14px}.alpha0678-empty-actions button.primary{border-color:rgba(244,200,79,.3);background:rgba(244,200,79,.07);color:#f6d98a}.alpha0678-action-control{position:relative;z-index:2;display:block!important;visibility:visible!important;opacity:1!important}
 @media(max-width:1100px){.page-head:after{display:none}.page-head h1{font-size:26px}}
 @media(max-width:980px){.alpha-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.alpha-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.brand-division{display:none}.page-head{padding:18px}.hero-x{display:block;margin:7px 0 0}.live{margin-top:8px}.page-head{align-items:flex-start}.topbar-inner{min-height:68px}}
@@ -2905,6 +2906,7 @@ html,body{-webkit-text-size-adjust:100%}
   .alpha0678-main-grid{grid-template-columns:1fr}
 }
 @media(max-width:700px){
+  .alpha0678-now-strip{align-items:flex-start;flex-direction:column;margin:-12px -12px 14px}.alpha0678-now-actions{width:100%}.alpha0678-now-actions button{flex:1}
   .alpha0678-action-control{padding:12px;border-radius:18px}
   .alpha0678-head{display:block}
   .alpha0678-head-actions{justify-content:flex-start;margin-top:10px}
@@ -3357,11 +3359,12 @@ html,body{-webkit-text-size-adjust:100%}
     </section>
 
     <section class="alpha0678-action-control" id="alpha0678ActionControl" aria-label="ALPHA Action Control">
+      <div class="alpha0678-now-strip"><div><b>⚡ AÇÕES AGORA</b><span>Operação ativa · escolha o próximo movimento</span></div><div class="alpha0678-now-actions"><button type="button" onclick="loadCandidates()">↻ SINCRONIZAR</button><button type="button" onclick="window.alphaPlusGo?.('candidates')">👥 CANDIDATOS</button><button type="button" onclick="openTasks039Center()">🎯 TAREFAS</button></div></div>
       <div class="alpha0678-head">
         <div>
-          <div class="alpha0678-kicker">ALPHA 067.8 // OPERATION CONTROL</div>
+          <div class="alpha0678-kicker">ALPHA 067.11 // ACTION NOW</div>
           <div class="alpha0678-title">AÇÃO <b>AGORA</b></div>
-          <div class="alpha0678-sub">A fila que merece sua atenção primeiro. Priorização calculada somente com os dados já existentes no CRM.</div>
+          <div class="alpha0678-sub">A fila operacional mostra candidatos mesmo sem sinais críticos, ordenando o próximo movimento com os dados já existentes no CRM.</div>
         </div>
         <div class="alpha0678-head-actions">
           <span class="alpha0678-live"><i></i> LIVE</span>
@@ -9191,7 +9194,7 @@ function crm053UltraSection(c){
     const sla=act.filter(c=>{const d=lastDate(c);return d&&now-d.getTime()>48*3600000&&wip(c)}).length;
     const overdue=tasks().filter(t=>{const done=['concluida','concluido','finalizada','finalizado'].includes(norm(t?.status));const d=dt(t?.due_at);return !done&&d&&d.getTime()<now}).length;
     const hot=act.filter(c=>/quente|hot|alta|urgente/i.test(temperature(c))).length;
-    const ranked=act.map(c=>({c,info:score(c)})).filter(x=>wip(x.c)||x.info.overdue>0).sort((a,b)=>b.info.value-a.info.value).slice(0,12);
+    const ranked=act.map(c=>({c,info:score(c)})).sort((a,b)=>b.info.value-a.info.value).slice(0,12);
     const k=q('alpha0678Kpis');
     if(k)k.innerHTML=[
       ['gold','⚡','AGIR AGORA',ranked.length,'fila operacional'],
@@ -9212,7 +9215,7 @@ function crm053UltraSection(c){
           <div class="alpha0678-reason"><b>${esc(rb)}</b><span>${esc(rs)}</span></div>
           <div class="alpha0678-actions"><button type="button" class="primary" onclick="openDetails('${id}')">ABRIR 360°</button><button type="button" onclick="openTasks039Center()">TAREFAS</button></div>
         </div>`;
-      }).join(''):`<div class="alpha0678-empty"><b>Nenhum sinal crítico encontrado.</b><span>A fila prioritária está limpa com os dados disponíveis.</span></div>`;
+      }).join(''):`<div class="alpha0678-empty alpha0678-empty-live"><b>Nenhum candidato carregado ainda.</b><span>Use uma das ações abaixo para colocar a operação em movimento.</span><div class="alpha0678-empty-actions"><button type="button" class="primary" onclick="loadCandidates()">↻ SINCRONIZAR BASE</button><button type="button" onclick="window.alphaPlusGo?.('candidates')">👥 ABRIR CANDIDATOS</button><button type="button" onclick="openTasks039Center()">🎯 CENTRAL DE TAREFAS</button></div></div>`;
     }
     renderAudit(base,act);
     const foot=q('alpha0678Foot');if(foot)foot.textContent=`Atualizado ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})} · ${act.length} ativos · ${tasks().length} tarefas carregadas · cálculo em memória, sem novo schema.`;
